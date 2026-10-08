@@ -413,3 +413,33 @@ function keluarAkun(){
   document.getElementById('halamanCari').classList.remove('tampil');
   document.getElementById('halamanLogin').classList.remove('sembunyi');
   document.getElementById('loginUser'
+                          document.getElementById('loginPw').value = '';
+}
+
+function resetFormRegis(){
+  document.getElementById('nickname').value = '';
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+  document.getElementById('tglLahir').value = '';
+  jenisKelamin = '';
+  document.getElementById('jkLaki').classList.remove('aktif');
+  document.getElementById('jkPerempuan').classList.remove('aktif');
+  fotoBase64 = '';
+  document.getElementById('pratinjauFoto').style.display = 'none';
+  document.getElementById('ikonFoto').style.display = 'block';
+}
+
+function tampilPesan(teks){
+  document.getElementById('pesanTeks').textContent = teks;
+  document.getElementById('pesanBox').classList.add('tampil');
+}
+
+function tutupPesan(){
+  document.getElementById('pesanBox').classList.remove('tampil');
+}
+
+cekLogin();
+</script>
+
+</body>
+</html>
