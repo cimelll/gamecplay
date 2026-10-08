@@ -1,0 +1,169 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', sans-serif}
+:root{
+  --biru-utama:#4A90E2;
+  --biru-gelap:#357ABD;
+  --biru-terang:#E8F4FF;
+  --biru-sangat-terang:#F2F8FF;
+  --putih:#FFFFFF;
+  --abu-terang:#F5F7FA;
+  --abu-batas:#E4E9F0;
+  --abu-teks:#8A94A6;
+  --teks:#333333;
+  --hijau:#34C759;
+  --merah:#FF3B30;
+  --kuning:#FFB800;
+}
+body{background:var(--biru-sangat-terang);min-height:100vh;color:var(--teks)}
+.sembunyi{display:none !important}
+
+/* === HALAMAN MASUK === */
+.layar-masuk{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.kotak-masuk{background:var(--putih);border-radius:16px;padding:40px 32px;width:100%;max-width:400px;box-shadow:0 4px 20px rgba(74,144,226,.08);text-align:center}
+.kotak-masuk h1{color:var(--biru-utama);font-size:28px;margin-bottom:8px}
+.kotak-masuk p{color:var(--abu-teks);margin-bottom:24px}
+.input{width:100%;padding:12px 16px;border:1px solid var(--abu-batas);border-radius:10px;font-size:15px;margin-bottom:16px;outline:none;transition:.2s}
+.input:focus{border-color:var(--biru-utama);background:var(--biru-sangat-terang)}
+.btn{width:100%;padding:12px;border-radius:10px;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:.2s}
+.btn-biru{background:var(--biru-utama);color:var(--putih)}
+.btn-biru:hover{background:var(--biru-gelap)}
+.btn-putih{background:var(--biru-terang);color:var(--biru-utama)}
+.btn-putih:hover{background:#D8ECFF}
+.btn-kecil{padding:8px 14px;border-radius:8px;font-size:14px;border:none;cursor:pointer;transition:.2s;font-weight:500}
+.btn-hijau{background:var(--hijau);color:white}
+.btn-hijau:hover{background:#28A745}
+.btn-merah{background:var(--merah);color:white}
+.btn-merah:hover{background:#D32F2F}
+.btn-abu{background:var(--abu-terang);color:var(--teks)}
+.btn-abu:hover{background:var(--abu-batas)}
+
+/* === APLIKASI UTAMA === */
+.aplikasi{display:none;min-height:100vh}
+.aplikasi.tampil{display:flex}
+
+/* SIDEBAR */
+.sidebar{width:260px;background:var(--putih);border-right:1px solid var(--abu-batas);position:fixed;top:0;bottom:0;left:0;display:flex;flex-direction:column}
+.sidebar-atas{padding:20px;border-bottom:1px solid var(--abu-batas)}
+.sidebar-atas h2{font-size:22px;color:var(--biru-utama);font-weight:700}
+.sidebar-menu{flex:1;padding:12px}
+.menu-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;cursor:pointer;margin-bottom:4px;font-size:15px;color:var(--teks)}
+.menu-item:hover{background:var(--biru-sangat-terang)}
+.menu-item.aktif{background:var(--biru-terang);color:var(--biru-utama);font-weight:600}
+.sidebar-bawah{padding:16px;border-top:1px solid var(--abu-batas)}
+.profil-mini{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;transition:.2s}
+.profil-mini:hover{background:var(--biru-sangat-terang)}
+.foto-kecil{width:38px;height:38px;border-radius:50%;background:var(--biru-terang);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--biru-utama)}
+.nama-mini{flex:1;font-size:14px;font-weight:500}
+.koin-mini{font-size:14px;color:var(--kuning);font-weight:600}
+
+/* KONTEN TENGAH */
+.konten{flex:1;margin-left:260px;margin-right:340px;padding:24px;min-height:100vh}
+.judul-halaman{font-size:20px;font-weight:600;color:var(--teks);margin-bottom:20px}
+.cari-bar{display:flex;gap:10px;margin-bottom:20px}
+.cari-bar input{flex:1;padding:10px 14px;border:1px solid var(--abu-batas);border-radius:8px;outline:none;font-size:14px}
+.cari-bar input:focus{border-color:var(--biru-utama)}
+
+/* DAFTAR TEMAN */
+.daftar-teman{background:var(--putih);border-radius:12px;overflow:hidden;border:1px solid var(--abu-batas)}
+.item-teman{display:flex;align-items:center;padding:16px;border-bottom:1px solid var(--abu-terang);cursor:pointer;transition:.2s}
+.item-teman:last-child{border-bottom:none}
+.item-teman:hover{background:var(--biru-sangat-terang)}
+.foto-item{width:44px;height:44px;border-radius:50%;background:var(--biru-terang);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--biru-utama);margin-right:12px;position:relative}
+.titik-status{position:absolute;bottom:2px;right:2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--putih)}
+.online{background:var(--hijau)}
+.offline{background:var(--abu-batas)}
+.info-teman{flex:1}
+.nama-teman{font-weight:500;font-size:15px;color:var(--teks)}
+.status-teman{font-size:13px;color:var(--abu-teks);margin-top:2px}
+.waktu-terakhir{font-size:12px;color:var(--abu-teks);margin-top:2px}
+.tidak-ada{text-align:center;color:var(--abu-teks);padding:40px 20px}
+
+/* TASK */
+.daftar-task{display:grid;gap:12px}
+.item-task{background:var(--putih);padding:16px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--abu-batas)}
+.nama-task{font-size:15px;color:var(--teks)}
+.hadiah-task{color:var(--kuning);font-weight:600}
+
+/* PROFIL */
+.kotak-profil{background:var(--putih);padding:32px;border-radius:12px;text-align:center;border:1px solid var(--abu-batas)}
+.foto-besar{width:90px;height:90px;border-radius:50%;background:var(--biru-terang);display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--biru-utama);margin:0 auto 16px}
+.nama-besar{font-size:22px;font-weight:600;color:var(--teks);margin-bottom:4px}
+.id-besar{color:var(--abu-teks);font-size:14px;margin-bottom:16px}
+.id-besar button{margin-left:8px}
+.koin-besar{font-size:32px;font-weight:700;color:var(--kuning);margin-bottom:24px}
+.form-edit{text-align:left;max-width:340px;margin:0 auto}
+.form-edit label{display:block;margin-bottom:6px;font-size:14px;font-weight:500;color:var(--teks)}
+.form-edit input{width:100%;padding:11px 14px;border:1px solid var(--abu-batas);border-radius:8px;margin-bottom:16px;outline:none;font-size:14px}
+.form-edit input:focus{border-color:var(--biru-utama)}
+
+/* PANEL CHAT */
+.panel-chat{width:340px;position:fixed;top:0;bottom:0;right:0;background:var(--putih);border-left:1px solid var(--abu-batas);display:flex;flex-direction:column}
+.chat-kosong{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--abu-teks);padding:30px;text-align:center}
+.chat-kosong-icon{font-size:56px;margin-bottom:16px;opacity:.4}
+.chat-header{padding:14px 16px;border-bottom:1px solid var(--abu-batas);display:flex;align-items:center;gap:12px;background:var(--biru-sangat-terang)}
+.tombol-kembali{display:none;background:none;border:none;font-size:20px;cursor:pointer;color:var(--teks);padding:4px}
+.area-pesan{flex:1;padding:16px;overflow-y:auto;background:var(--biru-sangat-terang)}
+.baris-pesan{margin-bottom:14px;display:flex}
+.pesan-kiri{justify-content:flex-start}
+.pesan-kanan{justify-content:flex-end}
+.bubble-pesan{max-width:75%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5}
+.pesan-kiri .bubble-pesan{background:var(--putih);border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.05);border:1px solid var(--abu-batas)}
+.pesan-kanan .bubble-pesan{background:var(--biru-utama);color:var(--putih);border-bottom-right-radius:4px}
+.waktu-pesan{font-size:10px;opacity:.6;margin-top:4px;text-align:right}
+.bar-input{padding:12px 16px;border-top:1px solid var(--abu-batas);display:flex;gap:10px;align-items:center;background:var(--putih)}
+.bar-input input{flex:1;padding:10px 16px;border-radius:20px;border:1px solid var(--abu-batas);outline:none;font-size:14px;background:var(--abu-terang)}
+.bar-input input:focus{background:var(--putih);border-color:var(--biru-utama)}
+.tombol-kirim{width:40px;height:40px;border-radius:50%;background:var(--biru-utama);color:white;border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.tombol-kirim:hover{background:var(--biru-gelap)}
+.tombol-hadiah{width:40px;height:40px;border-radius:50%;background:var(--biru-terang);color:var(--biru-utama);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.tombol-hadiah:hover{background:#D8ECFF}
+
+/* MODAL HADIAH */
+.modal-hadiah{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-hadiah.tampil{display:flex}
+.kotak-hadiah{background:var(--putih);border-radius:12px;width:90%;max-width:380px;max-height:80vh;overflow:hidden}
+.judul-hadiah{padding:16px 20px;border-bottom:1px solid var(--abu-batas);display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:17px}
+.tutup-modal{background:none;border:none;font-size:22px;cursor:pointer;color:var(--abu-teks);padding:4px}
+.isi-hadiah{padding:20px}
+.daftar-hadiah{display:grid;gap:12px}
+.item-hadiah{display:flex;align-items:center;justify-content:space-between;padding:14px;background:var(--biru-sangat-terang);border-radius:10px;border:1px solid var(--abu-batas)}
+.info-hadiah{display:flex;align-items:center;gap:12px}
+.emoji-hadiah{font-size:24px}
+.nama-hadiah{font-size:15px;font-weight:500}
+.harga-hadiah{color:var(--kuning);font-weight:600;font-size:14px}
+.btn-kirim-hadiah{padding:6px 14px;background:var(--biru-utama);color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500}
+.btn-kirim-hadiah:hover{background:var(--biru-gelap)}
+.btn-kirim-hadiah:disabled{background:var(--abu-batas);cursor:not-allowed;opacity:.7}
+
+/* MODAL CARI TEMAN */
+.modal-cari{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-cari.tampil{display:flex}
+.kotak-cari{background:var(--putih);border-radius:12px;width:90%;max-width:400px;max-height:80vh;overflow:hidden}
+.judul-cari{padding:16px 20px;border-bottom:1px solid var(--abu-batas);display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:17px}
+.isi-cari{padding:20px}
+.hasil-cari{margin-top:16px}
+.item-hasil{display:flex;align-items:center;gap:12px;padding:12px;background:var(--biru-sangat-terang);border-radius:8px;margin-bottom:8px;border:1px solid var(--abu-batas)}
+.info-hasil{flex:1}
+.nama-hasil{font-weight:500;font-size:15px}
+.id-hasil{font-size:12px;color:var(--abu-teks)}
+
+/* PERMINTAAN */
+.item-permintaan{padding:16px;background:var(--putih);border-radius:10px;margin-bottom:10px;border:1px solid var(--abu-batas)}
+.nama-permintaan{font-weight:500;margin-bottom:10px;font-size:15px}
+.aksi-permintaan{display:flex;gap:10px}
+
+/* POPUP */
+.popup-latar{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:200}
+.popup-latar.tampil{display:flex}
+.popup-kotak{background:var(--putih);border-radius:12px;padding:30px 24px;text-align:center;max-width:320px;width:90%}
+.popup-teks{font-size:15px;margin-bottom:20px;color:var(--teks)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{width:70px}
+  .sidebar-atas h2,.menu-item span,.nama-mini,.koin-mini{display:none}
+  .menu-item{justify-content:center;padding:14px}
+  .konten{margin-left:70px;margin-right:0;padding:16px}
+  .panel-chat{display:none;left:70px;z-index:50;width:100%}
+  .panel-chat.buka{display:flex}
+  .tombol-kembali{display:block}
+}
