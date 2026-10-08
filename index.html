@@ -151,8 +151,32 @@ body{
   color: #0369a1;
 }
 
-/* Halaman Registrasi */
-.container{
+.menu-item.terpisah{
+  border-top: 1px solid #e0f2fe;
+  margin-top: auto;
+}
+
+/* Konten Utama Setelah Login */
+.kosong-box{
+  width: 100%;
+  max-width: 420px;
+  margin: 60px auto;
+  text-align: center;
+  padding: 40px 20px;
+  display: none;
+}
+
+.kosong-box.tampil{
+  display: block;
+}
+
+.kosong-teks{
+  color: #7dd3f7;
+  font-size: 16px;
+}
+
+/* Form Box */
+.form-box{
   width: 100%;
   max-width: 420px;
   margin: 30px auto;
@@ -177,7 +201,7 @@ label{
   margin-bottom: 8px;
 }
 
-input, select{
+input{
   width: 100%;
   padding: 12px 14px;
   border: 2px solid #bfdbfe;
@@ -190,27 +214,66 @@ input, select{
   transition: 0.2s ease;
 }
 
-input:focus, select:focus{
+input:focus{
   border-color: #3b82f6;
   background: white;
 }
 
-.sudah-terpakai{
+.salah{
   color: #dc2626;
   font-size: 13px;
-  margin-top: -12px;
-  margin-bottom: 12px;
+  margin: -12px 0 12px;
   display: none;
 }
 
-.tersedia{
+.salah.tampil{
+  display: block;
+}
+
+.berhasil-teks-kecil{
   color: #16a34a;
   font-size: 13px;
-  margin-top: -12px;
-  margin-bottom: 12px;
+  margin: -12px 0 12px;
   display: none;
 }
 
+button{
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin-top: 8px;
+}
+
+button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+.link-teks{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.link-teks span{
+  color: #0369a1;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.link-teks span:hover{
+  text-decoration: underline;
+}
+
+/* Registrasi Form */
 .foto-area{
   text-align: center;
   margin-bottom: 20px;
@@ -271,25 +334,6 @@ input:focus, select:focus{
   background: #dbeafe;
   color: #1d4ed8;
   font-weight: bold;
-}
-
-button#daftarBtn{
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s ease;
-  margin-top: 8px;
-}
-
-button#daftarBtn:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
 }
 
 /* Halaman Profil */
@@ -375,6 +419,7 @@ button#daftarBtn:hover{
   align-items: center;
   justify-content: center;
   transition: 0.2s ease;
+  margin-top: 0;
 }
 
 .salin-btn:hover{
@@ -415,30 +460,20 @@ button#daftarBtn:hover{
   cursor: not-allowed;
 }
 
-.simpan-btn{
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: 0.2s ease;
+select.profil-input{
+  appearance: none;
 }
 
-.simpan-btn:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+.simpan-btn{
+  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+  margin-top: 20px;
 }
 
 .sembunyi{
   display: none !important;
 }
 
-/* Loading */
+/* Loading & Berhasil */
 .loading-box{
   position: fixed;
   top: 0;
@@ -483,54 +518,40 @@ button#daftarBtn:hover{
   font-weight: 600;
 }
 
-/* Berhasil */
-.berhasil-box{
+.pesan-box{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(22, 163, 74, 0.15);
+  background: rgba(0,0,0,0.4);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 999;
 }
 
-.berhasil-box.tampil{
+.pesan-box.tampil{
   display: flex;
 }
 
-.berhasil-kotak{
+.pesan-kotak{
   background: white;
-  padding: 35px 40px;
+  padding: 30px 40px;
   border-radius: 16px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(22, 163, 74, 0.2);
+  max-width: 320px;
 }
 
-.berhasil-ikon{
-  font-size: 50px;
-  color: #16a34a;
-  margin-bottom: 10px;
-}
-
-.berhasil-teks{
-  color: #166534;
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.berhasil-sub{
-  color: #6b7280;
-  font-size: 14px;
+.pesan-teks{
+  font-size: 17px;
+  color: #0c4a6e;
   margin-bottom: 20px;
 }
 
-.tutup-btn{
+.pesan-tombol{
   padding: 10px 25px;
-  background: #16a34a;
+  background: #3b82f6;
   color: white;
   border: none;
   border-radius: 8px;
@@ -560,21 +581,40 @@ button#daftarBtn:hover{
     <div class="sidebar-judul">Menu</div>
   </div>
   <div class="menu-item" onclick="bukaProfil()">Profil</div>
+  <div class="menu-item terpisah" onclick="keluarAkun()">Keluar</div>
+</div>
+
+<!-- Halaman Login -->
+<div class="form-box" id="halamanLogin">
+  <h2>Login</h2>
+  
+  <label for="loginUser">Username</label>
+  <input type="text" id="loginUser" placeholder="Masukkan username">
+  
+  <label for="loginPw">Kata Sandi</label>
+  <input type="password" id="loginPw" placeholder="Masukkan kata sandi">
+  
+  <div class="salah" id="loginSalah">Username atau kata sandi salah</div>
+  
+  <button onclick="masukAkun()">Login</button>
+  
+  <div class="link-teks">
+    Belum punya akun? <span onclick="gantiKeRegis()">Daftar di sini</span>
+  </div>
 </div>
 
 <!-- Halaman Registrasi -->
-<div class="container" id="halamanDaftar">
+<div class="form-box sembunyi" id="halamanRegis">
   <h2>Buat Akun Baru</h2>
 
   <label for="nickname">Nickname</label>
   <input type="text" id="nickname" placeholder="Masukkan nama panggilan">
-  <div class="sudah-terpakai" id="sudahTerpakai">Nama ini sudah dipakai, pilih yang lain</div>
-  <div class="tersedia" id="tersedia">Nama tersedia</div>
 
   <label for="username">Username</label>
   <input type="text" id="username" placeholder="Buat nama pengguna unik">
-  <div class="sudah-terpakai" id="userTerpakai">Username sudah dipakai</div>
-  <div class="tersedia" id="userTersedia">Username tersedia</div>
+
+  <label for="password">Kata Sandi</label>
+  <input type="password" id="password" placeholder="Buat kata sandi">
 
   <label>Tanggal Lahir</label>
   <input type="date" id="tglLahir">
@@ -595,7 +635,16 @@ button#daftarBtn:hover{
     <input type="file" id="inputFoto" accept="image/*" style="display:none" onchange="tampilFoto(this)">
   </div>
 
-  <button id="daftarBtn" onclick="kirimData()">Daftar Sekarang</button>
+  <button onclick="buatAkun()">Daftar</button>
+
+  <div class="link-teks">
+    Sudah punya akun? <span onclick="gantiKeLogin()">Login di sini</span>
+  </div>
+</div>
+
+<!-- Halaman Utama Setelah Login - KOSONG -->
+<div class="kosong-box" id="halamanUtama">
+  <p class="kosong-teks"></p>
 </div>
 
 <!-- Halaman Profil -->
@@ -654,66 +703,50 @@ button#daftarBtn:hover{
   </div>
 </div>
 
-<!-- Berhasil -->
-<div class="berhasil-box" id="berhasilBox">
-  <div class="berhasil-kotak">
-    <div class="berhasil-ikon">✓</div>
-    <p class="berhasil-teks">Berhasil</p>
-    <p class="berhasil-sub" id="teksBerhasil">Akun kamu sudah dibuat</p>
-    <button class="tutup-btn" onclick="tutupBerhasil()">Oke</button>
+<!-- Pesan -->
+<div class="pesan-box" id="pesanBox">
+  <div class="pesan-kotak">
+    <p class="pesan-teks" id="pesanTeks"></p>
+    <button class="pesan-tombol" onclick="tutupPesan()">Oke</button>
   </div>
 </div>
 
 <script>
-const namaTerpakai = ['admin', 'cimel', 'user', 'test', 'owner', 'admin123'];
-let jenisKelamin = '';
-let fotoBase64 = '';
 let akunData = null;
+let fotoBase64 = '';
+let jenisKelamin = '';
 
-// Cek apakah sudah ada akun
-function cekAkunAda(){
-  const data = localStorage.getItem('pengguna');
+// Cek apakah sudah login
+function cekLogin(){
+  const data = localStorage.getItem('cplay_akun');
   if(data){
     akunData = JSON.parse(data);
-    document.getElementById('menuBtn').classList.add('tampil');
+    tampilSetelahLogin();
   }
 }
 
-// Cek Nickname
-document.getElementById('nickname').addEventListener('input', function(){
-  const val = this.value.trim().toLowerCase();
-  const terpakai = document.getElementById('sudahTerpakai');
-  const tersedia = document.getElementById('tersedia');
-  
-  if(namaTerpakai.includes(val) && val.length > 0){
-    terpakai.style.display = 'block';
-    tersedia.style.display = 'none';
-  } else if(val.length > 0){
-    terpakai.style.display = 'none';
-    tersedia.style.display = 'block';
-  } else {
-    terpakai.style.display = 'none';
-    tersedia.style.display = 'none';
-  }
-});
+// Ganti ke halaman registrasi
+function gantiKeRegis(){
+  document.getElementById('halamanLogin').classList.add('sembunyi');
+  document.getElementById('halamanRegis').classList.remove('sembunyi');
+  document.getElementById('loginSalah').classList.remove('tampil');
+}
 
-// Cek Username
-document.getElementById('username').addEventListener('input', function(){
-  const val = this.value.trim().toLowerCase();
-  const terpakai = document.getElementById('userTerpakai');
-  const tersedia = document.getElementById('userTersedia');
-  
-  if(namaTerpakai.includes(val) && val.length > 0){
-    terpakai.style.display = 'block';
-    tersedia.style.display = 'none';
-  } else if(val.length > 0){
-    terpakai.style.display = 'none';
-    tersedia.style.display = 'block';
-  } else {
-    terpakai.style.display = 'none';
-    tersedia.style.display = 'none';
+// Ganti ke halaman login
+function gantiKeLogin(){
+  document.getElementById('halamanRegis').classList.add('sembunyi');
+  document.getElementById('halamanLogin').classList.remove('sembunyi');
+}
+
+// Buat ID: CML + 5 karakter acak
+function buatID(){
+  const karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = 'CML';
+  for(let i = 0; i < 5; i++){
+    id += karakter.charAt(Math.floor(Math.random() * karakter.length));
   }
-});
+  return id;
+}
 
 // Pilih Jenis Kelamin
 function pilihJK(jk){
@@ -750,6 +783,77 @@ function gantiFotoProfil(input){
   }
 }
 
+// Buat Akun Baru
+function buatAkun(){
+  const nickname = document.getElementById('nickname').value.trim();
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const tglLahir = document.getElementById('tglLahir').value;
+  
+  if(!nickname || !username || !password || !tglLahir || !jenisKelamin){
+    tampilPesan('Lengkapi semua data terlebih dahulu');
+    return;
+  }
+  
+  // 1 Perangkat = 1 Akun
+  if(localStorage.getItem('cplay_akun')){
+    tampilPesan('Perangkat ini sudah memiliki akun. Gunakan fitur Login.');
+    return;
+  }
+  
+  document.getElementById('loadingBox').classList.add('tampil');
+  
+  setTimeout(function(){
+    document.getElementById('loadingBox').classList.remove('tampil');
+    
+    akunData = {
+      id: buatID(),
+      nickname: nickname,
+      username: username,
+      password: password,
+      tglLahir: tglLahir,
+      jenisKelamin: jenisKelamin,
+      foto: fotoBase64
+    };
+    
+    localStorage.setItem('cplay_akun', JSON.stringify(akunData));
+    tampilPesan('Akun berhasil dibuat!');
+    
+    // Reset form & tampil halaman utama
+    resetFormRegis();
+    tampilSetelahLogin();
+  }, 1500);
+}
+
+// Login Akun
+function masukAkun(){
+  const user = document.getElementById('loginUser').value.trim();
+  const pw = document.getElementById('loginPw').value;
+  const simpan = JSON.parse(localStorage.getItem('cplay_akun'));
+  
+  if(!simpan){
+    document.getElementById('loginSalah').classList.add('tampil');
+    return;
+  }
+  
+  if(simpan.username === user && simpan.password === pw){
+    akunData = simpan;
+    document.getElementById('loginSalah').classList.remove('tampil');
+    tampilSetelahLogin();
+  } else {
+    document.getElementById('loginSalah').classList.add('tampil');
+  }
+}
+
+// Tampil halaman setelah login sukses
+function tampilSetelahLogin(){
+  document.getElementById('halamanLogin').classList.add('sembunyi');
+  document.getElementById('halamanRegis').classList.add('sembunyi');
+  document.getElementById('halamanProfil').classList.remove('tampil');
+  document.getElementById('menuBtn').classList.add('tampil');
+  document.getElementById('halamanUtama').classList.add('tampil');
+}
+
 // Buka/Tutup Sidebar
 function bukaSidebar(){
   document.getElementById('sidebar').classList.add('buka');
@@ -764,35 +868,24 @@ function tutupSidebar(){
 // Buka Halaman Profil
 function bukaProfil(){
   tutupSidebar();
-  if(akunData){
-    document.getElementById('halamanDaftar').classList.add('sembunyi');
-    document.getElementById('halamanProfil').classList.add('tampil');
-    
-    document.getElementById('tampilID').textContent = akunData.id;
-    document.getElementById('editNickname').value = akunData.nickname;
-    document.getElementById('editUsername').value = akunData.username;
-    document.getElementById('editTglLahir').value = akunData.tglLahir;
-    document.getElementById('editJK').value = akunData.jenisKelamin;
-    
-    if(akunData.foto){
-      document.getElementById('profilGambar').src = akunData.foto;
-      document.getElementById('profilGambar').style.display = 'block';
-      document.getElementById('profilIkon').style.display = 'none';
-    } else {
-      document.getElementById('profilGambar').style.display = 'none';
-      document.getElementById('profilIkon').style.display = 'flex';
-    }
+  document.getElementById('halamanUtama').classList.remove('tampil');
+  document.getElementById('halamanProfil').classList.add('tampil');
+  
+  // Isi data ke profil
+  document.getElementById('tampilID').textContent = akunData.id;
+  document.getElementById('editNickname').value = akunData.nickname;
+  document.getElementById('editUsername').value = akunData.username;
+  document.getElementById('editTglLahir').value = akunData.tglLahir;
+  document.getElementById('editJK').value = akunData.jenisKelamin;
+  
+  if(akunData.foto){
+    document.getElementById('profilGambar').src = akunData.foto;
+    document.getElementById('profilGambar').style.display = 'block';
+    document.getElementById('profilIkon').style.display = 'none';
+  } else {
+    document.getElementById('profilGambar').style.display = 'none';
+    document.getElementById('profilIkon').style.display = 'flex';
   }
-}
-
-// Buat ID: CML + 5 karakter acak
-function buatID(){
-  const karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let id = 'CML';
-  for(let i = 0; i < 5; i++){
-    id += karakter.charAt(Math.floor(Math.random() * karakter.length));
-  }
-  return id;
 }
 
 // Salin ID
@@ -805,63 +898,23 @@ function salinID(){
   });
 }
 
-// Simpan perubahan profil
+// Simpan Perubahan Profil
 function simpanPerubahan(){
   akunData.nickname = document.getElementById('editNickname').value.trim();
   akunData.username = document.getElementById('editUsername').value.trim();
   akunData.tglLahir = document.getElementById('editTglLahir').value;
   akunData.jenisKelamin = document.getElementById('editJK').value;
   
-  localStorage.setItem('pengguna', JSON.stringify(akunData));
-  
-  document.getElementById('teksBerhasil').textContent = 'Perubahan berhasil disimpan';
-  document.getElementById('berhasilBox').classList.add('tampil');
+  localStorage.setItem('cplay_akun', JSON.stringify(akunData));
+  tampilPesan('Perubahan tersimpan');
 }
 
-// Kirim Data Registrasi
-function kirimData(){
-  const nickname = document.getElementById('nickname').value.trim();
-  const username = document.getElementById('username').value.trim();
-  const tglLahir = document.getElementById('tglLahir').value;
-  
-  if(!nickname || !username || !tglLahir || !jenisKelamin){
-    alert('Harap lengkapi semua data');
-    return;
-  }
-  
-  document.getElementById('loadingBox').classList.add('tampil');
-  
-  setTimeout(function(){
-    document.getElementById('loadingBox').classList.remove('tampil');
-    
-    const idBaru = buatID();
-    akunData = {
-      id: idBaru,
-      nickname: nickname,
-      username: username,
-      tglLahir: tglLahir,
-      jenisKelamin: jenisKelamin,
-      foto: fotoBase64
-    };
-    
-    localStorage.setItem('pengguna', JSON.stringify(akunData));
-    namaTerpakai.push(username.toLowerCase());
-    namaTerpakai.push(nickname.toLowerCase());
-    
-    document.getElementById('menuBtn').classList.add('tampil');
-    document.getElementById('teksBerhasil').textContent = 'Akun kamu sudah dibuat';
-    document.getElementById('berhasilBox').classList.add('tampil');
-  }, 2000);
-}
-
-function tutupBerhasil(){
-  document.getElementById('berhasilBox').classList.remove('tampil');
-}
-
-// Cek saat halaman dimuat
-cekAkunAda();
-</script>
-
-</body>
-  </html>
-  
+// Keluar Akun
+function keluarAkun(){
+  tutupSidebar();
+  akunData = null;
+  document.getElementById('menuBtn').classList.remove('tampil');
+  document.getElementById('halamanUtama').classList.remove('tampil');
+  document.getElementById('halamanProfil').classList.remove('tampil');
+  document.getElementById('halamanLogin').classList.remove('sembunyi');
+  document.getEleme
