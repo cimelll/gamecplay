@@ -5,639 +5,93 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cplay</title>
 <style>
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body{
-  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
-  min-height: 100vh;
-}
-
-/* Header */
-.header{
-  background: white;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  box-shadow: 0 2px 8px rgba(147, 197, 253, 0.2);
-}
-
-.menu-btn{
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  display: none;
-}
-
-.menu-btn.tampil{
-  display: block;
-}
-
-.garis-tiga{
-  width: 24px;
-  height: 3px;
-  background: #0369a1;
-  border-radius: 2px;
-  position: relative;
-}
-
-.garis-tiga::before,
-.garis-tiga::after{
-  content: '';
-  position: absolute;
-  width: 24px;
-  height: 3px;
-  background: #0369a1;
-  border-radius: 2px;
-  left: 0;
-}
-
-.garis-tiga::before{
-  top: -8px;
-}
-
-.garis-tiga::after{
-  top: 8px;
-}
-
-.header h1{
-  font-size: 22px;
-  color: #0369a1;
-  font-weight: bold;
-}
-
-/* Overlay */
-.overlay{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 99;
-  display: none;
-}
-
-.overlay.tampil{
-  display: block;
-}
-
-/* Sidebar */
-.sidebar{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 280px;
-  height: 100%;
-  background: white;
-  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  transform: translateX(-100%);
-  transition: 0.3s ease;
-}
-
-.sidebar.buka{
-  transform: translateX(0);
-}
-
-.sidebar-header{
-  background: linear-gradient(135deg, #3b82f6, #0ea5e9);
-  padding: 25px 20px;
-}
-
-.sidebar-tutup{
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  line-height: 1;
-}
-
-.sidebar-judul{
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.menu-item{
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: 0.2s ease;
-  color: #0c4a6e;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.menu-item:hover{
-  background: #f0f9ff;
-  color: #0369a1;
-}
-
-.menu-item.terpisah{
-  border-top: 1px solid #e0f2fe;
-  margin-top: auto;
-}
-
-/* Konten Utama Setelah Login */
-.kosong-box{
-  width: 100%;
-  max-width: 420px;
-  margin: 60px auto;
-  text-align: center;
-  padding: 40px 20px;
-  display: none;
-}
-
-.kosong-box.tampil{
-  display: block;
-}
-
-.kosong-teks{
-  color: #7dd3f7;
-  font-size: 16px;
-}
-
-/* Form Box */
-.form-box{
-  width: 100%;
-  max-width: 420px;
-  margin: 30px auto;
-  background: white;
-  border-radius: 20px;
-  padding: 30px 25px;
-  box-shadow: 0 4px 20px rgba(147, 197, 253, 0.3);
-}
-
-h2{
-  text-align: center;
-  color: #0369a1;
-  margin-bottom: 25px;
-  font-size: 20px;
-}
-
-label{
-  display: block;
-  font-size: 14px;
-  color: #0c4a6e;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-input{
-  width: 100%;
-  padding: 12px 14px;
-  border: 2px solid #bfdbfe;
-  border-radius: 10px;
-  font-size: 15px;
-  background: #f0f9ff;
-  color: #1e3a5f;
-  outline: none;
-  margin-bottom: 16px;
-  transition: 0.2s ease;
-}
-
-input:focus{
-  border-color: #3b82f6;
-  background: white;
-}
-
-.salah{
-  color: #dc2626;
-  font-size: 13px;
-  margin: -12px 0 12px;
-  display: none;
-}
-
-.salah.tampil{
-  display: block;
-}
-
-button{
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s ease;
-  margin-top: 8px;
-}
-
-button:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-}
-
-button:disabled{
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.link-teks{
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #64748b;
-}
-
-.link-teks span{
-  color: #0369a1;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.link-teks span:hover{
-  text-decoration: underline;
-}
-
-/* Registrasi Form */
-.foto-area{
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.foto-bulat{
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #bfdbfe;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto 10px;
-  overflow: hidden;
-  border: 3px solid #93c5fd;
-  cursor: pointer;
-}
-
-.foto-bulat img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
-}
-
-.foto-bulat span{
-  font-size: 36px;
-  color: #3b82f6;
-}
-
-.foto-teks{
-  font-size: 14px;
-  color: #0369a1;
-  cursor: pointer;
-}
-
-.jenis-kelamin{
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.jk-btn{
-  flex: 1;
-  padding: 10px;
-  border: 2px solid #bfdbfe;
-  background: #f0f9ff;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.2s ease;
-  color: #1e3a5f;
-}
-
-.jk-btn.aktif{
-  border-color: #3b82f6;
-  background: #dbeafe;
-  color: #1d4ed8;
-  font-weight: bold;
-}
-
-/* Halaman Profil */
-.profil-box{
-  width: 100%;
-  max-width: 420px;
-  margin: 30px auto;
-  background: white;
-  border-radius: 20px;
-  padding: 30px 25px;
-  box-shadow: 0 4px 20px rgba(147, 197, 253, 0.3);
-  display: none;
-}
-
-.profil-box.tampil{
-  display: block;
-}
-
-.profil-foto{
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: #bfdbfe;
-  margin: 0 auto 20px;
-  overflow: hidden;
-  border: 4px solid #93c5fd;
-  cursor: pointer;
-}
-
-.profil-foto img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
-}
-
-.profil-foto span{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  font-size: 48px;
-  color: #3b82f6;
-}
-
-.profil-item{
-  padding: 12px 0;
-  border-bottom: 1px solid #e0f2fe;
-}
-
-.profil-label{
-  font-size: 13px;
-  color: #64748b;
-  margin-bottom: 4px;
-}
-
-.id-wrapper{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.id-box{
-  background: #f0f9ff;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 16px;
-  color: #1d4ed8;
-  font-weight: bold;
-  letter-spacing: 1px;
-  flex: 1;
-}
-
-.salin-btn{
-  background: #e0f2fe;
-  border: none;
-  border-radius: 8px;
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s ease;
-  margin-top: 0;
-  width: auto;
-}
-
-.salin-btn:hover{
-  background: #bfdbfe;
-}
-
-.salin-btn svg{
-  width: 18px;
-  height: 18px;
-  fill: #0369a1;
-}
-
-.salin-btn.ter-salin{
-  background: #d1fae5;
-}
-
-.profil-input{
-  width: 100%;
-  padding: 10px 12px;
-  border: 2px solid #e0f2fe;
-  border-radius: 8px;
-  font-size: 15px;
-  background: #fafafa;
-  color: #0c4a6e;
-  outline: none;
-  transition: 0.2s ease;
-}
-
-.profil-input:focus{
-  border-color: #3b82f6;
-  background: white;
-}
-
-.profil-input.tidak-bisa-edit{
-  background: #e9e9e9;
-  border-color: #d1d5db;
-  color: #6b7280;
-  cursor: not-allowed;
-}
-
-select.profil-input{
-  appearance: none;
-}
-
-.simpan-btn{
-  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
-  margin-top: 20px;
-}
-
-.sembunyi{
-  display: none !important;
-}
-
-/* Temukan Teman */
-.cari-box{
-  width: 100%;
-  max-width: 420px;
-  margin: 30px auto;
-  background: white;
-  border-radius: 20px;
-  padding: 30px 25px;
-  box-shadow: 0 4px 20px rgba(147, 197, 253, 0.3);
-  display: none;
-}
-
-.cari-box.tampil{
-  display: block;
-}
-
-.hasil-cari{
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #e0f2fe;
-  display: none;
-}
-
-.hasil-cari.tampil{
-  display: block;
-}
-
-.hasil-foto{
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: #bfdbfe;
-  overflow: hidden;
-  border: 3px solid #93c5fd;
-  margin-bottom: 10px;
-}
-
-.hasil-foto img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.hasil-nama{
-  font-size: 18px;
-  font-weight: bold;
-  color: #0c4a6e;
-  margin-bottom: 4px;
-}
-
-.hasil-id{
-  font-family: monospace;
-  color: #1d4ed8;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.hasil-info{
-  font-size: 14px;
-  color: #64748b;
-}
-
-.tidak-ketemu{
-  text-align: center;
-  color: #64748b;
-  padding: 20px;
-  display: none;
-}
-
-.tidak-ketemu.tampil{
-  display: block;
-}
-
-/* Loading & Berhasil */
-.loading-box{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(30, 64, 175, 0.6);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.loading-box.tampil{
-  display: flex;
-}
-
-.loading-kotak{
-  background: white;
-  padding: 30px 40px;
-  border-radius: 16px;
-  text-align: center;
-}
-
-.loading-bulat{
-  width: 50px;
-  height: 50px;
-  border: 4px solid #bfdbfe;
-  border-top-color: #3b82f6;
-  border-radius: 50%;
-  animation: muter 1s linear infinite;
-  margin: 0 auto 15px;
-}
-
-@keyframes muter{
-  to { transform: rotate(360deg); }
-}
-
-.loading-teks{
-  color: #0369a1;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.pesan-box{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.pesan-box.tampil{
-  display: flex;
-}
-
-.pesan-kotak{
-  background: white;
-  padding: 30px 40px;
-  border-radius: 16px;
-  text-align: center;
-  max-width: 320px;
-}
-
-.pesan-teks{
-  font-size: 17px;
-  color: #0c4a6e;
-  margin-bottom: 20px;
-}
-
-.pesan-tombol{
-  padding: 10px 25px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:linear-gradient(180deg,#e0f2fe 0%,#bae6fd 100%);min-height:100vh}
+.header{background:#fff;padding:15px 20px;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 2px 8px rgba(147,197,253,.2)}
+.menu-btn{position:absolute;left:20px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:5px;display:none}
+.menu-btn.tampil{display:block}
+.garis-tiga{width:24px;height:3px;background:#0369a1;border-radius:2px;position:relative}
+.garis-tiga::before,.garis-tiga::after{content:'';position:absolute;width:24px;height:3px;background:#0369a1;border-radius:2px;left:0}
+.garis-tiga::before{top:-8px}
+.garis-tiga::after{top:8px}
+.header h1{font-size:22px;color:#0369a1;font-weight:bold}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);z-index:99;display:none}
+.overlay.tampil{display:block}
+.sidebar{position:fixed;top:0;left:0;width:280px;height:100%;background:#fff;box-shadow:2px 0 15px rgba(0,0,0,.1);z-index:100;transform:translateX(-100%);transition:.3s ease}
+.sidebar.buka{transform:translateX(0)}
+.sidebar-header{background:linear-gradient(135deg,#3b82f6,#0ea5e9);padding:25px 20px}
+.sidebar-tutup{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;line-height:1}
+.sidebar-judul{color:#fff;font-size:18px;font-weight:bold;margin-top:20px}
+.menu-item{padding:15px 20px;display:flex;align-items:center;cursor:pointer;transition:.2s ease;color:#0c4a6e;font-size:16px;font-weight:500}
+.menu-item:hover{background:#f0f9ff;color:#0369a1}
+.menu-item.terpisah{border-top:1px solid #e0f2fe;margin-top:auto}
+.kosong-box{width:100%;max-width:420px;margin:60px auto;text-align:center;padding:40px 20px;display:none}
+.kosong-box.tampil{display:block}
+.kosong-teks{color:#7dd3f7;font-size:16px}
+.form-box{width:100%;max-width:420px;margin:30px auto;background:#fff;border-radius:20px;padding:30px 25px;box-shadow:0 4px 20px rgba(147,197,253,.3)}
+h2{text-align:center;color:#0369a1;margin-bottom:25px;font-size:20px}
+label{display:block;font-size:14px;color:#0c4a6e;font-weight:600;margin-bottom:8px}
+input{width:100%;padding:12px 14px;border:2px solid #bfdbfe;border-radius:10px;font-size:15px;background:#f0f9ff;color:#1e3a5f;outline:none;margin-bottom:16px;transition:.2s ease}
+input:focus{border-color:#3b82f6;background:#fff}
+.salah{color:#dc2626;font-size:13px;margin:-12px 0 12px;display:none}
+.salah.tampil{display:block}
+button{width:100%;padding:14px;background:linear-gradient(90deg,#3b82f6,#0ea5e9);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;transition:.2s ease;margin-top:8px}
+button:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(59,130,246,.35)}
+.link-teks{text-align:center;margin-top:20px;font-size:14px;color:#64748b}
+.link-teks span{color:#0369a1;font-weight:bold;cursor:pointer}
+.link-teks span:hover{text-decoration:underline}
+.foto-area{text-align:center;margin-bottom:20px}
+.foto-bulat{width:100px;height:100px;border-radius:50%;background:#bfdbfe;display:flex;justify-content:center;align-items:center;margin:0 auto 10px;overflow:hidden;border:3px solid #93c5fd;cursor:pointer}
+.foto-bulat img{width:100%;height:100%;object-fit:cover;display:none}
+.foto-bulat span{font-size:36px;color:#3b82f6}
+.foto-teks{font-size:14px;color:#0369a1;cursor:pointer}
+.jenis-kelamin{display:flex;gap:12px;margin-bottom:16px}
+.jk-btn{flex:1;padding:10px;border:2px solid #bfdbfe;background:#f0f9ff;border-radius:8px;font-size:14px;cursor:pointer;transition:.2s ease;color:#1e3a5f}
+.jk-btn.aktif{border-color:#3b82f6;background:#dbeafe;color:#1d4ed8;font-weight:bold}
+.profil-box{width:100%;max-width:420px;margin:30px auto;background:#fff;border-radius:20px;padding:30px 25px;box-shadow:0 4px 20px rgba(147,197,253,.3);display:none}
+.profil-box.tampil{display:block}
+.profil-foto{width:120px;height:120px;border-radius:50%;background:#bfdbfe;margin:0 auto 20px;overflow:hidden;border:4px solid #93c5fd;cursor:pointer}
+.profil-foto img{width:100%;height:100%;object-fit:cover;display:none}
+.profil-foto span{display:flex;justify-content:center;align-items:center;width:100%;height:100%;font-size:48px;color:#3b82f6}
+.profil-item{padding:12px 0;border-bottom:1px solid #e0f2fe}
+.profil-label{font-size:13px;color:#64748b;margin-bottom:4px}
+.id-wrapper{display:flex;align-items:center;gap:10px}
+.id-box{background:#f0f9ff;padding:10px 14px;border-radius:8px;font-family:monospace;font-size:16px;color:#1d4ed8;font-weight:bold;letter-spacing:1px;flex:1}
+.salin-btn{background:#e0f2fe;border:none;border-radius:8px;padding:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s ease;margin-top:0;width:auto}
+.salin-btn:hover{background:#bfdbfe}
+.salin-btn svg{width:18px;height:18px;fill:#0369a1}
+.salin-btn.ter-salin{background:#d1fae5}
+.profil-input{width:100%;padding:10px 12px;border:2px solid #e0f2fe;border-radius:8px;font-size:15px;background:#fafafa;color:#0c4a6e;outline:none;transition:.2s ease}
+.profil-input:focus{border-color:#3b82f6;background:#fff}
+.profil-input.tidak-bisa-edit{background:#e9e9e9;border-color:#d1d5db;color:#6b7280;cursor:not-allowed}
+select.profil-input{appearance:none}
+.sembunyi{display:none !important}
+.cari-box{width:100%;max-width:420px;margin:30px auto;background:#fff;border-radius:20px;padding:30px 25px;box-shadow:0 4px 20px rgba(147,197,253,.3);display:none}
+.cari-box.tampil{display:block}
+.hasil-cari{margin-top:20px;padding-top:20px;border-top:1px solid #e0f2fe;display:none}
+.hasil-cari.tampil{display:block}
+.hasil-foto{width:70px;height:70px;border-radius:50%;background:#bfdbfe;overflow:hidden;border:3px solid #93c5fd;margin-bottom:10px}
+.hasil-foto img{width:100%;height:100%;object-fit:cover;display:block}
+.hasil-nama{font-size:18px;font-weight:bold;color:#0c4a6e;margin-bottom:4px}
+.hasil-id{font-family:monospace;color:#1d4ed8;font-size:14px;margin-bottom:4px}
+.hasil-info{font-size:14px;color:#64748b}
+.tidak-ketemu{text-align:center;color:#64748b;padding:20px;display:none}
+.tidak-ketemu.tampil{display:block}
+.loading-box{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(30,64,175,.6);display:none;justify-content:center;align-items:center;z-index:999}
+.loading-box.tampil{display:flex}
+.loading-kotak{background:#fff;padding:30px 40px;border-radius:16px;text-align:center}
+.loading-bulat{width:50px;height:50px;border:4px solid #bfdbfe;border-top-color:#3b82f6;border-radius:50%;animation:muter 1s linear infinite;margin:0 auto 15px}
+@keyframes muter{to{transform:rotate(360deg)}}
+.loading-teks{color:#0369a1;font-size:15px;font-weight:600}
+.pesan-box{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);display:none;justify-content:center;align-items:center;z-index:999}
+.pesan-box.tampil{display:flex}
+.pesan-kotak{background:#fff;padding:30px 40px;border-radius:16px;text-align:center;max-width:320px}
+.pesan-teks{font-size:17px;color:#0c4a6e;margin-bottom:20px}
+.pesan-tombol{padding:10px 25px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:bold;cursor:pointer}
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <div class="header">
   <button class="menu-btn" id="menuBtn" onclick="bukaSidebar()">
     <div class="garis-tiga"></div>
@@ -645,10 +99,8 @@ select.profil-input{
   <h1>Cplay</h1>
 </div>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay" onclick="tutupSidebar()"></div>
 
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <button class="sidebar-tutup" onclick="tutupSidebar()">×</button>
@@ -659,80 +111,55 @@ select.profil-input{
   <div class="menu-item terpisah" onclick="keluarAkun()">Keluar</div>
 </div>
 
-<!-- Halaman Login -->
 <div class="form-box" id="halamanLogin">
   <h2>Login</h2>
-  
   <label for="loginUser">Username</label>
   <input type="text" id="loginUser" placeholder="Masukkan username">
-  
   <label for="loginPw">Kata Sandi</label>
   <input type="password" id="loginPw" placeholder="Masukkan kata sandi">
-  
   <div class="salah" id="loginSalah">Username atau kata sandi salah</div>
-  
   <button onclick="masukAkun()">Login</button>
-  
-  <div class="link-teks">
-    Belum punya akun? <span onclick="gantiKeRegis()">Daftar di sini</span>
-  </div>
+  <div class="link-teks">Belum punya akun? <span onclick="gantiKeRegis()">Daftar di sini</span></div>
 </div>
 
-<!-- Halaman Registrasi -->
 <div class="form-box sembunyi" id="halamanRegis">
   <h2>Buat Akun Baru</h2>
-
   <label for="nickname">Nickname</label>
   <input type="text" id="nickname" placeholder="Masukkan nama panggilan">
-
   <label for="username">Username</label>
   <input type="text" id="username" placeholder="Buat nama pengguna unik">
-
   <label for="password">Kata Sandi</label>
   <input type="password" id="password" placeholder="Buat kata sandi">
-
   <label>Tanggal Lahir</label>
   <input type="date" id="tglLahir">
-
   <label>Jenis Kelamin</label>
   <div class="jenis-kelamin">
     <button type="button" class="jk-btn" id="jkLaki" onclick="pilihJK('Laki-laki')">Laki-laki</button>
     <button type="button" class="jk-btn" id="jkPerempuan" onclick="pilihJK('Perempuan')">Perempuan</button>
   </div>
-
   <label>Foto Profil</label>
   <div class="foto-area">
-    <div class="foto-bulat" id="fotoBulat" onclick="document.getElementById('inputFoto').click()">
+    <div class="foto-bulat" onclick="document.getElementById('inputFoto').click()">
       <span id="ikonFoto">+</span>
       <img id="pratinjauFoto" src="" alt="Foto">
     </div>
     <p class="foto-teks" onclick="document.getElementById('inputFoto').click()">Klik untuk pilih foto</p>
     <input type="file" id="inputFoto" accept="image/*" style="display:none" onchange="tampilFoto(this)">
   </div>
-
-  <button id="btnDaftar" onclick="buatAkun()">Daftar</button>
-
-  <div class="link-teks">
-    Sudah punya akun? <span onclick="gantiKeLogin()">Login di sini</span>
-  </div>
+  <button onclick="buatAkun()">Daftar</button>
+  <div class="link-teks">Sudah punya akun? <span onclick="gantiKeLogin()">Login di sini</span></div>
 </div>
 
-<!-- Halaman Utama Setelah Login - KOSONG -->
 <div class="kosong-box" id="halamanUtama">
   <p class="kosong-teks"></p>
 </div>
 
-<!-- Halaman Temukan Teman -->
 <div class="cari-box" id="halamanCari">
   <h2>Temukan Teman</h2>
-  
   <label for="kataCari">Masukkan ID atau Username</label>
   <input type="text" id="kataCari" placeholder="Contoh: CML72B atau username">
-  
   <button onclick="cariTeman()">Cari</button>
-  
   <div class="tidak-ketemu" id="tidakKetemu">Akun tidak ditemukan</div>
-  
   <div class="hasil-cari" id="hasilCari">
     <div class="hasil-foto">
       <img id="cariFoto" src="" alt="Foto">
@@ -743,43 +170,34 @@ select.profil-input{
   </div>
 </div>
 
-<!-- Halaman Profil -->
 <div class="profil-box" id="halamanProfil">
   <h2>Profil Saya</h2>
-  
-  <div class="profil-foto" id="profilFoto" onclick="document.getElementById('gantiFoto').click()">
+  <div class="profil-foto" onclick="document.getElementById('gantiFoto').click()">
     <span id="profilIkon">+</span>
     <img id="profilGambar" src="" alt="Foto Profil">
   </div>
   <input type="file" id="gantiFoto" accept="image/*" style="display:none" onchange="gantiFotoProfil(this)">
-  
   <div class="profil-item">
     <div class="profil-label">ID</div>
     <div class="id-wrapper">
       <div class="id-box" id="tampilID">-</div>
-      <button class="salin-btn" id="salinBtn" onclick="salinID()">
-        <svg viewBox="0 0 24 24">
-          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-        </svg>
+      <button class="salin-btn" onclick="salinID()">
+        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
       </button>
     </div>
   </div>
-  
   <div class="profil-item">
     <div class="profil-label">Nickname</div>
     <input type="text" class="profil-input" id="editNickname">
   </div>
-  
   <div class="profil-item">
     <div class="profil-label">Username</div>
     <input type="text" class="profil-input" id="editUsername">
   </div>
-  
   <div class="profil-item">
     <div class="profil-label">Tanggal Lahir</div>
     <input type="date" class="profil-input" id="editTglLahir">
   </div>
-  
   <div class="profil-item">
     <div class="profil-label">Jenis Kelamin</div>
     <select class="profil-input" id="editJK">
@@ -787,11 +205,9 @@ select.profil-input{
       <option value="Perempuan">Perempuan</option>
     </select>
   </div>
-  
   <button class="simpan-btn" onclick="simpanPerubahan()">Simpan Perubahan</button>
 </div>
 
-<!-- Loading -->
 <div class="loading-box" id="loadingBox">
   <div class="loading-kotak">
     <div class="loading-bulat"></div>
@@ -799,7 +215,6 @@ select.profil-input{
   </div>
 </div>
 
-<!-- Pesan -->
 <div class="pesan-box" id="pesanBox">
   <div class="pesan-kotak">
     <p class="pesan-teks" id="pesanTeks"></p>
@@ -808,78 +223,63 @@ select.profil-input{
 </div>
 
 <script>
-let akunData = null;
-let fotoBase64 = '';
-let jenisKelamin = '';
+let akunData = null, fotoBase64 = '', jenisKelamin = '';
 
-// Cek apakah sudah login
 function cekLogin(){
   const data = localStorage.getItem('cplay_akun');
-  if(data){
-    akunData = JSON.parse(data);
-    tampilSetelahLogin();
-  }
+  if(data){ akunData = JSON.parse(data); tampilSetelahLogin(); }
 }
 
-// Ganti ke halaman registrasi
 function gantiKeRegis(){
   document.getElementById('halamanLogin').classList.add('sembunyi');
   document.getElementById('halamanRegis').classList.remove('sembunyi');
   document.getElementById('loginSalah').classList.remove('tampil');
 }
 
-// Ganti ke halaman login
 function gantiKeLogin(){
   document.getElementById('halamanRegis').classList.add('sembunyi');
   document.getElementById('halamanLogin').classList.remove('sembunyi');
 }
 
-// Buat ID: CML + 5 karakter acak
 function buatID(){
-  const karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let id = 'CML';
-  for(let i = 0; i < 5; i++){
-    id += karakter.charAt(Math.floor(Math.random() * karakter.length));
-  }
+  for(let i=0;i<5;i++) id += c[Math.floor(Math.random()*c.length)];
   return id;
 }
 
-// Pilih Jenis Kelamin
 function pilihJK(jk){
   jenisKelamin = jk;
-  document.getElementById('jkLaki').classList.toggle('aktif', jk === 'Laki-laki');
-  document.getElementById('jkPerempuan').classList.toggle('aktif', jk === 'Perempuan');
+  document.getElementById('jkLaki').classList.toggle('aktif', jk==='Laki-laki');
+  document.getElementById('jkPerempuan').classList.toggle('aktif', jk==='Perempuan');
 }
 
-// Tampil Foto di registrasi
 function tampilFoto(input){
   if(input.files && input.files[0]){
-    const reader = new FileReader();
-    reader.onload = function(e){
+    const r = new FileReader();
+    r.onload = e => {
       fotoBase64 = e.target.result;
       document.getElementById('pratinjauFoto').src = fotoBase64;
       document.getElementById('pratinjauFoto').style.display = 'block';
       document.getElementById('ikonFoto').style.display = 'none';
     };
-    reader.readAsDataURL(input.files[0]);
+    r.readAsDataURL(input.files[0]);
   }
 }
 
-// Ganti Foto di profil
 function gantiFotoProfil(input){
   if(input.files && input.files[0]){
-    const reader = new FileReader();
-    reader.onload = function(e){
+    const r = new FileReader();
+    r.onload = e => {
       akunData.foto = e.target.result;
       document.getElementById('profilGambar').src = akunData.foto;
       document.getElementById('profilGambar').style.display = 'block';
       document.getElementById('profilIkon').style.display = 'none';
     };
-    reader.readAsDataURL(input.files[0]);
+    r.readAsDataURL(input.files[0]);
   }
 }
 
-// Buat Akun Baru
 function buatAkun(){
   const nickname = document.getElementById('nickname').value.trim();
   const username = document.getElementById('username').value.trim();
@@ -887,61 +287,36 @@ function buatAkun(){
   const tglLahir = document.getElementById('tglLahir').value;
   
   if(!nickname || !username || !password || !tglLahir || !jenisKelamin){
-    tampilPesan('Lengkapi semua data terlebih dahulu');
-    return;
+    tampilPesan('Lengkapi semua data terlebih dahulu'); return;
   }
-  
-  // 1 Perangkat = 1 Akun
   if(localStorage.getItem('cplay_akun')){
-    tampilPesan('Perangkat ini sudah memiliki akun. Gunakan fitur Login.');
-    return;
+    tampilPesan('Perangkat ini sudah punya akun. Gunakan Login.'); return;
   }
   
   document.getElementById('loadingBox').classList.add('tampil');
-  
-  setTimeout(function(){
+  setTimeout(()=>{
     document.getElementById('loadingBox').classList.remove('tampil');
-    
-    akunData = {
-      id: buatID(),
-      nickname: nickname,
-      username: username,
-      password: password,
-      tglLahir: tglLahir,
-      jenisKelamin: jenisKelamin,
-      foto: fotoBase64
-    };
-    
+    akunData = { id:buatID(), nickname, username, password, tglLahir, jenisKelamin, foto:fotoBase64 };
     localStorage.setItem('cplay_akun', JSON.stringify(akunData));
     tampilPesan('Akun berhasil dibuat!');
-    
-    // Reset form & tampil halaman utama
     resetFormRegis();
     tampilSetelahLogin();
-  }, 1500);
+  },1500);
 }
 
-// Login Akun
 function masukAkun(){
   const user = document.getElementById('loginUser').value.trim();
   const pw = document.getElementById('loginPw').value;
-  const simpan = JSON.parse(localStorage.getItem('cplay_akun'));
+  const simpan = JSON.parse(localStorage.getItem('cplay_akun')||'null');
   
-  if(!simpan){
-    document.getElementById('loginSalah').classList.add('tampil');
-    return;
+  if(!simpan || simpan.username!==user || simpan.password!==pw){
+    document.getElementById('loginSalah').classList.add('tampil'); return;
   }
-  
-  if(simpan.username === user && simpan.password === pw){
-    akunData = simpan;
-    document.getElementById('loginSalah').classList.remove('tampil');
-    tampilSetelahLogin();
-  } else {
-    document.getElementById('loginSalah').classList.add('tampil');
-  }
+  akunData = simpan;
+  document.getElementById('loginSalah').classList.remove('tampil');
+  tampilSetelahLogin();
 }
 
-// Tampil halaman setelah login sukses
 function tampilSetelahLogin(){
   document.getElementById('halamanLogin').classList.add('sembunyi');
   document.getElementById('halamanRegis').classList.add('sembunyi');
@@ -951,7 +326,6 @@ function tampilSetelahLogin(){
   document.getElementById('halamanUtama').classList.add('tampil');
 }
 
-// Buka/Tutup Sidebar
 function bukaSidebar(){
   document.getElementById('sidebar').classList.add('buka');
   document.getElementById('overlay').classList.add('tampil');
@@ -962,11 +336,80 @@ function tutupSidebar(){
   document.getElementById('overlay').classList.remove('tampil');
 }
 
-// Buka Halaman Profil
 function bukaProfil(){
-  tutupSidebar();
-  sembunyikanSemua();
+  tutupSidebar(); sembunyikanSemua();
   document.getElementById('halamanUtama').classList.remove('tampil');
   document.getElementById('halamanProfil').classList.add('tampil');
   
-  // Is
+  document.getElementById('tampilID').textContent = akunData.id;
+  document.getElementById('editNickname').value = akunData.nickname;
+  document.getElementById('editUsername').value = akunData.username;
+  document.getElementById('editTglLahir').value = akunData.tglLahir;
+  document.getElementById('editJK').value = akunData.jenisKelamin;
+  
+  if(akunData.foto){
+    document.getElementById('profilGambar').src = akunData.foto;
+    document.getElementById('profilGambar').style.display = 'block';
+    document.getElementById('profilIkon').style.display = 'none';
+  }
+}
+
+function bukaCari(){
+  tutupSidebar(); sembunyikanSemua();
+  document.getElementById('halamanUtama').classList.remove('tampil');
+  document.getElementById('halamanCari').classList.add('tampil');
+  document.getElementById('kataCari').value = '';
+  document.getElementById('hasilCari').classList.remove('tampil');
+  document.getElementById('tidakKetemu').classList.remove('tampil');
+}
+
+function sembunyikanSemua(){
+  document.getElementById('halamanProfil').classList.remove('tampil');
+  document.getElementById('halamanCari').classList.remove('tampil');
+  document.getElementById('hasilCari').classList.remove('tampil');
+  document.getElementById('tidakKetemu').classList.remove('tampil');
+}
+
+function cariTeman(){
+  const kata = document.getElementById('kataCari').value.trim();
+  document.getElementById('hasilCari').classList.remove('tampil');
+  document.getElementById('tidakKetemu').classList.remove('tampil');
+  if(!kata){ tampilPesan('Masukkan ID atau Username'); return; }
+  
+  if(akunData && (akunData.id===kata || akunData.username===kata)){
+    document.getElementById('cariNickname').textContent = akunData.nickname;
+    document.getElementById('cariID').textContent = akunData.id;
+    document.getElementById('cariUser').textContent = '@'+akunData.username;
+    if(akunData.foto) document.getElementById('cariFoto').src = akunData.foto;
+    document.getElementById('hasilCari').classList.add('tampil');
+    return;
+  }
+  document.getElementById('tidakKetemu').classList.add('tampil');
+}
+
+function salinID(){
+  navigator.clipboard.writeText(document.getElementById('tampilID').textContent)
+    .then(()=>{
+      const btn = document.querySelector('.salin-btn');
+      btn.classList.add('ter-salin');
+      setTimeout(()=>btn.classList.remove('ter-salin'),1500);
+    });
+}
+
+function simpanPerubahan(){
+  akunData.nickname = document.getElementById('editNickname').value.trim();
+  akunData.username = document.getElementById('editUsername').value.trim();
+  akunData.tglLahir = document.getElementById('editTglLahir').value;
+  akunData.jenisKelamin = document.getElementById('editJK').value;
+  localStorage.setItem('cplay_akun', JSON.stringify(akunData));
+  tampilPesan('Perubahan tersimpan');
+}
+
+function keluarAkun(){
+  tutupSidebar(); akunData = null;
+  document.getElementById('menuBtn').classList.remove('tampil');
+  document.getElementById('halamanUtama').classList.remove('tampil');
+  document.getElementById('halamanProfil').classList.remove('tampil');
+  document.getElementById('halamanCari').classList.remove('tampil');
+  document.getElementById('halamanLogin').classList.remove('sembunyi');
+  document.getElementById('loginUser'
