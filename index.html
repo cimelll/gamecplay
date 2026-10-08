@@ -1,1092 +1,1039 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cplay - Teman baru, mabar bareng, jadi lebih seru!</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', Roboto, 'Helvetica Neue', sans-serif}
-:root{
-  --biru-utama:#4A90E2;
-  --biru-terang:#E8F4FF;
-  --biru-sangat-terang:#F2F8FF;
-  --biru-gelap:#2E6BC9;
-  --abu-terang:#F5F7FA;
-  --abu-batas:#E4E9F0;
-  --abu-teks:#8A94A6;
-  --teks:#1D293F;
-  --putih:#FFFFFF;
-  --hijau:#34C759;
-  --merah:#FF3B30;
-  --kuning:#FFB800;
-  --bayangan:0 4px 20px rgba(74,144,226,.12);
-  --bayangan-kuat:0 8px 30px rgba(0,0,0,.08);
-}
-body{background:linear-gradient(135deg,#E8F4FF 0%,#F2F8FF 100%);min-height:100vh;color:var(--teks)}
-.sembunyi{display:none !important}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cplay - Teman Baru, Cerita Baru</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-/* === LOGIN PAGE === */
-.login-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-card{background:var(--putih);border-radius:20px;padding:40px 32px;width:100%;max-width:420px;box-shadow:var(--bayangan);text-align:center}
-.logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
-.logo-icon{font-size:28px;color:var(--biru-utama)}
-.logo h1{font-size:26px;color:var(--biru-utama);font-weight:700}
-.logo-desc{color:var(--abu-teks);font-size:14px;margin-bottom:36px}
-.form-group{text-align:left;margin-bottom:16px}
-.form-group label{display:block;font-size:14px;color:var(--teks);margin-bottom:8px;font-weight:500}
-.form-input{width:100%;padding:12px 16px;border:1px solid var(--abu-batas);border-radius:12px;font-size:15px;transition:.2s;background:var(--abu-terang)}
-.form-input:focus{outline:none;border-color:var(--biru-utama);background:var(--putih);box-shadow:0 0 0 3px rgba(74,144,226,.1)}
-.btn{width:100%;padding:13px;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:.2s;border:none}
-.btn-utama{background:linear-gradient(90deg,var(--biru-utama),var(--biru-gelap));color:var(--putih)}
-.btn-utama:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(74,144,226,.3)}
-.btn-sekunder{background:var(--biru-terang);color:var(--biru-utama);margin-top:12px}
-.btn-sekunder:hover{background:#D8ECFF}
-.link-teks{margin-top:20px;font-size:13px;color:var(--abu-teks)}
-.link-teks a{color:var(--biru-utama);text-decoration:none;font-weight:500}
-.salah{color:var(--merah);font-size:13px;margin-top:8px;text-align:left;display:none}
-.salah.tampil{display:block}
+        :root {
+            --biru-soft: #e6f0fa;
+            --biru-mentah: #4a90e2;
+            --biru-gelap: #357abd;
+            --putih: #ffffff;
+            --abu-soft: #f0f4f8;
+            --teks: #2c3e50;
+            --teks-abu: #7f8c8d;
+            --sukses: #2ecc71;
+            --peringatan: #e74c3c;
+        }
 
-/* === REGISTER PAGE === */
-.jenis-kelamin{display:flex;gap:12px;margin-top:8px}
-.jk-option{flex:1;padding:10px;border:1px solid var(--abu-batas);border-radius:10px;text-align:center;cursor:pointer;transition:.2s;font-size:14px;background:var(--abu-terang)}
-.jk-option.aktif{border-color:var(--biru-utama);background:var(--biru-terang);color:var(--biru-utama);font-weight:500}
-.sudah-punya{margin-top:24px;font-size:14px;color:var(--abu-teks)}
-.sudah-punya a{color:var(--biru-utama);text-decoration:none;font-weight:500}
+        body {
+            background-color: var(--biru-soft);
+            color: var(--teks);
+            min-height: 100vh;
+        }
 
-/* === MAIN LAYOUT === */
-.app-container{display:none;min-height:100vh}
-.app-container.tampil{display:flex}
+        .layar {
+            display: none;
+            min-height: 100vh;
+        }
 
-/* SIDEBAR KIRI — MENU UTAMA */
-.sidebar-kiri{width:260px;background:var(--putih);border-right:1px solid var(--abu-batas);display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:50}
-.sidebar-header{padding:20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--abu-batas)}
-.sidebar-header .logo-icon{font-size:24px}
-.sidebar-header h2{font-size:20px;color:var(--biru-utama);font-weight:700}
-.sidebar-menu{flex:1;padding:12px}
-.menu-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;cursor:pointer;transition:.15s;font-size:15px;color:var(--teks);margin-bottom:4px}
-.menu-item:hover{background:var(--biru-sangat-terang)}
-.menu-item.aktif{background:var(--biru-terang);color:var(--biru-utama);font-weight:600}
-.menu-icon{font-size:20px;width:24px;text-align:center;position:relative}
-.badge-notif{position:absolute;top:-6px;right:-6px;background:var(--merah);color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;display:none}
-.badge-notif.tampil{display:flex}
-.sidebar-footer{padding:16px;border-top:1px solid var(--abu-batas)}
-.profil-mini{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;cursor:pointer;transition:.15s}
-.profil-mini:hover{background:var(--abu-terang)}
-.profil-foto-kecil{width:36px;height:36px;border-radius:50%;background:var(--biru-terang);display:flex;align-items:center;justify-content:center;font-size:18px}
-.profil-nama-mini{font-size:14px;font-weight:500}
-.profil-koin-mini{font-size:12px;color:var(--kuning);display:flex;align-items:center;gap:4px;margin-left:auto}
+        .layar.aktif {
+            display: block;
+        }
 
-/* KONTEN TENGAH — DAFTAR TEMAN / CHAT LIST */
-.konten-tengah{flex:1;margin-left:260px;margin-right:320px;background:var(--putih);border-right:1px solid var(--abu-batas);min-height:100vh}
-.tabs{display:flex;border-bottom:1px solid var(--abu-batas);padding:0 16px}
-.tab-item{padding:14px 20px;font-size:15px;font-weight:500;color:var(--abu-teks);cursor:pointer;border-bottom:2px solid transparent;transition:.15s}
-.tab-item.aktif{color:var(--biru-utama);border-bottom-color:var(--biru-utama)}
-.cari-input{padding:12px 16px;border-bottom:1px solid var(--abu-batas)}
-.cari-input input{width:100%;padding:10px 14px;border-radius:10px;border:none;background:var(--abu-terang);font-size:14px;outline:none}
-.daftar-item{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--abu-batas);cursor:pointer;transition:.1s}
-.daftar-item:hover{background:var(--biru-sangat-terang)}
-.daftar-item.aktif{background:var(--biru-terang)}
-.item-foto{width:44px;height:44px;border-radius:50%;background:var(--abu-terang);display:flex;align-items:center;justify-content:center;font-size:20px;margin-right:12px;position:relative}
-.item-status{position:absolute;bottom:2px;right:2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--putih)}
-.status-online{background:var(--hijau)}
-.status-offline{background:var(--abu-batas)}
-.item-info{flex:1;min-width:0}
-.item-nama{font-size:15px;font-weight:500;color:var(--teks)}
-.item-pesan{font-size:13px;color:var(--abu-teks);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;margin-top:2px}
-.item-waktu{font-size:12px;color:var(--abu-teks);margin-left:8px;white-space:nowrap}
-.tambah-fab{position:fixed;bottom:24px;left:calc(260px + 320px - 60px);width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--biru-utama),var(--biru-gelap));color:#fff;font-size:28px;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(74,144,226,.3);z-index:40;transition:.2s}
-.tambah-fab:hover{transform:scale(1.05)}
+        /* ==== HALAMAN LOGIN ==== */
+        .container-login {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
 
-/* PANEL KANAN — AREA CHAT / INFO */
-.panel-kanan{width:320px;position:fixed;top:0;bottom:0;right:0;background:var(--biru-sangat-terang);display:flex;flex-direction:column;border-left:1px solid var(--abu-batas)}
-.chat-kosong{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--abu-teks);padding:40px;text-align:center}
-.chat-kosong-icon{font-size:64px;margin-bottom:16px;opacity:.4}
-.chat-header{padding:12px 16px;background:var(--putih);border-bottom:1px solid var(--abu-batas);display:flex;align-items:center;gap:10px}
-.chat-kembali{display:none;background:none;border:none;font-size:20px;cursor:pointer;color:var(--teks)}
-.chat-info{flex:1}
-.chat-nama{font-weight:600;font-size:15px}
-.chat-status{font-size:12px;color:var(--hijau)}
-.chat-actions{display:flex;gap:12px}
-.chat-actions button{background:none;border:none;font-size:18px;cursor:pointer;color:var(--abu-teks)}
-.chat-pesan-area{flex:1;padding:16px;overflow-y:auto;background:var(--biru-sangat-terang)}
-.pesan-baris{margin-bottom:12px;display:flex}
-.pesan-kiri{justify-content:flex-start}
-.pesan-kanan{justify-content:flex-end}
-.pesan-bubble{max-width:75%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.4}
-.pesan-kiri .pesan-bubble{background:var(--putih);border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
-.pesan-kanan .pesan-bubble{background:var(--biru-utama);color:#fff;border-bottom-right-radius:4px}
-.pesan-waktu{font-size:10px;opacity:.6;margin-top:4px;text-align:right}
-.chat-input-bar{padding:12px 16px;background:var(--putih);border-top:1px solid var(--abu-batas);display:flex;gap:10px;align-items:center}
-.chat-input-bar input{flex:1;padding:10px 16px;border-radius:20px;border:1px solid var(--abu-batas);font-size:14px;outline:none;background:var(--abu-terang)}
-.chat-kirim{width:40px;height:40px;border-radius:50%;background:var(--biru-utama);color:#fff;border:none;font-size:16px;cursor:pointer}
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-/* === MODAL === */
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:1000}
-.modal-overlay.tampil{display:flex}
-.modal-kotak{background:var(--putih);border-radius:16px;width:90%;max-width:440px;max-height:85vh;overflow:hidden;box-shadow:var(--bayangan-kuat)}
-.modal-header{padding:16px 20px;border-bottom:1px solid var(--abu-batas);display:flex;justify-content:space-between;align-items:center}
-.modal-judul{font-size:17px;font-weight:600}
-.modal-tutup{background:none;border:none;font-size:22px;cursor:pointer;color:var(--abu-teks)}
-.modal-isi{padding:20px;overflow-y:auto;max-height:70vh}
-.modal-footer{padding:16px 20px;border-top:1px solid var(--abu-batas);display:flex;justify-content:flex-end;gap:10px}
-.btn-kecil{padding:8px 20px;border-radius:8px;font-size:14px}
-.btn-prim{background:var(--biru-utama);color:#fff}
-.btn-prim:hover{background:var(--biru-gelap)}
-.btn-sek{background:var(--abu-terang);color:var(--teks)}
-.btn-sek:hover{background:var(--abu-batas)}
+        .logo h1 {
+            color: var(--biru-mentah);
+            font-size: 32px;
+        }
 
-/* Cari Teman List */
-.cari-hasil{margin-top:16px}
-.cari-hasil-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--abu-terang);border-radius:10px;margin-bottom:8px}
-.cari-hasil-info{flex:1}
-.cari-hasil-nama{font-weight:500}
-.cari-hasil-id{font-size:12px;color:var(--abu-teks)}
-.btn-tambah{padding:6px 14px;background:var(--biru-utama);color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer}
-.btn-tambah:disabled{background:var(--abu-batas);cursor:not-allowed}
+        .logo p {
+            color: var(--teks-abu);
+            font-size: 14px;
+            margin-top: 5px;
+        }
 
-/* Notifikasi Permintaan */
-.notif-item{padding:16px;border-bottom:1px solid var(--abu-batas)}
-.notif-teks{font-size:14px;margin-bottom:12px}
-.notif-aksi{display:flex;gap:10px}
-.btn-terima{padding:7px 18px;background:var(--biru-utama);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:500}
-.btn-tolak{padding:7px 18px;background:var(--abu-terang);color:var(--teks);border:none;border-radius:8px;cursor:pointer;font-weight:500}
-.tidak-ada{text-align:center;color:var(--abu-teks);padding:30px}
+        .kotak-form {
+            background: var(--putih);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.1);
+        }
 
-/* Mabar / Task Page */
-.page-mabar,.page-task,.page-profil,.page-notif{display:none;padding:20px}
-.page-mabar.tampil,.page-task.tampil,.page-profil.tampil,.page-notif.tampil{display:block}
-.page-judul{font-size:18px;font-weight:600;margin-bottom:20px}
-.room-list{display:grid;gap:12px}
-.room-item{display:flex;align-items:center;padding:14px;background:var(--abu-terang);border-radius:12px}
-.room-game{width:48px;height:48px;border-radius:8px;background:var(--biru-terang);display:flex;align-items:center;justify-content:center;font-size:24px;margin-right:12px}
-.room-info{flex:1}
-.room-nama{font-weight:500}
-.room-pemain{font-size:12px;color:var(--abu-teks)}
-.btn-gabung{padding:6px 16px;background:var(--biru-utama);color:#fff;border:none;border-radius:6px;cursor:pointer}
-.buat-room-form{background:var(--abu-terang);padding:16px;border-radius:12px;margin-bottom:20px}
-.task-item{display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--abu-terang);border-radius:10px;margin-bottom:8px}
-.task-nama{font-size:14px}
-.task-hadiah{color:var(--kuning);font-weight:600}
-.profil-foto-besar{width:90px;height:90px;border-radius:50%;background:var(--biru-terang);display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 16px}
-.profil-nama-besar{text-align:center;font-size:20px;font-weight:600;margin-bottom:4px}
-.profil-id-besar{text-align:center;color:var(--abu-teks);font-size:13px;margin-bottom:20px}
-.koin-besar{text-align:center;font-size:32px;font-weight:700;color:var(--kuning);margin-bottom:20px}
-.form-edit{margin-top:20px}
-.form-edit label{font-size:14px;font-weight:500;margin-bottom:6px;display:block}
-.form-edit input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--abu-batas);margin-bottom:14px}
+        .input-group {
+            margin-bottom: 20px;
+        }
 
-/* Footer Brand */
-.brand-footer{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-size:13px;color:var(--abu-teks);z-index:10}
-.brand-footer strong{color:var(--biru-utama)}
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--teks);
+            font-weight: 500;
+        }
 
-/* Responsive */
-@media(max-width:900px){
-  .sidebar-kiri{width:70px}
-  .sidebar-header h2,.menu-item span,.profil-nama-mini,.profil-koin-mini{display:none}
-  .menu-item{justify-content:center;padding:14px}
-  .konten-tengah{margin-left:70px;margin-right:0}
-  .panel-kanan{display:none}
-  .panel-kanan.terbuka{display:flex;left:70px;z-index:60}
-  .tambah-fab{left:calc(70px + 100% - 60px)}
-}
-</style>
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d0e0f0;
+            border-radius: 8px;
+            font-size: 15px;
+            background: var(--biru-soft);
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--biru-mentah);
+            background: var(--putih);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-biru {
+            background: var(--biru-mentah);
+            color: white;
+        }
+
+        .btn-biru:hover {
+            background: var(--biru-gelap);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--biru-mentah);
+            border: 1px solid var(--biru-mentah);
+        }
+
+        .btn-outline:hover {
+            background: var(--biru-soft);
+        }
+
+        .link-bawah {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .link-bawah a {
+            color: var(--biru-mentah);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link-bawah a:hover {
+            text-decoration: underline;
+        }
+
+        .baris-dua {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .radio-pilihan {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #d0e0f0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: var(--putih);
+        }
+
+        .radio-pilihan.terpilih {
+            border-color: var(--biru-mentah);
+            background: var(--biru-soft);
+            color: var(--biru-gelap);
+        }
+
+        /* ==== LAYAR UTAMA — Gaya WhatsApp ==== */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            background: var(--putih);
+        }
+
+        /* Sidebar Kiri */
+        .sidebar-kiri {
+            width: 380px;
+            border-right: 1px solid #e0e8f0;
+            display: flex;
+            flex-direction: column;
+            background: var(--biru-soft);
+        }
+
+        .header-sidebar {
+            padding: 15px 20px;
+            background: var(--putih);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e0e8f0;
+        }
+
+        .profil-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar-kecil {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--biru-mentah);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .info-profil h4 {
+            font-size: 14px;
+            color: var(--teks);
+        }
+
+        .info-profil p {
+            font-size: 12px;
+            color: var(--teks-abu);
+        }
+
+        .koin-tampil {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            color: var(--teks);
+        }
+
+        .tombol-titik {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--teks-abu);
+        }
+
+        .tombol-titik:hover {
+            background: var(--biru-soft);
+        }
+
+        .pencarian {
+            padding: 12px 15px;
+        }
+
+        .pencarian input {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background: var(--putih);
+            border: 1px solid #d0e0f0;
+            font-size: 14px;
+        }
+
+        .pencarian input:focus {
+            outline: none;
+            border-color: var(--biru-mentah);
+        }
+
+        .nav-tab {
+            display: flex;
+            border-bottom: 1px solid #e0e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--teks-abu);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .tab-btn.aktif {
+            color: var(--biru-mentah);
+            border-bottom: 2px solid var(--biru-mentah);
+        }
+
+        .daftar-item {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .item-teman {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e8eef4;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .item-teman:hover {
+            background: var(--biru-soft);
+        }
+
+        .item-teman.aktif {
+            background: #dcecfc;
+        }
+
+        .avatar-teman {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--biru-mentah);
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .status-dot.online {
+            background: var(--sukses);
+        }
+
+        .status-dot.offline {
+            background: #bdc3c7;
+        }
+
+        .info-teman {
+            flex: 1;
+        }
+
+        .info-teman h5 {
+            font-size: 14px;
+            color: var(--teks);
+        }
+
+        .info-teman p {
+                  font-size: 12px;
+            color: var(--teks-abu);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        .waktu-chat {
+            font-size: 11px;
+            color: var(--teks-abu);
+        }
+
+        .btn-kecil {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-tambah {
+            background: var(--biru-mentah);
+            color: white;
+        }
+
+        .btn-terima {
+            background: var(--sukses);
+            color: white;
+            margin-right: 5px;
+        }
+
+        .btn-tolak {
+            background: var(--peringatan);
+            color: white;
+        }
+
+        /* Ruang Chat */
+        .ruang-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f7fafc;
+        }
+
+        .header-chat {
+            padding: 12px 20px;
+            background: var(--putih);
+            border-bottom: 1px solid #e0e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-chat {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badan-chat {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #f0f6fc 0%, #e6f0fa 100%);
+        }
+
+        .pesan {
+            max-width: 65%;
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .pesan.dikirim {
+            background: #dcf8c6;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .pesan.diterima {
+            background: var(--putih);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+
+        .waktu-pesan {
+            font-size: 10px;
+            color: var(--teks-abu);
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .kotak-kirim {
+            padding: 15px 20px;
+            background: var(--putih);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-top: 1px solid #e0e8f0;
+        }
+
+        .kotak-kirim input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid #d0e0f0;
+            border-radius: 24px;
+            font-size: 14px;
+        }
+
+        .kotak-kirim button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--biru-mentah);
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Panel Samping Kanan (Notifikasi & Menu) */
+        .panel-kanan {
+            width: 320px;
+            border-left: 1px solid #e0e8f0;
+            background: var(--putih);
+            display: none;
+        }
+
+        .panel-kanan.buka {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            font-size: 16px;
+        }
+
+        .tutup-panel {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--teks-abu);
+        }
+
+        .isi-panel {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .item-notifikasi {
+            padding: 12px;
+            background: var(--biru-soft);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .item-notifikasi p {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        /* Mabar & Task */
+        .bagian-mabar {
+            padding: 15px;
+        }
+
+        .judul-bagian {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--biru-gelap);
+        }
+
+        .kotak-mabar {
+            background: var(--putih);
+            border: 1px solid #d0e0f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .baris-pemain {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .slot-pemain {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--biru-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--teks-abu);
+        }
+
+        .slot-pemain.siap {
+            background: #dcf8c6;
+            color: var(--sukses);
+        }
+
+        .btn-mabar {
+            background: var(--biru-mentah);
+            color: white;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .sembunyi {
+            display: none !important;
+        }
+
+        .pesan-kosong {
+            text-align: center;
+            padding: 40px;
+            color: var(--teks-abu);
+        }
+    </style>
 </head>
 <body>
 
-<!-- === HALAMAN LOGIN === -->
-<div class="login-container" id="halamanLogin">
-  <div class="login-card">
-    <div class="logo">
-      <span class="logo-icon">✈️</span>
-      <h1>Cplay</h1>
-    </div>
-    <p class="logo-desc">Teman baru, mabar bareng, jadi lebih seru!</p>
-    
-    <div class="form-group">
-      <label>ID / Nickname / Email</label>
-      <input type="text" class="form-input" id="loginUser" placeholder="Masukkan ID atau nama kamu">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-input" id="loginPass" placeholder="Masukkan password">
-      <div class="salah" id="loginSalah">Username atau password salah</div>
-    </div>
-    <button class="btn btn-utama" onclick="masukAkun()">Masuk</button>
-    <button class="btn btn-sekunder" onclick="tampilRegis()">Buat Akun Baru</button>
-    <p class="link-teks"><a href="#" onclick="event.preventDefault(); tampilPopup('Fitur reset password belum terhubung ke server.')">Lupa password?</a></p>
-  </div>
-</div>
-
-<!-- === HALAMAN REGISTER === -->
-<div class="login-container sembunyi" id="halamanRegis">
-  <div class="login-card">
-    <div class="logo">
-      <span class="logo-icon">✈️</span>
-      <h1>Cplay</h1>
-    </div>
-    <p class="logo-desc">Daftar akun baru</
-      p>
-    
-    <div class="form-group">
-      <label>Nickname</label>
-      <input type="text" class="form-input" id="regNickname" placeholder="Masukkan nickname">
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" class="form-input" id="regEmail" placeholder="Masukkan email">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-input" id="regPass" placeholder="Masukkan password">
-    </div>
-    <div class="form-group">
-      <label>Jenis Kelamin</label>
-      <div class="jenis-kelamin">
-        <div class="jk-option" id="jkLaki" onclick="pilihJK('laki')">♂ Laki-laki</div>
-        <div class="jk-option" id="jkPerem" onclick="pilihJK('perempuan')">♀ Perempuan</div>
-      </div>
-    </div>
-    <button class="btn btn-utama" onclick="buatAkun()">Daftar</button>
-    <p class="sudah-punya">Sudah punya akun? <a href="#" onclick="tampilLogin()">Login di sini</a></p>
-  </div>
-</div>
-
-<!-- === HALAMAN UTAMA APLIKASI === -->
-<div class="app-container" id="appUtama">
-  <!-- SIDEBAR KIRI -->
-  <div class="sidebar-kiri">
-    <div class="sidebar-header">
-      <span class="logo-icon">✈️</span>
-      <h2>Cplay</h2>
-    </div>
-    <div class="sidebar-menu">
-      <div class="menu-item aktif" id="menuBeranda" onclick="bukaHalaman('beranda')">
-        <span class="menu-icon">🏠</span>
-        <span>Beranda</span>
-      </div>
-      <div class="menu-item" id="menuMabar" onclick="bukaHalaman('mabar')">
-        <span class="menu-icon">🎮</span>
-        <span>Mabar</span>
-      </div>
-      <div class="menu-item" id="menuTask" onclick="bukaHalaman('task')">
-        <span class="menu-icon">📋</span>
-        <span>Task</span>
-      </div>
-      <div class="menu-item" id="menuNotif" onclick="bukaHalaman('notif')">
-        <span class="menu-icon">🔔<span class="badge-notif" id="badgeNotif">0</span></span>
-        <span>Notifikasi</span>
-      </div>
-      <div class="menu-item" id="menuProfil" onclick="bukaHalaman('profil')">
-        <span class="menu-icon">👤</span>
-        <span>Profil</span>
-      </div>
-    </div>
-    <div class="sidebar-footer">
-      <div class="profil-mini" onclick="bukaHalaman('profil')">
-        <div class="profil-foto-kecil">👤</div>
-        <div class="profil-nama-mini" id="namaMini">-</div>
-        <div class="profil-koin-mini">🪙 <span id="koinMini">0</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- KONTEN TENGAH -->
-  <div class="konten-tengah" id="kontenTengah">
-    <!-- BERANDA: DAFTAR TEMAN -->
-    <div id="halBeranda">
-      <div class="tabs">
-        <div class="tab-item aktif" id="tabSemua" onclick="gantiTab('semua')">Semua</div>
-        <div class="tab-item" id="tabPesan" onclick="gantiTab('pesan')">Chat</div>
-      </div>
-      <div class="cari-input">
-        <input type="text" placeholder="Cari teman, ID, atau nickname..." id="cariTemanInput">
-      </div>
-      <div id="daftarTemanList">
-        <div style="text-align:center;color:var(--abu-teks);padding:60px 20px">Pilih chat untuk memulai obrolan</div>
-      </div>
-    </div>
-
-    <!-- MABAR -->
-    <div class="page-mabar" id="halMabar">
-      <h2 class="page-judul">Mabar Bareng</h2>
-      <div class="buat-room-form">
-        <h4 style="margin-bottom:12px">Buat Ruangan</h4>
-        <div class="form-group" style="margin-bottom:10px">
-          <label style="font-size:13px">Nama Ruangan</label>
-          <input type="text" class="form-input" style="background:#fff" placeholder="Masukkan nama ruangan" id="namaRoom">
+<!-- ======================================
+     HALAMAN LOGIN
+     ====================================== -->
+<div id="layar-login" class="layar aktif">
+    <div class="container-login">
+        <div class="logo">
+            <h1>Cplay</h1>
+            <p>Teman baru, cerita baru</p>
         </div>
-        <button class="btn btn-utama" style="margin-top:0;padding:10px" onclick="buatRoom()">+ Buat Room</button>
-      </div>
-      <h4 style="margin-bottom:12px">Room Populer</h4>
-      <div class="room-list" id="daftarRoom">
-        <div class="room-item">
-          <div class="room-game">🎮</div>
-          <div class="room-info">
-            <div class="room-nama">Free Fire - BR</div>
-            <div class="room-pemain">4/4 pemain • ID: 0992734</div>
-          </div>
-          <button class="btn-gabung" onclick="gabungRoom(this)">Gabung</button>
+
+        <div class="kotak-form">
+            <div class="input-group">
+                <label>ID / Nama Pengguna</label>
+                <input type="text" id="login-id" placeholder="Masukkan nama atau ID">
+            </div>
+            <div class="input-group">
+                <label>Kata Sandi</label>
+                <input type="password" id="login-pass" placeholder="Masukkan kata sandi">
+            </div>
+            <button class="btn btn-biru" onclick="masuk()">Masuk</button>
+            
+            <div class="link-bawah">
+                <p>Belum punya akun? <a onclick="gantiLayar('layar-registrasi')">Buat Akun Baru</a></p>
+                <p style="margin-top: 8px;"><a href="#">Lupa kata sandi?</a></p>
+            </div>
         </div>
-        <div class="room-item">
-          <div class="room-game">🎯</div>
-          <div class="room-info">
-            <div class="room-nama">Free Fire - CS</div>
-            <div class="room-pemain">2/4 pemain</div>
-          </div>
-          <button class="btn-gabung" onclick="gabungRoom(this)">Gabung</button>
+    </div>
+</div>
+
+<!-- ======================================
+     HALAMAN REGISTRASI
+     ====================================== -->
+<div id="layar-registrasi" class="layar">
+    <div class="container-login">
+        <div class="logo">
+            <h1>Cplay</h1>
+            <p>Daftar akun baru</p>
         </div>
-        <div class="room-item">
-          <div class="room-game">⛏️</div>
-          <div class="room-info">
-            <div class="room-nama">Minecraft</div>
-            <div class="room-pemain">2/4 pemain • ID: 654987</div>
-          </div>
-          <button class="btn-gabung" onclick="gabungRoom(this)">Gabung</button>
+
+        <div class="kotak-form">
+            <div class="input-group">
+                <label>Nama Pengguna</label>
+                <input type="text" id="reg-nama" placeholder="Buat nama pengguna">
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="reg-email" placeholder="Masukkan email">
+            </div>
+            <div class="input-group">
+                <label>Kata Sandi</label>
+                <input type="password" id="reg-pass" placeholder="Buat kata sandi">
+            </div>
+            <div class="input-group">
+                <label>Jenis Kelamin</label>
+                <div class="baris-dua">
+                    <div class="radio-pilihan terpilih" id="radio-laki" onclick="pilihKelamin('laki')">Laki-laki</div>
+                    <div class="radio-pilihan" id="radio-perem" onclick="pilihKelamin('perempuan')">Perempuan</div>
+                </div>
+            </div>
+            <button class="btn btn-biru" onclick="daftar()">Daftar</button>
+            
+            <div class="link-bawah">
+                <p>Sudah punya akun? <a onclick="gantiLayar('layar-login')">Masuk disini</a></p>
+            </div>
         </div>
-      </div>
     </div>
-
-    <!-- TASK -->
-    <div class="page-task" id="halTask">
-      <h2 class="page-judul">Tugas Harian</h2>
-      <div class="task-item">
-        <div class="task-nama">Menambah 1 teman baru</div>
-        <div class="task-hadiah">🪙 +10</div>
-      </div>
-      <div class="task-item">
-        <div class="task-nama">Kirim pesan ke teman</div>
-        <div class="task-hadiah">🪙 +5</div>
-      </div>
-      <div class="task-item">
-        <div class="task-nama">Main mabar 1 kali</div>
-        <div class="task-hadiah">🪙 +20</div>
-      </div>
-      <div class="task-item">
-        <div class="task-nama">Selesaikan 3 misi harian</div>
-        <div class="task-hadiah">🪙 +30</div>
-      </div>
-      <div style="margin-top:24px;padding:16px;background:var(--biru-terang);border-radius:12px;text-align:center">
-        <div style="font-size:14px;color:var(--abu-teks)">Total Koin Kamu</div>
-        <div style="font-size:28px;font-weight:700;color:var(--kuning);margin-top:4px" id="koinTask">0 🪙</div>
-      </div>
-    </div>
-
-    <!-- NOTIFIKASI -->
-    <div class="page-notif" id="halNotif">
-      <h2 class="page-judul">Permintaan Pertemanan</h2>
-      <div id="daftarNotifPage">
-        <div class="tidak-ada">Belum ada permintaan pertemanan</div>
-      </div>
-    </div>
-
-    <!-- PROFIL -->
-    <div class="page-profil" id="halProfil">
-      <div class="profil-foto-besar">👤</div>
-      <div class="profil-nama-besar" id="profilNama">-</div>
-      <div class="profil-id-besar">ID: <span id="profilId">-</span> <button onclick="salinId()" style="border:none;background:var(--biru-terang);color:var(--biru-utama);padding:2px 8px;border-radius:4px;cursor:pointer;font-size:12px">Salin</button></div>
-      <div class="koin-besar" id="profilKoin">0 🪙</div>
-      
-      <div class="form-edit">
-        <label>Nickname</label>
-        <input type="text" id="editNickname">
-        <label>Email</label>
-        <input type="email" id="editEmail">
-        <button class="btn btn-utama" style="margin-top:8px" onclick="simpanProfil()">Simpan Perubahan</button>
-      </div>
-      
-      <button class="btn btn-sekunder" style="margin-top:40px" onclick="keluarAkun()">Keluar Akun</button>
-      <button class="btn btn-sekunder" style="margin-top:12px" onclick="bukaRegisDariApp()">+ Buat Akun Baru</button>
-    </div>
-  </div>
-
-  <!-- PANEL KANAN — CHAT AREA -->
-  <div class="panel-kanan" id="panelChat">
-    <div class="chat-kosong" id="chatKosong">
-      <div class="chat-kosong-icon">💬</div>
-      <p>Pilih teman untuk memulai obrolan</p>
-    </div>
-    
-    <div class="chat-header sembunyi" id="chatHeader">
-      <button class="chat-kembali" onclick="tutupChat()">←</button>
-      <div class="chat-foto">👤</div>
-      <div class="chat-info">
-        <div class="chat-nama" id="chatNama">-</div>
-        <div class="chat-status" id="chatStatus">Online</div>
-      </div>
-      <div class="chat-actions">
-        <button>📞</button>
-        <button>📹</button>
-        <button>⋮</button>
-      </div>
-    </div>
-    
-    <div class="chat-pesan-area" id="chatPesanArea" style="display:none"></div>
-    
-    <div class="chat-input-bar" id="chatInputBar" style="display:none">
-      <input type="text" id="inputPesan" placeholder="Ketik pesan...">
-      <button class="chat-kirim" onclick="kirimPesan()">➤</button>
-    </div>
-  </div>
-
-  <!-- TOMBOL TAMBAH -->
-  <button class="tambah-fab" onclick="bukaModalCari()">+</button>
 </div>
 
-<!-- === MODAL: CARI TEMAN === -->
-<div class="modal-overlay" id="modalCari">
-  <div class="modal-kotak">
-    <div class="modal-header">
-      <h3 class="modal-judul">Cari Teman</h3>
-      <button class="modal-tutup" onclick="tutupModalCari()">×</button>
-    </div>
-    <div class="modal-isi">
-      <input type="text" class="form-input" id="cariIdTeman" placeholder="Masukkan ID atau Nickname teman">
-      <button class="btn btn-utama" style="margin-top:0;margin-bottom:16px" onclick="cariTeman()">Cari</button>
-      <div class="cari-hasil" id="hasilCariTeman">
-        <div class="tidak-ada">Masukkan ID untuk mencari teman</div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- ======================================
+     LAYAR UTAMA — SETELAH LOGIN
+     ====================================== -->
+<div id="layar-utama" class="layar">
+    <div class="app-container">
+        <!-- === SIDEBAR KIRI === -->
+        <div class="sidebar-kiri">
+            <div class="header-sidebar">
+                <div class="profil-mini">
+                    <div class="avatar-kecil" id="avatar-saya">S</div>
+                    <div class="info-profil">
+                        <h4 id="nama-saya">Saya</h4>
+                        <p class="koin-tampil">🪙 125</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn-kecil btn-outline" style="padding: 4px 10px; font-size: 12px;" onclick="gantiLayar('layar-registrasi')">+ Akun</button>
+                    <button class="tombol-titik" onclick="bukaPanel()">⋯</button>
+                </div>
+            </div>
 
-<!-- === MODAL: NOTIFIKASI POPUP === -->
-<div class="modal-overlay" id="modalNotifPopup">
-  <div class="modal-kotak">
-    <div class="modal-header">
-      <h3 class="modal-judul">Permintaan Pertemanan</h3>
-      <button class="modal-tutup" onclick="tutupModalNotifPopup()">×</button>
-    </div>
-    <div class="modal-isi" id="isiNotifPopup">
-      <div class="tidak-ada">Belum ada permintaan</div>
-    </div>
-  </div>
-</div>
+            <div class="pencarian">
+                <input type="text" id="cari-teman" placeholder="Cari teman dengan ID...">
+                <button class="btn btn-kecil btn-biru" style="width: 100%; margin-top: 8px;" onclick="cariPengguna()">Cari & Temukan</button>
+            </div>
 
-<!-- === POPUP PESAN === -->
-<div class="modal-overlay" id="popupPesan">
-  <div class="modal-kotak" style="max-width:320px">
-    <div class="modal-isi" style="text-align:center;padding:30px 20px">
-      <p id="teksPopupPesan" style="font-size:15px;margin-bottom:20px"></p>
-      <button class="btn btn-utama" style="width:auto;padding:10px 30px" onclick="tutupPopupPesan()">Oke</button>
-    </div>
-  </div>
-</div>
+            <div class="nav-tab">
+                <button class="tab-btn aktif" onclick="gantiTab('daftar-chat')">Obrolan</button>
+                <button class="tab-btn" onclick="gantiTab('daftar-teman')">Teman</button>
+                <button class="tab-btn" onclick="gantiTab('bagian-mabar')">Mabar</button>
+            </div>
 
-<!-- FOOTER BRAND -->
-<div class="brand-footer">Cplay — Teman baru, cerita baru, mabar bareng, jadi lebih seru! 💛</div>
+            <!-- DAFTAR CHAT -->
+            <div id="daftar-chat" class="daftar-item">
+                <div class="pesan-kosong" id="kosong-chat">Belum ada obrolan. Tambah teman dulu ya!</div>
+            </div>
+
+            <!-- DAFTAR TEMAN -->
+            <div id="daftar-teman" class="daftar-item sembunyi">
+                <div style="padding: 10px 15px; font-size: 13px; font-weight: 600; color: #2ecc71;">🟢 Online</div>
+                                 <div id="daftar-online"></div>
+                <div style="padding: 10px 15px; font-size: 13px; font-weight: 600; color: #95a5a6; margin-top: 10px;">⚪ Offline</div>
+                <div id="daftar-offline"></div>
+                <div class="pesan-kosong" id="kosong-teman">Belum punya teman. Cari teman pakai ID di atas ya!</div>
+            </div>
+
+            <!-- MABAR & TASK -->
+            <div id="bagian-mabar" class="sembunyi">
+                <div class="bagian-mabar">
+                    <div class="judul-bagian">Buat Ruang Mabar</div>
+                    <div class="kotak-mabar">
+                        <input type="text" placeholder="Masukkan nama ruangan" style="width: 100%; padding: 8px; border: 1px solid #d0e0f0; border-radius: 6px; margin-bottom: 8px;">
+                        <button class="btn btn-biru" style="padding: 8px;">➕ Buat Ruangan</button>
+                    </div>
+
+                    <div class="judul-bagian">Ruangan Populer</div>
+                    <div class="kotak-mabar">
+                        <strong>Free Fire - BR</strong>
+                        <p style="font-size: 13px; color: #7f8c8d;">ID: 8927234 • 4/4 Pemain</p>
+                        <div class="baris-pemain">
+                            <div class="slot-pemain siap">👤</div>
+                            <div class="slot-pemain">?</div>
+                            <div class="slot-pemain">?</div>
+                            <div class="slot-pemain">?</div>
+                        </div>
+                        <button class="btn btn-kecil btn-biru" style="width: 100%; margin-top: 5px;">Gabung</button>
+                    </div>
+
+                    <div class="kotak-mabar">
+                        <strong>Task Bersama Hari Ini</strong>
+                        <p style="font-size: 13px; margin-top: 8px;">✅ Main 1 kali bersama: 🪙10</p>
+                        <p style="font-size: 13px;">✅ Main 3 kali bersama: 🪙30</p>
+                        <p style="font-size: 13px;">✅ Selesaikan 1 misi: 🪙15</p>
+                        <button class="btn btn-mabar" onclick="alert('Mabar dimulai! Ajak teman kamu main bareng ya! 🎮')">Mulai Mabar & Task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === RUANG CHAT === -->
+        <div class="ruang-chat">
+            <div class="header-chat">
+                <div class="info-chat">
+                    <div class="avatar-teman" id="chat-avatar">?</div>
+                    <div>
+                        <h5 id="chat-nama">Pilih teman untuk memulai obrolan</h5>
+                        <small style="color: #7f8c8d;" id="chat-status">-</small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn-kecil btn-biru" id="btn-mabar-chat" style="display: none;" onclick="ajakMabar()">🎮 Ajak Mabar</button>
+                </div>
+            </div>
+
+            <div class="badan-chat" id="badan-chat">
+                <div class="pesan-kosong">Pilih teman dari daftar untuk mulai mengobrol 💬</div>
+            </div>
+
+            <div class="kotak-kirim" id="kotak-kirim" style="display: none;">
+                <input type="text" id="input-pesan" placeholder="Ketik pesan...">
+                <button onclick="kirimPesan()">➤</button>
+            </div>
+        </div>
+
+        <!-- === PANEL KANAN — NOTIFIKASI & MENU === -->
+        <div class="panel-kanan" id="panel-samping">
+            <div class="panel-header">
+                <h3>Notifikasi & Menu</h3>
+                <button class="tutup-panel" onclick="tutupPanel()">✕</button>
+            </div>
+            <div class="isi-panel" id="isi-panel">
+                <div class="judul-bagian">Permintaan Pertemanan</div>
+                <div id="daftar-permintaan">
+                    <p style="color: #95a5a6; font-size: 14px;">Belum ada permintaan pertemanan</p>
+                </div>
+
+                <div class="judul-bagian" style="margin-top: 25px;">Pengaturan Akun</div>
+                <div style="font-size: 14px; line-height: 2;">
+                    <p>👤 Lihat Profil</p>
+                    <p>🪙 Top Up Koin</p>
+                    <p>⚙️ Pengaturan</p>
+                    <p>❓ Bantuan</p>
+                    <p style="color: #e74c3c; cursor: pointer;" onclick="keluar()">Keluar Akun</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-// === DATA GLOBAL ===
-let akunSaya = null;
-let temanDipilih = null;
-let halamanAktif = 'beranda';
-let jenisKelamin = '';
+// Data Global
+let penggunaSaya = { nama: 'Saya', id: 'ID000001', koin: 125 };
+let daftarTeman = [];
+let permintaanPertemanan = [];
+let riwayatChat = {};
+let tabAktif = 'daftar-chat';
 
-// === INISIALISASI ===
-window.onload = function(){
-  cekAkunTersimpan();
-};
-
-function buatID(){
-  const c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let id = 'CML';
-  for(let i=0;i<7;i++) id += c[Math.floor(Math.random()*c.length)];
-  return id;
+// Ganti Layar
+function gantiLayar(idLayar) {
+    document.querySelectorAll('.layar').forEach(l => l.classList.remove('aktif'));
+    document.getElementById(idLayar).classList.add('aktif');
 }
 
-function cekAkunTersimpan(){
-  const simpan = localStorage.getItem('cplay_saya');
-  if(simpan){
-    akunSaya = JSON.parse(simpan);
-    masukKeAplikasi();
-  }
+// Pilih Jenis Kelamin
+function pilihKelamin(jns) {
+    document.getElementById('radio-laki').classList.remove('terpilih');
+    document.getElementById('radio-perem').classList.remove('terpilih');
+    if (jns === 'laki') document.getElementById('radio-laki').classList.add('terpilih');
+    else document.getElementById('radio-perem').classList.add('terpilih');
 }
 
-// === LOGIN & REGISTER ===
-function tampilRegis(){
-  document.getElementById('halamanLogin').classList.add('sembunyi');
-  document.getElementById('halamanRegis').classList.remove('sembunyi');
-}
-function tampilLogin(){
-  document.getElementById('halamanRegis').classList.add('sembunyi');
-  document.getElementById('halamanLogin').classList.remove('sembunyi');
-}
-function pilihJK(opsi){
-  jenisKelamin = opsi;
-  document.getElementById('jkLaki').classList.toggle('aktif', opsi==='laki');
-  document.getElementById('jkPerem').classList.toggle('aktif', opsi==='perempuan');
-}
-function buatAkun(){
-  const nickname = document.getElementById('regNickname').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  const password = document.getElementById('regPass').value;
-  
-  if(!nickname||!email||!password||!jenisKelamin){
-    tampilPopup('Lengkapi semua data!');
-    return;
-  }
-  
-  akunSaya = {
-    id: buatID(),
-    nickname,
-    email,
-    password,
-    jenisKelamin,
-    teman: [],
-    permintaan: [],
-    pesan: {},
-    koin: 0
-  };
-  
-  simpanKeSemuaAkun();
-  masukKeAplikasi();
-}
-function masukAkun(){
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  const semuaAkun = JSON.parse(localStorage.getItem('cplay_semuaAkun')||'[]');
-  const akun = semuaAkun.find(a=>
-    (a.nickname===user || a.id===user || a.email===user) && a.password===pass
-  );
-  
-  if(!akun){
-    document.getElementById('loginSalah').classList.add('tampil');
-    return;
-  }
-  
-  akunSaya = akun;
-  localStorage.setItem('cplay_saya', JSON.stringify(akunSaya));
-  document.getElementById('loginSalah').classList.remove('tampil');
-  masukKeAplikasi();
-}
-function masukKeAplikasi(){
-  document.getElementById('halamanLogin').classList.add('sembunyi');
-  document.getElementById('halamanRegis').classList.add('sembunyi');
-  document.getElementById('appUtama').classList.add('tampil');
-  
-  document.getElementById('namaMini').textContent = akunSaya.nickname;
-  document.getElementById('profilNama').textContent = akunSaya.nickname;
-  document.getElementById('profilId').textContent = akunSaya.id;
-  document.getElementById('editNickname').value = akunSaya.nickname;
-  document.getElementById('editEmail').value = akunSaya.email||'';
-  
-  updateTampilanKoin();
-  renderDaftarTeman();
-  updateBadgeNotif();
-  renderNotifikasi();
+// Daftar Akun
+function daftar() {
+    let nama = document.getElementById('reg-nama').value.trim();
+    if (!nama) { alert('Silakan isi nama pengguna!'); return; }
+    penggunaSaya.nama = nama;
+    penggunaSaya.id = 'ID' + Math.floor(Math.random() * 900000 + 100000);
+    alert('Selamat datang, ' + nama + '! Akun berhasil dibuat. ID kamu: ' + penggunaSaya.id);
+    masuk();
 }
 
-// === NAVIGASI HALAMAN ===
-function bukaHalaman(hal){
-  halamanAktif = hal;
-  document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('aktif'));
-  document.getElementById('menu'+hal.charAt(0).toUpperCase()+hal.slice(1)).classList.add('aktif');
-  
-  document.getElementById('halBeranda').style.display = hal==='beranda'?'block':'none';
-  document.getElementById('halMabar').classList.toggle('tampil', hal==='mabar');
-  document.getElementById('halTask').classList.toggle('tampil', hal==='task');
-  document.getElementById('halNotif').classList.toggle('tampil', hal==='notif');
-  document.getElementById('halProfil').classList.toggle('tampil', hal==='profil');
-  
-  if(hal==='notif') renderNotifikasi();
-  if(hal==='task') document.getElementById('koinTask').textContent = akunSaya.koin + ' 🪙';
-}
-function gantiTab(tab){
-  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('aktif'));
-  const target = tab === 'semua'
-    ? document.getElementById('tabSemua')
-    : document.getElementById('tabPesan');
-  if(target) target.classList.add('aktif');
-  renderDaftarTeman();
+// Masuk / Login
+function masuk() {
+    let namaInput = document.getElementById('login-id').value.trim();
+    if (namaInput) penggunaSaya.nama = namaInput;
+    document.getElementById('nama-saya').textContent = penggunaSaya.nama;
+    document.getElementById('avatar-saya').textContent = penggunaSaya.nama.charAt(0).toUpperCase();
+    gantiLayar('layar-utama');
+    perbaruiDaftarTeman();
 }
 
-// === KOIN ===
-function tambahKoin(jumlah){
-  akunSaya.koin += jumlah;
-  simpanKeSemuaAkun();
-  updateTampilanKoin();
-}
-function updateTampilanKoin(){
-  document.getElementById('koinMini').textContent = akunSaya.koin;
-  document.getElementById('profilKoin').textContent = akunSaya.koin + ' 🪙';
-  document.getElementById('koinTask').textContent = akunSaya.koin + ' 🪙';
-}
-
-// === CARI TEMAN ===
-function bukaModalCari(){
-  document.getElementById('modalCari').classList.add('tampil');
-  document.getElementById('cariIdTeman').value='';
-  document.getElementById('hasilCariTeman').innerHTML='<d
-iv class="tidak-ada">Masukkan ID untuk mencari teman</div>';
-}
-function tutupModalCari(){
-  document.getElementById('modalCari').classList.remove('tampil');
-}
-function cariTeman(){
-  const kata = document.getElementById('cariIdTeman').value.trim();
-  const kotak = document.getElementById('hasilCariTeman');
-  if(!kata){
-    kotak.innerHTML='<div style="color:var(--merah)">Masukkan ID atau Nickname</div>';
-    return;
-  }
-  if(kata===akunSaya.id || kata===akunSaya.nickname){
-    kotak.innerHTML='<div class="tidak-ada">Itu akun kamu sendiri</div>';
-    return;
-  }
-  
-  const semuaAkun = JSON.parse(localStorage.getItem('cplay_semuaAkun')||'[]');
-  const ditemukan = semuaAkun.find(a=>a.id===kata || a.nickname===kata);
-  
-  if(ditemukan){
-    kotak.innerHTML = `
-      <div class="cari-hasil-item">
-        <div class="profil-foto-kecil" style="width:44px;height:44px">👤</div>
-        <div class="cari-hasil-info">
-          <div class="cari-hasil-nama">${ditemukan.nickname}</div>
-          <div class="cari-hasil-id">${ditemukan.id}</div>
-        </div>
-        <button class="btn-tambah" id="btnTambah${ditemukan.id}" onclick="kirimPermintaan('${ditemukan.id}')">+ Tambah</button>
-      </div>`;
-  }else{
-    kotak.innerHTML='<div class="tidak-ada">Akun tidak ditemukan</div>';
-  }
-}
-function kirimPermintaan(idTujuan){
-  const semuaAkun = JSON.parse(localStorage.getItem('cplay_semuaAkun')||'[]');
-  const idx = semuaAkun.findIndex(a=>a.id===idTujuan);
-  if(idx===-1) return;
-  
-  if(!semuaAkun[idx].permintaan) semuaAkun[idx].permintaan=[];
-  if(semuaAkun[idx].permintaan.find(p=>p.dari===akunSaya.id)){
-    tampilPopup('Permintaan sudah dikirim sebelumnya');
-    return;
-  }
-  
-  semuaAkun[idx].permintaan.push({dari:akunSaya.id, nama:akunSaya.nickname});
-  localStorage.setItem('cplay_semuaAkun', JSON.stringify(semuaAkun));
-  tampilPopup('Permintaan pertemanan dikirim!');
-  document.getElementById(`btnTambah${idTujuan}`).disabled = true;
-  document.getElementById(`btnTambah${idTujuan}`).textContent = '✓ Dikirim';
-}
-
-// === NOTIFIKASI ===
-function renderNotifikasi(){
-  const kotak = document.getElementById('daftarNotifPage');
-  if(!akunSaya.permintaan || akunSaya.permintaan.length===0){
-    kotak.innerHTML='<div class="tidak-ada">Belum ada permintaan pertemanan</div>';
-    return;
-  }
-  kotak.innerHTML = akunSaya.permintaan.map(p=>`
-    <div class="notif-item">
-      <div class="notif-teks"><b>${p.nama}</b> ingin berteman denganmu</div>
-      <div class="notif-aksi">
-        <button class="btn-terima" onclick="terimaPermintaan('${p.dari}')">Terima</button>
-        <button class="btn-tolak" onclick="tolakPermintaan('${p.dari}')">Tolak</button>
-      </div>
-    </div>`).join('');
-}
-function terimaPermintaan(idDari){
-  const semuaAkun = JSON.parse(localStorage.getItem('cplay_semuaAkun')||'[]');
-  const idxSaya = semuaAkun.findIndex(a=>a.id===akunSaya.id);
-  const teman = semuaAkun.find(a=>a.id===idDari);
-  
-  akunSaya.permintaan = akunSaya.permintaan.filter(p=>p.dari!==idDari);
-  
-  if(!akunSaya.teman) akunSaya.teman=[];
-  if(!akunSaya.teman.find(t=>t.id===idDari)){
-    akunSaya.teman.push({id:teman.id, nama:teman.nickname, online:true});
-    tambahKoin(10);
-  }
-  
-  if(!teman.teman) teman.teman=[];
-  if(!teman.teman.find(t=>t.id===akunSaya.id)){
-    teman.teman.push({id:akunSaya.id, nama:akunSaya.nickname, online:true});
-  }
-  
-  if(idxSaya!==-1) semuaAkun[idxSaya] = akunSaya;
-  localStorage.setItem('cplay_semuaAkun', JSON.stringify(semuaAkun));
-  localStorage.setItem('cplay_saya', JSON.stringify(akunSaya));
-  
-  tampilPopup('Berhasil berteman dengan '+teman.nickname+'! 🪙+10');
-  renderNotifikasi();
-  renderDaftarTeman();
-  updateBadgeNotif();
-}
-function tolakPermintaan(idDari){
-  akunSaya.permintaan = akunSaya.permintaan.filter(p=>p.dari!==idDari);
-  simpanKeSemuaAkun();
-  tampilPopup('Permintaan ditolak');
-  renderNotifikasi();
-  updateBadgeNotif();
-}
-function updateBadgeNotif(){
-  const jumlah = akunSaya?.permintaan?.length||0;
-  const badge = document.getElementById('badgeNotif');
-  badge.textContent = jumlah;
-  badge.classList.toggle('tampil', jumlah>0);
-}
-
-// === DAFTAR TEMAN & CHAT ===
-function renderDaftarTeman(){
-  const list = document.getElementById('daftarTemanList');
-  if(!akunSaya.teman || akunSaya.teman.length===0){
-    list.innerHTML='<div style="text-align:center;color:var(--abu-teks);padding:60px 20px">Belum ada teman.<br>Klik tombol + untuk cari teman baru.</div>';
-    return;
-  }
-  list.innerHTML = akunSaya.teman.map(t=>`
-    <div class="daftar-item" onclick="bukaChat('${t.id}','${t.nama}')">
-      <div class="item-foto">
-        👤
-        <span class="item-status ${t.online?'status-online':'status-offline'}"></span>
-      </div>
-      <div class="item-info">
-        <div class="item-nama">${t.nama}</div>
-        <div class="item-pesan">${(akunSaya.pesan?.[t.id]||[]).slice(-1)[0]?.teks||'Mulai obrolan...'}</div>
-      </div>
-      <div class="item-waktu">${(akunSaya.pesan?.[t.id]||[]).slice(-1)[0]?.waktu||''}</div>
-    </div>`).join('');
-}
-function bukaChat(id, nama){
-  temanDipilih = {id, nama};
-  
-  document.getElementById('chatKosong').style.display = 'none';
-  document.getElementById('chatHeader').classList.remove('sembunyi');
-  document.getElementById('chatPesanArea').style.display = 'block';
-  document.getElementById('chatInputBar').style.display = 'flex';
-  document.getElementById('chatNama').textContent = nama;
-  
-  renderPesan();
-  
-  if(window.innerWidth<=900){
-    document.getElementById('panelChat').style.display = 'flex';
-    document.getElementById('panelChat').style.flexDirection = 'column';
-    document.querySelector('.konten-tengah').style.display = 'none';
-  }
-}
-function tutupChat(){
-  temanDipilih = null;
-  document.getElementById('chatKosong').style.display = 'flex';
-  document.getElementById('chatHeader').classList.add('sembunyi');
-  document.getElementById('chatPesanArea').style.display = 'none';
-  document.getElementById('chatInputBar').style.display = 'none';
-  
-  if(window.innerWidth<=900){
-    document.getElementById('panelChat').style.display = '';
-    document.querySelector('.konten-tengah').style.display = 'block';
-  }
-}
-function renderPesan(){
-  const area = document.getElementById('chatPesanArea');
-  if(!akunSaya.pesan) akunSaya.pesan = {};
-  if(!akunSaya.pesan[temanDipilih.id]){
-    area.innerHTML='<div style="text-align:center;color:var(--abu-teks);padding:30">Mulai obrolan dengan '+temanDipilih.nama+'</div>';
-    return;
-
-function kirimPesan(){
-  if(!temanDipilih) return;
-  const input = document.getElementById('inputPesan');
-  const teks = input.value.trim();
-  if(!teks) return;
-
-  if(!akunSaya.pesan) akunSaya.pesan = {};
-  if(!akunSaya.pesan[temanDipilih.id]) akunSaya.pesan[temanDipilih.id] = [];
-
-  const waktu = new Date().toLocaleTimeString('id-ID',{
-    hour:'2-digit',
-    minute:'2-digit'
-  });
-
-  akunSaya.pesan[temanDipilih.id].push({
-    dari: akunSaya.id,
-    teks,
-    waktu
-  });
-
-  simpanKeSemuaAkun();
-  input.value = '';
-  renderPesan();
-  renderDaftarTeman();
-}
-
-function simpanKeSemuaAkun(){
-  if(!akunSaya) return;
-
-  const semuaAkun = JSON.parse(
-    localStorage.getItem('cplay_semuaAkun') || '[]'
-  );
-
-  const idx = semuaAkun.findIndex(a => a.id === akunSaya.id);
-
-  if(idx === -1){
-    semuaAkun.push(akunSaya);
-  }else{
-    semuaAkun[idx] = akunSaya;
-  }
-
-  localStorage.setItem(
-    'cplay_semuaAkun',
-    JSON.stringify(semuaAkun)
-  );
-
-  localStorage.setItem(
-    'cplay_saya',
-    JSON.stringify(akunSaya)
-  );
-}
-
-function renderPesan(){
-  const area = document.getElementById('chatPesanArea');
-
-  if(!temanDipilih){
-    area.innerHTML = '';
-    return;
-  }
-
-  if(!akunSaya.pesan) akunSaya.pesan = {};
-
-  const pesan = akunSaya.pesan[temanDipilih.id] || [];
-
-  if(pesan.length === 0){
-    area.innerHTML =
-      '<div style="text-align:center;color:var(--abu-teks);padding:30px">Mulai obrolan dengan '
-      + temanDipilih.nama + '</div>';
-    return;
-  }
-
-  area.innerHTML = pesan.map(p => `
-    <div class="pesan-baris ${p.dari===akunSaya.id?'pesan-kanan':'pesan-kiri'}">
-      <div class="pesan-bubble">
-        ${escapeHtml(p.teks)}
-        <div class="pesan-waktu">${p.waktu}</div>
-      </div>
-    </div>
-  `).join('');
-
-  area.scrollTop = area.scrollHeight;
-}
-
-function escapeHtml(value){
-  const div = document.createElement('div');
-  div.textContent = value;
-  return div.innerHTML;
-}
-
-function tampilPopup(teks){
-  document.getElementById('teksPopupPesan').textContent = teks;
-  document.getElementById('popupPesan').classList.add('tampil');
-}
-
-function tutupPopupPesan(){
-  document.getElementById('popupPesan').classList.remove('tampil');
-}
-
-function tutupModalNotifPopup(){
-  document.getElementById('modalNotifPopup').classList.remove('tampil');
-}
-
-function bukaRegisDariApp(){
-  document.getElementById('appUtama').classList.remove('tampil');
-  document.getElementById('halamanLogin').classList.add('sembunyi');
-  document.getElementById('halamanRegis').classList.remove('sembunyi');
-
-  document.getElementById('regNickname').value = '';
-  document.getElementById('regEmail').value = '';
-  document.getElementById('regPass').value = '';
-  jenisKelamin = '';
-  document.getElementById('jkLaki').classList.remove('aktif');
-  document.getElementById('jkPerem').classList.remove('aktif');
-}
-
-function keluarAkun(){
-  localStorage.removeItem('cplay_saya');
-  akunSaya = null;
-  temanDipilih = null;
-
-  document.getElementById('appUtama').classList.remove('tampil');
-  document.getElementById('halamanRegis').classList.add('sembunyi');
-  document.getElementById('halamanLogin').classList.remove('sembunyi');
-
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-  document.getElementById('loginSalah').classList.remove('tampil');
-}
-
-function salinId(){
-  if(!akunSaya) return;
-
-  const id = akunSaya.id;
-
-  if(navigator.clipboard && window.isSecureContext){
-    navigator.clipboard.writeText(id)
-      .then(() => tampilPopup('ID berhasil disalin!'))
-      .catch(() => salinIdFallback(id));
-  }else{
-    salinIdFallback(id);
-  }
-}
-
-function salinIdFallback(id){
-  const area = document.createElement('textarea');
-  area.value = id;
-  area.style.position = 'fixed';
-  area.style.opacity = '0';
-  document.body.appendChild(area);
-  area.select();
-
-  try{
-    document.execCommand('copy');
-    tampilPopup('ID berhasil disalin!');
-  }catch(e){
-    tampilPopup('ID kamu: ' + id);
-  }
-
-  area.remove();
-}
-
-function simpanProfil(){
-  if(!akunSaya) return;
-
-  const nickname = document.getElementById('editNickname').value.trim();
-  const email = document.getElementById('editEmail').value.trim();
-
-  if(!nickname || !email){
-    tampilPopup('Nickname dan email tidak boleh kosong!');
-    return;
-  }
-
-  const namaLama = akunSaya.nickname;
-  akunSaya.nickname = nickname;
-  akunSaya.email = email;
-
-  // Update nama pada daftar teman milik akun lain bila nama berubah.
-  const semuaAkun = JSON.parse(
-    localStorage.getItem('cplay_semuaAkun') || '[]'
-  );
-
-  semuaAkun.forEach(a => {
-    if(!Array.isArray(a.teman)) return;
-    a.teman.forEach(t => {
-      if(t.id === akunSaya.id) t.nama = nickname;
-    });
-  });
-
-  const idx = semuaAkun.findIndex(a => a.id === akunSaya.id);
-  if(idx !== -1) semuaAkun[idx] = akunSaya;
-
-  localStorage.setItem('cplay_semuaAkun', JSON.stringify(semuaAkun));
-  localStorage.setItem('cplay_saya', JSON.stringify(akunSaya));
-
-  document.getElementById('namaMini').textContent = nickname;
-  document.getElementById('profilNama').textContent = nickname;
-
-  renderDaftarTeman();
-  tampilPopup(namaLama === nickname
-    ? 'Profil berhasil disimpan!'
-    : 'Profil berhasil diperbarui!');
-}
-
-function buatRoom(){
-  const input = document.getElementById('namaRoom');
-  const nama = input.value.trim();
-
-  if(!nama){
-    tampilPopup('Masukkan nama ruangan terlebih dahulu!');
-    input.focus();
-    return;
-  }
-
-  const list = document.getElementById('daftarRoom');
-  const item = document.createElement('div');
-  item.className = 'room-item';
-
-  item.innerHTML = `
-    <div class="room-game">🎮</div>
-    <div class="room-info">
-      <div class="room-nama">${escapeHtml(nama)}</div>
-      <div class="room-pemain">1/4 pemain • Dibuat oleh ${escapeHtml(akunSaya.nickname)}</div>
-    </div>
-    <button class="btn-gabung" onclick="gabungRoom(this)">Gabung</button>
-  `;
-
-  list.prepend(item);
-  input.value = '';
-  tampilPopup('Room berhasil dibuat!');
-}
-
-function gabungRoom(button){
-  const room = button.closest('.room-item');
-  if(!room) return;
-
-  const pemain = room.querySelector('.room-pemain');
-  button.disabled = true;
-  button.textContent = '✓ Bergabung';
-
-  if(pemain){
-    const match = pemain.textContent.match(/^(\d+)\/4/);
-    if(match){
-      const jumlah = Math.min(4, Number(match[1]) + 1);
-      pemain.textContent =
-        jumlah + '/4 pemain • Kamu sudah bergabung';
+// Keluar
+function keluar() {
+    if (confirm('Yakin ingin keluar?')) {
+        tutupPanel();
+        gantiLayar('layar-login');
     }
-  }
-
-  tampilPopup('Kamu berhasil bergabung ke room!');
 }
 
-function jalankanEnterChat(e){
-  if(e.key === 'Enter'){
-    e.preventDefault();
-    kirimPesan();
-  }
+// Ganti Tab
+function gantiTab(namaTab) {
+    tabAktif = namaTab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('aktif'));
+    event.target.classList.add('aktif');
+    document.getElementById('daftar-chat').classList.add('sembunyi');
+    document.getElementById('daftar-teman').classList.add('sembunyi');
+    document.getElementById('bagian-mabar').classList.add('sembunyi');
+    document.getElementById(namaTab).classList.remove('sembunyi');
 }
 
-document.addEventListener('DOMContentLoaded', function(){
-  const input = document.getElementById('inputPesan');
-  if(input) input.addEventListener('keydown', jalankanEnterChat);
+// Cari Pengguna
+function cariPengguna() {
+    let kata = document.getElementById('cari-teman').value.trim();
+    if (!kata) { alert('Masukkan ID atau nama teman yang dicari!'); return; }
+    
+    let namaHasil = kata + '_Friend';
+    let idHasil = 'ID' + Math.floor(Math.random() * 900000 + 100000);
+    
+    let sudahAda = daftarTeman.some(t => t.id === idHasil);
+    if (sudahAda) { alert(namaHasil + ' sudah ada di daftar temanmu!'); return; }
+    
+    let konfirmasi = confirm('Ditemukan: ' + namaHasil + ' (' + idHasil + ')\n\nKirim permintaan pertemanan?');
+    if (konfirmasi) {
+        permintaanPertemanan.push({ nama: namaHasil, id: idHasil, dari: 'luar' });
+        alert('Permintaan pertemanan dikirim ke ' + namaHasil + '! 📩');
+        
+        setTimeout(() => {
+            let namaBalas = 'Zhen';
+            let idBalas = 'ID100245';
+            permintaanPertemanan.unshift({ nama: namaBalas, id: idBalas, dari: 'dalam' });
+            perbaruiNotifikasi();
+            alert(namaBalas + ' ingin berteman denganmu! Cek di notifikasi ya! 🔔');
+        }, 1500);
+    }
+}
 
-  const cariInput = document.getElementById('cariTemanInput');
-  if(cariInput){
-    cariInput.addEventListener('input', function(){
-      const kata = this.value.trim().toLowerCase();
-      const list = document.getElementById('daftarTemanList');
-
-      if(!akunSaya || !akunSaya.teman || !akunSaya.teman.length){
+// Perbarui Notifikasi
+function perbaruiNotifikasi() {
+    let wadah = document.getElementById('daftar-permintaan');
+    if (permintaanPertemanan.length === 0) {
+        wadah.innerHTML = '<p style="color: #95a5a6; font-size: 14px;">Belum ada permintaan pertemanan</p>';
         return;
-      }
-
-      const hasil = akunSaya.teman.filter(t =>
-        t.nama.toLowerCase().includes(kata) ||
-        t.id.toLowerCase().includes(kata)
-      );
-
-      if(!kata){
-        renderDaftarTeman();
-        return;
-      }
-
-      if(!hasil.length){
-        list.innerHTML =
-          '<div class="tidak-ada">Teman tidak ditemukan</div>';
-        return;
-      }
-
-      list.innerHTML = hasil.map(t=>`
-        <div class="daftar-item" onclick="bukaChat('${t.id}','${escapeHtml(t.nama)}')">
-          <div class="item-foto">
-            👤
-            <span class="item-status ${t.online?'status-online':'status-offline'}"></span>
-          </div>
-          <div class="item-info">
-            <div class="item-nama">${escapeHtml(t.nama)}</div>
-            <div class="item-pesan">
-              ${escapeHtml((akunSaya.pesan?.[t.id]||[]).slice(-1)[0]?.teks||'Mulai obrolan...')}
+    }
+    wadah.innerHTML = '';
+    permintaanPertemanan.forEach((p, i) => {
+        wadah.innerHTML += `
+            <div class="item-notifikasi">
+                <p><strong>${p.nama}</strong> ingin berteman denganmu</p>
+                <div>
+                    <button class="btn-kecil btn-terima" onclick="terimaPertemanan(${i})">Terima</button>
+                    <button class="btn-kecil btn-tolak" onclick="tolakPertemanan(${i})">Tolak</button>
+                </div>
             </div>
-          </div>
-        </div>
-      `).join('');
+        `;
     });
-  }
-});
+}
+
+// Terima Pertemanan
+function terimaPertemanan(index) {
+    let p = permintaanPertemanan[index];
+    let temanBaru = { nama: p.nama, id: p.id, online: true };
+    daftarTeman.push(temanBaru);
+    riwayatChat[p.id] = [];
+    permintaanPertemanan.splice(index, 1);
+    perbaruiNotifikasi();
+    perbaruiDaftarTeman();
+    alert(p.nama + ' sekarang adalah temanmu! 🎉');
+}
+
+// Tolak Pertemanan
+function tolakPertemanan(index) {
+    permintaanPertemanan.splice(index, 1);
+    perbaruiNotifikasi();
+}
+
+// Perbarui Daftar Teman
+function perbaruiDaftarTeman() {
+    let wadahOnline = document.getElementById('daftar-online');
+    let wadahOffline = document.getElementById('daftar-offline');
+    let wadahChat = document.getElementById('daftar-chat');
+    let kosongTeman = document.getElementById('kosong-teman');
+    let kosongChat = document.getElementById('kosong-chat');
+
+    wadahOnline.innerHTML = '';
+    wadahOffline.innerHTML = '';
+    wadahChat.innerHTML = '';
+
+    if (daftarTeman.length === 0) {
+        kosongTeman.style.display = 'block';
+        kosongChat.style.display = 'block';
+        return;
+    }
+    kosongTeman.style.display = 'none';
+    kosongChat.style.display = 'none';
+
+    daftarTeman.forEach(t => {
+        let htmlItem = `
+            <div class="item-teman" onclick="bukaChat('${t.id}', '${t.nama}')">
+                <div class="avatar-teman">
+                    ${t.nama.charAt(0).toUpperCase()}
+                    <span class="status-dot ${t.online ? 'online' : 'offline'}"></span>
+                </div>
+                <div class="info-teman">
+                    <h5>${t.nama}</h5>
+                    <p>${t.online ? 'Online sekarang' : 'Terakhir lama lalu'}</p>
+                </div>
+            </div>
+        `;
+        if (t.online) {
+            wadahOnline.innerHTML += htmlItem;
+        } else {
+            wadahOffline.innerHTML += htmlItem;
+        }
+
+        wadahChat.innerHTML += `
+            <div class="item-teman" onclick="bukaChat('${t.id}', '${t.nama}')">
+                <div class="avatar-teman">
+                    ${t.nama.charAt(0).toUpperCase()}
+                    <span class="status-dot ${t.online ? 'online' : 'offline'}"></span>
+                </div>
+                <div class="info-teman">
+                    <h5>${t.nama}</h5>
+                    <p>${riwayatChat[t.id] && riwayatChat[t.id].length > 0 ? riwayatChat[t.id][riwayatChat[t.id].length - 1].teks : 'Mulai obrolan...'}</p>
+                </div>
+                <span class="waktu-chat">Baru saja</span>
+            </div>
+        `;
+    });
+}
+
+let temanAktif = null;
+// Buka Chat
+function bukaChat(id, nama) {
+    temanAktif = { id, nama };
+    document.getElementById('chat-nama').textContent = nama;
+    document.getElementById('chat-avatar').textContent = nama.charAt(0).toUpperCase();
+    document.getElementById('chat-status').textContent = 'Online';
+    document.getElementById('btn-mabar-chat').style.display = 'inline-block';
+    document.getElementById('kotak-kirim').style.display = 'flex';
+    
+    tampilkanPesan();
+}
+
+// Tampilkan Pesan
+function tampilkanPesan() {
+    let wadah = document.getElementById('badan-chat');
+    if (!temanAktif) return;
+    let pesan = riwayatChat[temanAktif.id] || [];
+    if (pesan.length === 0) {
+        wadah.innerHTML = '<div class="pesan-kosong">Belum ada pesan. Sapa dia dulu ya! 👋</div>';
+        return;
+    }
+    wadah.innerHTML = '';
+    pesan.forEach(p => {
+        wadah.innerHTML += `
+            <div class="pesan ${p.dariSaya ? 'dikirim' : 'diterima'}">
+                ${p.teks}
+                <div class="waktu-pesan">${p.waktu}</div>
+            </div>
+        `;
+    });
+    wadah.scrollTop = wadah.scrollHeight;
+}
+
+// Kirim Pesan
+function kirimPesan() {
+    let input = document.getElementById('input-pesan');
+    let teks = input.value.trim();
+    if (!teks || !temanAktif) return;
+    
+    let sekarang = new Date();
+    let waktu = sekarang.getHours() + ':' + (sekarang.getMinutes() < 10 ? '0' : '') + sekarang.getMinutes();
+    
+    riwayatChat[temanAktif.id].push({ teks, waktu, dariSaya: true });
+    input.value = '';
+    tampilkanPesan();
+    
+    setTimeout(() => {
+        let balasan = ['Oke siap! 😊', 'Boleh dong!', 'Asyik, ayo main bareng! 🎮', 'Halo! Apa kabar?'][Math.floor(Math.random() * 4)];
+        riwayatChat[temanAktif.id].push({ teks: balasan, waktu, dariSaya: false });
+        tampilkanPesan();
+    }, 800);
+}
+
+// Ajak Mabar
+function ajakMabar() {
+    if (!temanAktif) return;
+    alert('Undangan mabar dikirim ke ' + temanAktif.nama + '! 🎮\n\nSaat dia menerima, kalian bisa main & kerjakan task bersama!');
+}
+
+// Buka/Tutup Panel
+function bukaPanel() {
+    document.getElementById('panel-samping').classList.add('buka');
+    perbaruiNotifikasi();
+}
+function tutupPanel() {
+    document.getElementById('panel-samping').classList.remove('buka');
+}
+
+window.onload = function() {
+    permintaanPertemanan.push({ nama: 'Luna', id: 'ID100789', dari: 'dalam' });
+};
 </script>
+
 </body>
-</html>
+  </html>
+  
