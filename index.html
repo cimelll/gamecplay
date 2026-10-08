@@ -1,1 +1,737 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cplay</title>
+<style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
+body{
+  background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+  min-height: 100vh;
+}
+
+/* Header */
+.header{
+  background: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(147, 197, 253, 0.2);
+}
+
+.menu-btn{
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.garis-tiga{
+  width: 24px;
+  height: 3px;
+  background: #0369a1;
+  border-radius: 2px;
+  position: relative;
+}
+
+.garis-tiga::before,
+.garis-tiga::after{
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 3px;
+  background: #0369a1;
+  border-radius: 2px;
+  left: 0;
+}
+
+.garis-tiga::before{
+  top: -8px;
+}
+
+.garis-tiga::after{
+  top: 8px;
+}
+
+.header h1{
+  font-size: 22px;
+  color: #0369a1;
+  font-weight: bold;
+}
+
+/* Sidebar Menu */
+.sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: white;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  transform: translateX(-100%);
+  transition: 0.3s ease;
+}
+
+.sidebar.buka{
+  transform: translateX(0);
+}
+
+.sidebar-header{
+  background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+  padding: 25px 20px;
+}
+
+.sidebar-tutup{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.sidebar-judul{
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.menu-item{
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: #0c4a6e;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.menu-item:hover{
+  background: #f0f9ff;
+  color: #0369a1;
+}
+
+/* Overlay */
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+  display: none;
+}
+
+.overlay.tampil{
+  display: block;
+}
+
+/* Halaman Registrasi */
+.container{
+  width: 100%;
+  max-width: 420px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 20px rgba(147, 197, 253, 0.3);
+}
+
+h2{
+  text-align: center;
+  color: #0369a1;
+  margin-bottom: 25px;
+  font-size: 20px;
+}
+
+label{
+  display: block;
+  font-size: 14px;
+  color: #0c4a6e;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+input, select{
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #bfdbfe;
+  border-radius: 10px;
+  font-size: 15px;
+  background: #f0f9ff;
+  color: #1e3a5f;
+  outline: none;
+  margin-bottom: 16px;
+  transition: 0.2s ease;
+}
+
+input:focus, select:focus{
+  border-color: #3b82f6;
+  background: white;
+}
+
+.sudah-terpakai{
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  display: none;
+}
+
+.tersedia{
+  color: #16a34a;
+  font-size: 13px;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  display: none;
+}
+
+.foto-area{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.foto-bulat{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #bfdbfe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 10px;
+  overflow: hidden;
+  border: 3px solid #93c5fd;
+  cursor: pointer;
+}
+
+.foto-bulat img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.foto-bulat span{
+  font-size: 36px;
+  color: #3b82f6;
+}
+
+.foto-teks{
+  font-size: 14px;
+  color: #0369a1;
+  cursor: pointer;
+}
+
+.jenis-kelamin{
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.jk-btn{
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #bfdbfe;
+  background: #f0f9ff;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: #1e3a5f;
+}
+
+.jk-btn.aktif{
+  border-color: #3b82f6;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-weight: bold;
+}
+
+button#daftarBtn{
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin-top: 8px;
+}
+
+button#daftarBtn:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button#daftarBtn:hover:not(:disabled){
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+/* Halaman Profil */
+.profil-box{
+  width: 100%;
+  max-width: 420px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 20px rgba(147, 197, 253, 0.3);
+  display: none;
+}
+
+.profil-tampil{
+  display: block;
+}
+
+.profil-foto{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #bfdbfe;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  border: 4px solid #93c5fd;
+}
+
+.profil-foto img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profil-foto span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 48px;
+  color: #3b82f6;
+}
+
+.profil-item{
+  padding: 12px 0;
+  border-bottom: 1px solid #e0f2fe;
+}
+
+.profil-label{
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.profil-nilai{
+  font-size: 16px;
+  color: #0c4a6e;
+  font-weight: 600;
+}
+
+.id-box{
+  background: #f0f9ff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-top: 6px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #1d4ed8;
+  word-break: break-all;
+}
+
+/* Loading */
+.loading-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 64, 175, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.loading-box.tampil{
+  display: flex;
+}
+
+.loading-kotak{
+  background: white;
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.loading-bulat{
+  width: 50px;
+  height: 50px;
+  border: 4px solid #bfdbfe;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: muter 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes muter{
+  to { transform: rotate(360deg); }
+}
+
+.loading-teks{
+  color: #0369a1;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Berhasil */
+.berhasil-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(22, 163, 74, 0.15);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.berhasil-box.tampil{
+  display: flex;
+}
+
+.berhasil-kotak{
+  background: white;
+  padding: 35px 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(22, 163, 74, 0.2);
+}
+
+.berhasil-ikon{
+  font-size: 50px;
+  color: #16a34a;
+  margin-bottom: 10px;
+}
+
+.berhasil-teks{
+  color: #166534;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.berhasil-sub{
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.tutup-btn{
+  padding: 10px 25px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sembunyi{
+  display: none !important;
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <button class="menu-btn" onclick="bukaSidebar()">
+    <div class="garis-tiga"></div>
+  </button>
+  <h1>Cplay</h1>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="tutupSidebar()"></div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <button class="sidebar-tutup" onclick="tutupSidebar()">×</button>
+    <div class="sidebar-judul">Menu</div>
+  </div>
+  <div class="menu-item" onclick="bukaProfil()">Profil</div>
+</div>
+
+<!-- Halaman Registrasi -->
+<div class="container" id="halamanDaftar">
+  <h2>Buat Akun Baru</h2>
+
+  <label for="nickname">Nickname</label>
+  <input type="text" id="nickname" placeholder="Masukkan nama panggilan">
+  <div class="sudah-terpakai" id="sudahTerpakai">Nama ini sudah dipakai, pilih yang lain</div>
+  <div class="tersedia" id="tersedia">Nama tersedia</div>
+
+  <label for="username">Username</label>
+  <input type="text" id="username" placeholder="Buat nama pengguna unik">
+  <div class="sudah-terpakai" id="userTerpakai">Username sudah dipakai</div>
+  <div class="tersedia" id="userTersedia">Username tersedia</div>
+
+  <label>Tanggal Lahir</label>
+  <input type="date" id="tglLahir">
+
+  <label>Jenis Kelamin</label>
+  <div class="jenis-kelamin">
+    <button type="button" class="jk-btn" id="jkLaki" onclick="pilihJK('Laki-laki')">Laki-laki</button>
+    <button type="button" class="jk-btn" id="jkPerempuan" onclick="pilihJK('Perempuan')">Perempuan</button>
+  </div>
+
+  <label>Foto Profil</label>
+  <div class="foto-area">
+    <div class="foto-bulat" id="fotoBulat" onclick="document.getElementById('inputFoto').click()">
+      <span id="ikonFoto">+</span>
+      <img id="pratinjauFoto" src="" alt="Foto">
+    </div>
+    <p class="foto-teks" onclick="document.getElementById('inputFoto').click()">Klik untuk pilih foto</p>
+    <input type="file" id="inputFoto" accept="image/*" style="display:none" onchange="tampilFoto(this)">
+  </div>
+
+  <button id="daftarBtn" onclick="kirimData()">Daftar Sekarang</button>
+</div>
+
+<!-- Halaman Profil -->
+<div class="profil-box" id="halamanProfil">
+  <h2>Profil Saya</h2>
+  <div class="profil-foto" id="profilFoto">
+    <span id="profilIkon">+</span>
+    <img id="profilGambar" src="" alt="Foto Profil">
+  </div>
+  
+  <div class="profil-item">
+    <div class="profil-label">ID</div>
+    <div class="id-box" id="tampilID">-</div>
+  </div>
+  
+  <div class="profil-item">
+    <div class="profil-label">Nickname</div>
+    <div class="profil-nilai" id="tampilNickname">-</div>
+  </div>
+  
+  <div class="profil-item">
+    <div class="profil-label">Username</div>
+    <div class="profil-nilai" id="tampilUsername">-</div>
+  </div>
+  
+  <div class="profil-item">
+    <div class="profil-label">Tanggal Lahir</div>
+    <div class="profil-nilai" id="tampilTglLahir">-</div>
+  </div>
+  
+  <div class="profil-item">
+    <div class="profil-label">Jenis Kelamin</div>
+    <div class="profil-nilai" id="tampilJK">-</div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div class="loading-box" id="loadingBox">
+  <div class="loading-kotak">
+    <div class="loading-bulat"></div>
+    <p class="loading-teks">Sedang memproses...</p>
+  </div>
+</div>
+
+<!-- Berhasil -->
+<div class="berhasil-box" id="berhasilBox">
+  <div class="berhasil-kotak">
+    <div class="berhasil-ikon">✓</div>
+    <p class="berhasil-teks">Berhasil</p>
+    <p class="berhasil-sub">Akun kamu sudah dibuat</p>
+    <button class="tutup-btn" onclick="tutupBerhasil()">Oke</button>
+  </div>
+</div>
+
+<script>
+const namaTerpakai = ['admin', 'cimel', 'user', 'test', 'owner', 'admin123'];
+let jenisKelamin = '';
+let fotoBase64 = '';
+
+// Cek Nickname
+document.getElementById('nickname').addEventListener('input', function(){
+  const val = this.value.trim().toLowerCase();
+  const terpakai = document.getElementById('sudahTerpakai');
+  const tersedia = document.getElementById('tersedia');
+  
+  if(namaTerpakai.includes(val) && val.length > 0){
+    terpakai.style.display = 'block';
+    tersedia.style.display = 'none';
+  } else if(val.length > 0){
+    terpakai.style.display = 'none';
+    tersedia.style.display = 'block';
+  } else {
+    terpakai.style.display = 'none';
+    tersedia.style.display = 'none';
+  }
+});
+
+// Cek Username
+document.getElementById('username').addEventListener('input', function(){
+  const val = this.value.trim().toLowerCase();
+  const terpakai = document.getElementById('userTerpakai');
+  const tersedia = document.getElementById('userTersedia');
+  
+  if(namaTerpakai.includes(val) && val.length > 0){
+    terpakai.style.display = 'block';
+    tersedia.style.display = 'none';
+  } else if(val.length > 0){
+    terpakai.style.display = 'none';
+    tersedia.style.display = 'block';
+  } else {
+    terpakai.style.display = 'none';
+    tersedia.style.display = 'none';
+  }
+});
+
+// Pilih Jenis Kelamin
+function pilihJK(jk){
+  jenisKelamin = jk;
+  document.getElementById('jkLaki').classList.toggle('aktif', jk === 'Laki-laki');
+  document.getElementById('jkPerempuan').classList.toggle('aktif', jk === 'Perempuan');
+}
+
+// Tampil Foto
+function tampilFoto(input){
+  if(input.files && input.files[0]){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      fotoBase64 = e.target.result;
+      document.getElementById('pratinjauFoto').src = fotoBase64;
+      document.getElementById('pratinjauFoto').style.display = 'block';
+      document.getElementById('ikonFoto').style.display = 'none';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// Buka/Tutup Sidebar
+function bukaSidebar(){
+  document.getElementById('sidebar').classList.add('buka');
+  document.getElementById('overlay').classList.add('tampil');
+}
+
+function tutupSidebar(){
+  document.getElementById('sidebar').classList.remove('buka');
+  document.getElementById('overlay').classList.remove('tampil');
+}
+
+// Buka Halaman Profil
+function bukaProfil(){
+  tutupSidebar();
+  const data = localStorage.getItem('pengguna');
+  if(data){
+    const pengguna = JSON.parse(data);
+    document.getElementById('tampilID').textContent = pengguna.id;
+    document.getElementById('tampilNickname').textContent = pengguna.nickname;
+    document.getElementById('tampilUsername').textContent = pengguna.username;
+    document.getElementById('tampilTglLahir').textContent = pengguna.tglLahir;
+    document.getElementById('tampilJK').textContent = pengguna.jenisKelamin;
+    
+    if(pengguna.foto){
+      document.getElementById('profilGambar').src = pengguna.foto;
+      document.getElementById('profilGambar').style.display = 'block';
+      document.getElementById('profilIkon').style.display = 'none';
+    }
+  } else {
+    alert('Silakan buat akun terlebih dahulu');
+  }
+}
+
+// Buat ID Unik
+function buatID(){
+  const karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = 'CP-';
+  for(let i = 0; i < 10; i++){
+    id += karakter.charAt(Math.floor(Math.random() * karakter.length));
+  }
+  return id;
+}
+
+// Kirim Data
+function kirimData(){
+  const nickname = document.getElementById('nickname').value.trim();
+  const username = document.getElementById('username').value.trim();
+  const tglLahir = document.getElementById('tglLahir').value;
+  
+  if(!nickname || !username || !tglLahir || !jenisKelamin){
+    alert('Harap lengkapi semua data');
+    return;
+  }
+  
+  document.getElementById('loadingBox').classList.add('tampil');
+  
+  setTimeout(function(){
+    document.getElementById('loadingBox').classList.remove('tampil');
+    document.getElementById('berhasilBox').classList.add('tampil');
+    
+    const idBaru = buatID();
+    const dataPengguna = {
+      id: idBaru,
+      nickname: nickname,
+      username: username,
+      tglLahir: tglLahir,
+      jenisKelamin: jenisKelamin,
+      foto: fotoBase64
+    };
+    
+    localStorage.setItem('pengguna', JSON.stringify(dataPengguna));
+    namaTerpakai.push(username.toLowerCase());
+    namaTerpakai.push(nickname.toLowerCase());
+    
+    // Reset form
+    document.getElementById('nickname').value = '';
+    document.getElementById('username').value = '';
+    document.getElementById('tglLahir').value = '';
+    jenisKelamin = '';
+    document.getElementById('jkLaki').classList.remove('aktif');
+    document.getElementById('jkPerempuan').classList.remove('aktif');
+    document.getElementById('pratinjauFoto').style.display = 'none';
+    document.getElementById('ikonFoto').style.display = 'block';
+    fotoBase64 = '';
+  }, 2000);
+}
+
+function tutupBerhasil(){
+  document.getElementById('berhasilBox').classList.remove('tampil');
+}
+</script>
+
+</body>
+  </html>
+  
