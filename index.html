@@ -77,7 +77,23 @@ body{
   font-weight: bold;
 }
 
-/* Sidebar Menu */
+/* Overlay */
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+  display: none;
+}
+
+.overlay.tampil{
+  display: block;
+}
+
+/* Sidebar */
 .sidebar{
   position: fixed;
   top: 0;
@@ -133,22 +149,6 @@ body{
 .menu-item:hover{
   background: #f0f9ff;
   color: #0369a1;
-}
-
-/* Overlay */
-.overlay{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 99;
-  display: none;
-}
-
-.overlay.tampil{
-  display: block;
 }
 
 /* Halaman Registrasi */
@@ -316,6 +316,7 @@ button#daftarBtn:hover{
   margin: 0 auto 20px;
   overflow: hidden;
   border: 4px solid #93c5fd;
+  cursor: pointer;
 }
 
 .profil-foto img{
@@ -346,22 +347,91 @@ button#daftarBtn:hover{
   margin-bottom: 4px;
 }
 
-.profil-nilai{
-  font-size: 16px;
-  color: #0c4a6e;
-  font-weight: 600;
+.id-wrapper{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .id-box{
   background: #f0f9ff;
   padding: 10px 14px;
   border-radius: 8px;
-  margin-top: 6px;
   font-family: monospace;
   font-size: 16px;
   color: #1d4ed8;
   font-weight: bold;
   letter-spacing: 1px;
+  flex: 1;
+}
+
+.salin-btn{
+  background: #e0f2fe;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.salin-btn:hover{
+  background: #bfdbfe;
+}
+
+.salin-btn svg{
+  width: 18px;
+  height: 18px;
+  fill: #0369a1;
+}
+
+.salin-btn.ter-salin{
+  background: #d1fae5;
+}
+
+.profil-input{
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e0f2fe;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fafafa;
+  color: #0c4a6e;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.profil-input:focus{
+  border-color: #3b82f6;
+  background: white;
+}
+
+.profil-input.tidak-bisa-edit{
+  background: #e9e9e9;
+  border-color: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.simpan-btn{
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s ease;
+}
+
+.simpan-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
 }
 
 .sembunyi{
@@ -531,35 +601,49 @@ button#daftarBtn:hover{
 <!-- Halaman Profil -->
 <div class="profil-box" id="halamanProfil">
   <h2>Profil Saya</h2>
-  <div class="profil-foto" id="profilFoto">
+  
+  <div class="profil-foto" id="profilFoto" onclick="document.getElementById('gantiFoto').click()">
     <span id="profilIkon">+</span>
     <img id="profilGambar" src="" alt="Foto Profil">
   </div>
+  <input type="file" id="gantiFoto" accept="image/*" style="display:none" onchange="gantiFotoProfil(this)">
   
   <div class="profil-item">
     <div class="profil-label">ID</div>
-    <div class="id-box" id="tampilID">-</div>
+    <div class="id-wrapper">
+      <div class="id-box" id="tampilID">-</div>
+      <button class="salin-btn" id="salinBtn" onclick="salinID()">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+        </svg>
+      </button>
+    </div>
   </div>
   
   <div class="profil-item">
     <div class="profil-label">Nickname</div>
-    <div class="profil-nilai" id="tampilNickname">-</div>
+    <input type="text" class="profil-input" id="editNickname">
   </div>
   
   <div class="profil-item">
     <div class="profil-label">Username</div>
-    <div class="profil-nilai" id="tampilUsername">-</div>
+    <input type="text" class="profil-input" id="editUsername">
   </div>
   
   <div class="profil-item">
     <div class="profil-label">Tanggal Lahir</div>
-    <div class="profil-nilai" id="tampilTglLahir">-</div>
+    <input type="date" class="profil-input" id="editTglLahir">
   </div>
   
   <div class="profil-item">
     <div class="profil-label">Jenis Kelamin</div>
-    <div class="profil-nilai" id="tampilJK">-</div>
+    <select class="profil-input" id="editJK">
+      <option value="Laki-laki">Laki-laki</option>
+      <option value="Perempuan">Perempuan</option>
+    </select>
   </div>
+  
+  <button class="simpan-btn" onclick="simpanPerubahan()">Simpan Perubahan</button>
 </div>
 
 <!-- Loading -->
@@ -575,7 +659,7 @@ button#daftarBtn:hover{
   <div class="berhasil-kotak">
     <div class="berhasil-ikon">✓</div>
     <p class="berhasil-teks">Berhasil</p>
-    <p class="berhasil-sub">Akun kamu sudah dibuat</p>
+    <p class="berhasil-sub" id="teksBerhasil">Akun kamu sudah dibuat</p>
     <button class="tutup-btn" onclick="tutupBerhasil()">Oke</button>
   </div>
 </div>
@@ -584,31 +668,14 @@ button#daftarBtn:hover{
 const namaTerpakai = ['admin', 'cimel', 'user', 'test', 'owner', 'admin123'];
 let jenisKelamin = '';
 let fotoBase64 = '';
+let akunData = null;
 
-// Cek apakah sudah ada akun sebelumnya
+// Cek apakah sudah ada akun
 function cekAkunAda(){
   const data = localStorage.getItem('pengguna');
   if(data){
+    akunData = JSON.parse(data);
     document.getElementById('menuBtn').classList.add('tampil');
-    document.getElementById('halamanDaftar').classList.add('sembunyi');
-    document.getElementById('halamanProfil').classList.add('tampil');
-    const pengguna = JSON.parse(data);
-    tampilkanDataProfil(pengguna);
-  }
-}
-
-// Tampilkan data ke halaman profil
-function tampilkanDataProfil(pengguna){
-  document.getElementById('tampilID').textContent = pengguna.id;
-  document.getElementById('tampilNickname').textContent = pengguna.nickname;
-  document.getElementById('tampilUsername').textContent = pengguna.username;
-  document.getElementById('tampilTglLahir').textContent = pengguna.tglLahir;
-  document.getElementById('tampilJK').textContent = pengguna.jenisKelamin;
-  
-  if(pengguna.foto){
-    document.getElementById('profilGambar').src = pengguna.foto;
-    document.getElementById('profilGambar').style.display = 'block';
-    document.getElementById('profilIkon').style.display = 'none';
   }
 }
 
@@ -655,7 +722,7 @@ function pilihJK(jk){
   document.getElementById('jkPerempuan').classList.toggle('aktif', jk === 'Perempuan');
 }
 
-// Tampil Foto
+// Tampil Foto di registrasi
 function tampilFoto(input){
   if(input.files && input.files[0]){
     const reader = new FileReader();
@@ -664,6 +731,20 @@ function tampilFoto(input){
       document.getElementById('pratinjauFoto').src = fotoBase64;
       document.getElementById('pratinjauFoto').style.display = 'block';
       document.getElementById('ikonFoto').style.display = 'none';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// Ganti Foto di profil
+function gantiFotoProfil(input){
+  if(input.files && input.files[0]){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      akunData.foto = e.target.result;
+      document.getElementById('profilGambar').src = akunData.foto;
+      document.getElementById('profilGambar').style.display = 'block';
+      document.getElementById('profilIkon').style.display = 'none';
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -683,9 +764,28 @@ function tutupSidebar(){
 // Buka Halaman Profil
 function bukaProfil(){
   tutupSidebar();
+  if(akunData){
+    document.getElementById('halamanDaftar').classList.add('sembunyi');
+    document.getElementById('halamanProfil').classList.add('tampil');
+    
+    document.getElementById('tampilID').textContent = akunData.id;
+    document.getElementById('editNickname').value = akunData.nickname;
+    document.getElementById('editUsername').value = akunData.username;
+    document.getElementById('editTglLahir').value = akunData.tglLahir;
+    document.getElementById('editJK').value = akunData.jenisKelamin;
+    
+    if(akunData.foto){
+      document.getElementById('profilGambar').src = akunData.foto;
+      document.getElementById('profilGambar').style.display = 'block';
+      document.getElementById('profilIkon').style.display = 'none';
+    } else {
+      document.getElementById('profilGambar').style.display = 'none';
+      document.getElementById('profilIkon').style.display = 'flex';
+    }
+  }
 }
 
-// Buat ID Unik dengan awalan CML
+// Buat ID: CML + 5 karakter acak
 function buatID(){
   const karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let id = 'CML';
@@ -695,7 +795,30 @@ function buatID(){
   return id;
 }
 
-// Kirim Data
+// Salin ID
+function salinID(){
+  const idText = document.getElementById('tampilID').textContent;
+  navigator.clipboard.writeText(idText).then(() => {
+    const btn = document.getElementById('salinBtn');
+    btn.classList.add('ter-salin');
+    setTimeout(() => btn.classList.remove('ter-salin'), 1500);
+  });
+}
+
+// Simpan perubahan profil
+function simpanPerubahan(){
+  akunData.nickname = document.getElementById('editNickname').value.trim();
+  akunData.username = document.getElementById('editUsername').value.trim();
+  akunData.tglLahir = document.getElementById('editTglLahir').value;
+  akunData.jenisKelamin = document.getElementById('editJK').value;
+  
+  localStorage.setItem('pengguna', JSON.stringify(akunData));
+  
+  document.getElementById('teksBerhasil').textContent = 'Perubahan berhasil disimpan';
+  document.getElementById('berhasilBox').classList.add('tampil');
+}
+
+// Kirim Data Registrasi
 function kirimData(){
   const nickname = document.getElementById('nickname').value.trim();
   const username = document.getElementById('username').value.trim();
@@ -710,10 +833,9 @@ function kirimData(){
   
   setTimeout(function(){
     document.getElementById('loadingBox').classList.remove('tampil');
-    document.getElementById('berhasilBox').classList.add('tampil');
     
     const idBaru = buatID();
-    const dataPengguna = {
+    akunData = {
       id: idBaru,
       nickname: nickname,
       username: username,
@@ -722,15 +844,13 @@ function kirimData(){
       foto: fotoBase64
     };
     
-    localStorage.setItem('pengguna', JSON.stringify(dataPengguna));
+    localStorage.setItem('pengguna', JSON.stringify(akunData));
     namaTerpakai.push(username.toLowerCase());
     namaTerpakai.push(nickname.toLowerCase());
     
-    // Tampilkan garis tiga dan halaman profil
     document.getElementById('menuBtn').classList.add('tampil');
-    document.getElementById('halamanDaftar').classList.add('sembunyi');
-    document.getElementById('halamanProfil').classList.add('tampil');
-    tampilkanDataProfil(dataPengguna);
+    document.getElementById('teksBerhasil').textContent = 'Akun kamu sudah dibuat';
+    document.getElementById('berhasilBox').classList.add('tampil');
   }, 2000);
 }
 
@@ -738,7 +858,7 @@ function tutupBerhasil(){
   document.getElementById('berhasilBox').classList.remove('tampil');
 }
 
-// Saat halaman dimuat, cek apakah sudah ada akun
+// Cek saat halaman dimuat
 cekAkunAda();
 </script>
 
