@@ -1,1039 +1,223 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cplay - Teman Baru, Cerita Baru</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --biru-soft: #e6f0fa;
-            --biru-mentah: #4a90e2;
-            --biru-gelap: #357abd;
-            --putih: #ffffff;
-            --abu-soft: #f0f4f8;
-            --teks: #2c3e50;
-            --teks-abu: #7f8c8d;
-            --sukses: #2ecc71;
-            --peringatan: #e74c3c;
-        }
-
-        body {
-            background-color: var(--biru-soft);
-            color: var(--teks);
-            min-height: 100vh;
-        }
-
-        .layar {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .layar.aktif {
-            display: block;
-        }
-
-        /* ==== HALAMAN LOGIN ==== */
-        .container-login {
-            max-width: 420px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .logo h1 {
-            color: var(--biru-mentah);
-            font-size: 32px;
-        }
-
-        .logo p {
-            color: var(--teks-abu);
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .kotak-form {
-            background: var(--putih);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.1);
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--teks);
-            font-weight: 500;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d0e0f0;
-            border-radius: 8px;
-            font-size: 15px;
-            background: var(--biru-soft);
-            transition: 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--biru-mentah);
-            background: var(--putih);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-biru {
-            background: var(--biru-mentah);
-            color: white;
-        }
-
-        .btn-biru:hover {
-            background: var(--biru-gelap);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--biru-mentah);
-            border: 1px solid var(--biru-mentah);
-        }
-
-        .btn-outline:hover {
-            background: var(--biru-soft);
-        }
-
-        .link-bawah {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .link-bawah a {
-            color: var(--biru-mentah);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .link-bawah a:hover {
-            text-decoration: underline;
-        }
-
-        .baris-dua {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .radio-pilihan {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #d0e0f0;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            background: var(--putih);
-        }
-
-        .radio-pilihan.terpilih {
-            border-color: var(--biru-mentah);
-            background: var(--biru-soft);
-            color: var(--biru-gelap);
-        }
-
-        /* ==== LAYAR UTAMA — Gaya WhatsApp ==== */
-        .app-container {
-            display: flex;
-            height: 100vh;
-            background: var(--putih);
-        }
-
-        /* Sidebar Kiri */
-        .sidebar-kiri {
-            width: 380px;
-            border-right: 1px solid #e0e8f0;
-            display: flex;
-            flex-direction: column;
-            background: var(--biru-soft);
-        }
-
-        .header-sidebar {
-            padding: 15px 20px;
-            background: var(--putih);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #e0e8f0;
-        }
-
-        .profil-mini {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .avatar-kecil {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--biru-mentah);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .info-profil h4 {
-            font-size: 14px;
-            color: var(--teks);
-        }
-
-        .info-profil p {
-            font-size: 12px;
-            color: var(--teks-abu);
-        }
-
-        .koin-tampil {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 600;
-            color: var(--teks);
-        }
-
-        .tombol-titik {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: none;
-            background: transparent;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--teks-abu);
-        }
-
-        .tombol-titik:hover {
-            background: var(--biru-soft);
-        }
-
-        .pencarian {
-            padding: 12px 15px;
-        }
-
-        .pencarian input {
-            width: 100%;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 20px;
-            background: var(--putih);
-            border: 1px solid #d0e0f0;
-            font-size: 14px;
-        }
-
-        .pencarian input:focus {
-            outline: none;
-            border-color: var(--biru-mentah);
-        }
-
-        .nav-tab {
-            display: flex;
-            border-bottom: 1px solid #e0e8f0;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            background: transparent;
-            color: var(--teks-abu);
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .tab-btn.aktif {
-            color: var(--biru-mentah);
-            border-bottom: 2px solid var(--biru-mentah);
-        }
-
-        .daftar-item {
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        .item-teman {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            border-bottom: 1px solid #e8eef4;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .item-teman:hover {
-            background: var(--biru-soft);
-        }
-
-        .item-teman.aktif {
-            background: #dcecfc;
-        }
-
-        .avatar-teman {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--biru-mentah);
-            margin-right: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            position: relative;
-        }
-
-        .status-dot {
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-
-        .status-dot.online {
-            background: var(--sukses);
-        }
-
-        .status-dot.offline {
-            background: #bdc3c7;
-        }
-
-        .info-teman {
-            flex: 1;
-        }
-
-        .info-teman h5 {
-            font-size: 14px;
-            color: var(--teks);
-        }
-
-        .info-teman p {
-                  font-size: 12px;
-            color: var(--teks-abu);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 200px;
-        }
-
-        .waktu-chat {
-            font-size: 11px;
-            color: var(--teks-abu);
-        }
-
-        .btn-kecil {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-
-        .btn-tambah {
-            background: var(--biru-mentah);
-            color: white;
-        }
-
-        .btn-terima {
-            background: var(--sukses);
-            color: white;
-            margin-right: 5px;
-        }
-
-        .btn-tolak {
-            background: var(--peringatan);
-            color: white;
-        }
-
-        /* Ruang Chat */
-        .ruang-chat {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #f7fafc;
-        }
-
-        .header-chat {
-            padding: 12px 20px;
-            background: var(--putih);
-            border-bottom: 1px solid #e0e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .info-chat {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .badan-chat {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: linear-gradient(180deg, #f0f6fc 0%, #e6f0fa 100%);
-        }
-
-        .pesan {
-            max-width: 65%;
-            margin-bottom: 12px;
-            padding: 10px 15px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.4;
-            position: relative;
-        }
-
-        .pesan.dikirim {
-            background: #dcf8c6;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
-        }
-
-        .pesan.diterima {
-            background: var(--putih);
-            margin-right: auto;
-            border-bottom-left-radius: 4px;
-        }
-
-        .waktu-pesan {
-            font-size: 10px;
-            color: var(--teks-abu);
-            margin-top: 4px;
-            text-align: right;
-        }
-
-        .kotak-kirim {
-            padding: 15px 20px;
-            background: var(--putih);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            border-top: 1px solid #e0e8f0;
-        }
-
-        .kotak-kirim input {
-            flex: 1;
-            padding: 12px 18px;
-            border: 1px solid #d0e0f0;
-            border-radius: 24px;
-            font-size: 14px;
-        }
-
-        .kotak-kirim button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: var(--biru-mentah);
-            color: white;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        /* Panel Samping Kanan (Notifikasi & Menu) */
-        .panel-kanan {
-            width: 320px;
-            border-left: 1px solid #e0e8f0;
-            background: var(--putih);
-            display: none;
-        }
-
-        .panel-kanan.buka {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .panel-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid #e0e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .panel-header h3 {
-            font-size: 16px;
-        }
-
-        .tutup-panel {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: var(--teks-abu);
-        }
-
-        .isi-panel {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .item-notifikasi {
-            padding: 12px;
-            background: var(--biru-soft);
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .item-notifikasi p {
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        /* Mabar & Task */
-        .bagian-mabar {
-            padding: 15px;
-        }
-
-        .judul-bagian {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--biru-gelap);
-        }
-
-        .kotak-mabar {
-            background: var(--putih);
-            border: 1px solid #d0e0f0;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 12px;
-        }
-
-        .baris-pemain {
-            display: flex;
-            gap: 8px;
-            margin: 10px 0;
-        }
-
-        .slot-pemain {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--biru-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: var(--teks-abu);
-        }
-
-        .slot-pemain.siap {
-            background: #dcf8c6;
-            color: var(--sukses);
-        }
-
-        .btn-mabar {
-            background: var(--biru-mentah);
-            color: white;
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        .sembunyi {
-            display: none !important;
-        }
-
-        .pesan-kosong {
-            text-align: center;
-            padding: 40px;
-            color: var(--teks-abu);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cplay</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ======================================
-     HALAMAN LOGIN
-     ====================================== -->
-<div id="layar-login" class="layar aktif">
-    <div class="container-login">
-        <div class="logo">
-            <h1>Cplay</h1>
-            <p>Teman baru, cerita baru</p>
-        </div>
-
-        <div class="kotak-form">
-            <div class="input-group">
-                <label>ID / Nama Pengguna</label>
-                <input type="text" id="login-id" placeholder="Masukkan nama atau ID">
-            </div>
-            <div class="input-group">
-                <label>Kata Sandi</label>
-                <input type="password" id="login-pass" placeholder="Masukkan kata sandi">
-            </div>
-            <button class="btn btn-biru" onclick="masuk()">Masuk</button>
-            
-            <div class="link-bawah">
-                <p>Belum punya akun? <a onclick="gantiLayar('layar-registrasi')">Buat Akun Baru</a></p>
-                <p style="margin-top: 8px;"><a href="#">Lupa kata sandi?</a></p>
-            </div>
-        </div>
-    </div>
+<!-- === HALAMAN MASUK === -->
+<div class="layar-masuk" id="layarMasuk">
+  <div class="kotak-masuk">
+    <h1>Cplay</h1>
+    <p>Masukkan nama untuk mulai bermain</p>
+    <input type="text" class="input" id="namaPengguna" placeholder="Nama kamu..." maxlength="20">
+    <button class="btn btn-biru" onclick="masuk()">Masuk & Mulai</button>
+  </div>
 </div>
 
-<!-- ======================================
-     HALAMAN REGISTRASI
-     ====================================== -->
-<div id="layar-registrasi" class="layar">
-    <div class="container-login">
-        <div class="logo">
-            <h1>Cplay</h1>
-            <p>Daftar akun baru</p>
-        </div>
-
-        <div class="kotak-form">
-            <div class="input-group">
-                <label>Nama Pengguna</label>
-                <input type="text" id="reg-nama" placeholder="Buat nama pengguna">
-            </div>
-            <div class="input-group">
-                <label>Email</label>
-                <input type="email" id="reg-email" placeholder="Masukkan email">
-            </div>
-            <div class="input-group">
-                <label>Kata Sandi</label>
-                <input type="password" id="reg-pass" placeholder="Buat kata sandi">
-            </div>
-            <div class="input-group">
-                <label>Jenis Kelamin</label>
-                <div class="baris-dua">
-                    <div class="radio-pilihan terpilih" id="radio-laki" onclick="pilihKelamin('laki')">Laki-laki</div>
-                    <div class="radio-pilihan" id="radio-perem" onclick="pilihKelamin('perempuan')">Perempuan</div>
-                </div>
-            </div>
-            <button class="btn btn-biru" onclick="daftar()">Daftar</button>
-            
-            <div class="link-bawah">
-                <p>Sudah punya akun? <a onclick="gantiLayar('layar-login')">Masuk disini</a></p>
-            </div>
-        </div>
+<!-- === APLIKASI UTAMA === -->
+<div class="aplikasi" id="aplikasi">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-atas">
+      <h2>Cplay</h2>
     </div>
-</div>
-
-<!-- ======================================
-     LAYAR UTAMA — SETELAH LOGIN
-     ====================================== -->
-<div id="layar-utama" class="layar">
-    <div class="app-container">
-        <!-- === SIDEBAR KIRI === -->
-        <div class="sidebar-kiri">
-            <div class="header-sidebar">
-                <div class="profil-mini">
-                    <div class="avatar-kecil" id="avatar-saya">S</div>
-                    <div class="info-profil">
-                        <h4 id="nama-saya">Saya</h4>
-                        <p class="koin-tampil">🪙 125</p>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn-kecil btn-outline" style="padding: 4px 10px; font-size: 12px;" onclick="gantiLayar('layar-registrasi')">+ Akun</button>
-                    <button class="tombol-titik" onclick="bukaPanel()">⋯</button>
-                </div>
-            </div>
-
-            <div class="pencarian">
-                <input type="text" id="cari-teman" placeholder="Cari teman dengan ID...">
-                <button class="btn btn-kecil btn-biru" style="width: 100%; margin-top: 8px;" onclick="cariPengguna()">Cari & Temukan</button>
-            </div>
-
-            <div class="nav-tab">
-                <button class="tab-btn aktif" onclick="gantiTab('daftar-chat')">Obrolan</button>
-                <button class="tab-btn" onclick="gantiTab('daftar-teman')">Teman</button>
-                <button class="tab-btn" onclick="gantiTab('bagian-mabar')">Mabar</button>
-            </div>
-
-            <!-- DAFTAR CHAT -->
-            <div id="daftar-chat" class="daftar-item">
-                <div class="pesan-kosong" id="kosong-chat">Belum ada obrolan. Tambah teman dulu ya!</div>
-            </div>
-
-            <!-- DAFTAR TEMAN -->
-            <div id="daftar-teman" class="daftar-item sembunyi">
-                <div style="padding: 10px 15px; font-size: 13px; font-weight: 600; color: #2ecc71;">🟢 Online</div>
-                                 <div id="daftar-online"></div>
-                <div style="padding: 10px 15px; font-size: 13px; font-weight: 600; color: #95a5a6; margin-top: 10px;">⚪ Offline</div>
-                <div id="daftar-offline"></div>
-                <div class="pesan-kosong" id="kosong-teman">Belum punya teman. Cari teman pakai ID di atas ya!</div>
-            </div>
-
-            <!-- MABAR & TASK -->
-            <div id="bagian-mabar" class="sembunyi">
-                <div class="bagian-mabar">
-                    <div class="judul-bagian">Buat Ruang Mabar</div>
-                    <div class="kotak-mabar">
-                        <input type="text" placeholder="Masukkan nama ruangan" style="width: 100%; padding: 8px; border: 1px solid #d0e0f0; border-radius: 6px; margin-bottom: 8px;">
-                        <button class="btn btn-biru" style="padding: 8px;">➕ Buat Ruangan</button>
-                    </div>
-
-                    <div class="judul-bagian">Ruangan Populer</div>
-                    <div class="kotak-mabar">
-                        <strong>Free Fire - BR</strong>
-                        <p style="font-size: 13px; color: #7f8c8d;">ID: 8927234 • 4/4 Pemain</p>
-                        <div class="baris-pemain">
-                            <div class="slot-pemain siap">👤</div>
-                            <div class="slot-pemain">?</div>
-                            <div class="slot-pemain">?</div>
-                            <div class="slot-pemain">?</div>
-                        </div>
-                        <button class="btn btn-kecil btn-biru" style="width: 100%; margin-top: 5px;">Gabung</button>
-                    </div>
-
-                    <div class="kotak-mabar">
-                        <strong>Task Bersama Hari Ini</strong>
-                        <p style="font-size: 13px; margin-top: 8px;">✅ Main 1 kali bersama: 🪙10</p>
-                        <p style="font-size: 13px;">✅ Main 3 kali bersama: 🪙30</p>
-                        <p style="font-size: 13px;">✅ Selesaikan 1 misi: 🪙15</p>
-                        <button class="btn btn-mabar" onclick="alert('Mabar dimulai! Ajak teman kamu main bareng ya! 🎮')">Mulai Mabar & Task</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- === RUANG CHAT === -->
-        <div class="ruang-chat">
-            <div class="header-chat">
-                <div class="info-chat">
-                    <div class="avatar-teman" id="chat-avatar">?</div>
-                    <div>
-                        <h5 id="chat-nama">Pilih teman untuk memulai obrolan</h5>
-                        <small style="color: #7f8c8d;" id="chat-status">-</small>
-                    </div>
-                </div>
-                <div>
-                    <button class="btn-kecil btn-biru" id="btn-mabar-chat" style="display: none;" onclick="ajakMabar()">🎮 Ajak Mabar</button>
-                </div>
-            </div>
-
-            <div class="badan-chat" id="badan-chat">
-                <div class="pesan-kosong">Pilih teman dari daftar untuk mulai mengobrol 💬</div>
-            </div>
-
-            <div class="kotak-kirim" id="kotak-kirim" style="display: none;">
-                <input type="text" id="input-pesan" placeholder="Ketik pesan...">
-                <button onclick="kirimPesan()">➤</button>
-            </div>
-        </div>
-
-        <!-- === PANEL KANAN — NOTIFIKASI & MENU === -->
-        <div class="panel-kanan" id="panel-samping">
-            <div class="panel-header">
-                <h3>Notifikasi & Menu</h3>
-                <button class="tutup-panel" onclick="tutupPanel()">✕</button>
-            </div>
-            <div class="isi-panel" id="isi-panel">
-                <div class="judul-bagian">Permintaan Pertemanan</div>
-                <div id="daftar-permintaan">
-                    <p style="color: #95a5a6; font-size: 14px;">Belum ada permintaan pertemanan</p>
-                </div>
-
-                <div class="judul-bagian" style="margin-top: 25px;">Pengaturan Akun</div>
-                <div style="font-size: 14px; line-height: 2;">
-                    <p>👤 Lihat Profil</p>
-                    <p>🪙 Top Up Koin</p>
-                    <p>⚙️ Pengaturan</p>
-                    <p>❓ Bantuan</p>
-                    <p style="color: #e74c3c; cursor: pointer;" onclick="keluar()">Keluar Akun</p>
-                </div>
-            </div>
-        </div>
+    <div class="sidebar-menu">
+      <div class="menu-item aktif" id="menuBeranda" onclick="bukaHalaman('beranda')">
+        <span>🏠</span><span>Beranda</span>
+      </div>
+      <div class="menu-item" id="menuTeman" onclick="bukaHalaman('teman')">
+        <span>👥</span><span>Teman</span>
+      </div>
+      <div class="menu-item" id="menuTask" onclick="bukaHalaman('task')">
+        <span>📋</span><span>Task</span>
+      </div>
+      <div class="menu-item" id="menuNotif" onclick="bukaHalaman('notif')">
+        <span>🔔</span><span>Permintaan</span>
+      </div>
+      <div class="menu-item" id="menuProfil" onclick="bukaHalaman('profil')">
+        <span>👤</span><span>Profil</span>
+      </div>
     </div>
-</div>
+    <div class="sidebar-bawah">
+      <div class="profil-mini" onclick="bukaHalaman('profil')">
+        <div class="foto-kecil">👤</div>
+        <div class="nama-mini" id="namaMini">-</div>
+        <div class="koin-mini" id="koinMini">🪙 0</div>
+      </div>
+    </div>
+  </div>
 
-<script>
-// Data Global
-let penggunaSaya = { nama: 'Saya', id: 'ID000001', koin: 125 };
-let daftarTeman = [];
-let permintaanPertemanan = [];
-let riwayatChat = {};
-let tabAktif = 'daftar-chat';
+  <!-- KONTEN TENGAH -->
+  <div class="konten" id="kontenUtama">
+    <!-- BERANDA -->
+    <div id="halBeranda">
+      <h2 class="judul-halaman">Teman Saya</h2>
+      <div class="cari-bar">
+        <input type="text" id="cariId" placeholder="Cari ID teman...">
+        <button class="btn-kecil btn-biru" onclick="bukaModalCari()">Cari</button>
+      </div>
+      <div class="daftar-teman" id="daftarTeman">
+        <div class="tidak-ada">Belum ada teman. Cari ID teman untuk menambahkan.</div>
+      </div>
+    </div>
 
-// Ganti Layar
-function gantiLayar(idLayar) {
-    document.querySelectorAll('.layar').forEach(l => l.classList.remove('aktif'));
-    document.getElementById(idLayar).classList.add('aktif');
-}
+    <!-- TEMAN -->
+    <div id="halTeman" class="sembunyi">
+      <h2 class="judul-halaman">Daftar Teman</h2>
+      <div class="daftar-teman" id="daftarTeman2">
+        <div class="tidak-ada">Belum ada teman.</div>
+      </div>
+    </div>
 
-// Pilih Jenis Kelamin
-function pilihKelamin(jns) {
-    document.getElementById('radio-laki').classList.remove('terpilih');
-    document.getElementById('radio-perem').classList.remove('terpilih');
-    if (jns === 'laki') document.getElementById('radio-laki').classList.add('terpilih');
-    else document.getElementById('radio-perem').classList.add('terpilih');
-}
+    <!-- TASK -->
+    <div id="halTask" class="sembunyi">
+      <h2 class="judul-halaman">Tugas Harian</h2>
+      <div class="daftar-task">
+        <div class="item-task">
+          <div class="nama-task">Menambah 1 teman baru</div>
+          <div class="hadiah-task">🪙 +5</div>
+          <button class="btn-kecil btn-biru" id="taskTambahTeman" onclick="ambilHadiah('tambahTeman')">Ambil</button>
+        </div>
+        <div class="item-task">
+          <div class="nama-task">Kirim pesan ke teman</div>
+          <div class="hadiah-task">🪙 +5</div>
+          <button class="btn-kecil btn-biru" id="taskKirimChat" onclick="ambilHadiah('kirimChat')">Ambil</button>
+        </div>
+      </div>
+      <div style="margin-top:24px;padding:20px;background:var(--putih);border-radius:10px;text-align:center;border:1px solid var(--abu-batas)">
+        <div style="color:var(--abu-teks);font-size:14px">Total Koin</div>
+        <div style="font-size:32px;font-weight:700;color:var(--kuning);margin-top:8px" id="totalKoin">🪙 0</div>
+      </div>
+    </div>
 
-// Daftar Akun
-function daftar() {
-    let nama = document.getElementById('reg-nama').value.trim();
-    if (!nama) { alert('Silakan isi nama pengguna!'); return; }
-    penggunaSaya.nama = nama;
-    penggunaSaya.id = 'ID' + Math.floor(Math.random() * 900000 + 100000);
-    alert('Selamat datang, ' + nama + '! Akun berhasil dibuat. ID kamu: ' + penggunaSaya.id);
-    masuk();
-}
+    <!-- PERMINTAAN -->
+    <div id="halNotif" class="sembunyi">
+      <h2 class="judul-halaman">Permintaan Pertemanan</h2>
+      <div id="daftarPermintaan">
+        <div class="tidak-ada">Belum ada permintaan.</div>
+      </div>
+    </div>
 
-// Masuk / Login
-function masuk() {
-    let namaInput = document.getElementById('login-id').value.trim();
-    if (namaInput) penggunaSaya.nama = namaInput;
-    document.getElementById('nama-saya').textContent = penggunaSaya.nama;
-    document.getElementById('avatar-saya').textContent = penggunaSaya.nama.charAt(0).toUpperCase();
-    gantiLayar('layar-utama');
-    perbaruiDaftarTeman();
-}
-
-// Keluar
-function keluar() {
-    if (confirm('Yakin ingin keluar?')) {
-        tutupPanel();
-        gantiLayar('layar-login');
-    }
-}
-
-// Ganti Tab
-function gantiTab(namaTab) {
-    tabAktif = namaTab;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('aktif'));
-    event.target.classList.add('aktif');
-    document.getElementById('daftar-chat').classList.add('sembunyi');
-    document.getElementById('daftar-teman').classList.add('sembunyi');
-    document.getElementById('bagian-mabar').classList.add('sembunyi');
-    document.getElementById(namaTab).classList.remove('sembunyi');
-}
-
-// Cari Pengguna
-function cariPengguna() {
-    let kata = document.getElementById('cari-teman').value.trim();
-    if (!kata) { alert('Masukkan ID atau nama teman yang dicari!'); return; }
-    
-    let namaHasil = kata + '_Friend';
-    let idHasil = 'ID' + Math.floor(Math.random() * 900000 + 100000);
-    
-    let sudahAda = daftarTeman.some(t => t.id === idHasil);
-    if (sudahAda) { alert(namaHasil + ' sudah ada di daftar temanmu!'); return; }
-    
-    let konfirmasi = confirm('Ditemukan: ' + namaHasil + ' (' + idHasil + ')\n\nKirim permintaan pertemanan?');
-    if (konfirmasi) {
-        permintaanPertemanan.push({ nama: namaHasil, id: idHasil, dari: 'luar' });
-        alert('Permintaan pertemanan dikirim ke ' + namaHasil + '! 📩');
+    <!-- PROFIL -->
+    <div id="halProfil" class="sembunyi">
+      <h2 class="judul-halaman">Profil Saya</h2>
+      <div class="kotak-profil">
+        <div class="foto-besar">👤</div>
+        <div class="nama-besar" id="namaProfil">-</div>
+        <div class="id-besar">ID: <span id="idSaya">-</span> <button class="btn-kecil btn-abu" onclick="salinId()">Salin</button></div>
+        <div class="koin-besar" id="koinProfil">🪙 0</div>
         
-        setTimeout(() => {
-            let namaBalas = 'Zhen';
-            let idBalas = 'ID100245';
-            permintaanPertemanan.unshift({ nama: namaBalas, id: idBalas, dari: 'dalam' });
-            perbaruiNotifikasi();
-            alert(namaBalas + ' ingin berteman denganmu! Cek di notifikasi ya! 🔔');
-        }, 1500);
-    }
-}
+        <div class="form-edit">
+          <label>Ubah Nama</label>
+          <input type="text" id="ubahNama" placeholder="Nama baru..." maxlength="20">
+          <button class="btn btn-biru" onclick="simpanNama()">Simpan Perubahan</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-// Perbarui Notifikasi
-function perbaruiNotifikasi() {
-    let wadah = document.getElementById('daftar-permintaan');
-    if (permintaanPertemanan.length === 0) {
-        wadah.innerHTML = '<p style="color: #95a5a6; font-size: 14px;">Belum ada permintaan pertemanan</p>';
-        return;
-    }
-    wadah.innerHTML = '';
-    permintaanPertemanan.forEach((p, i) => {
-        wadah.innerHTML += `
-            <div class="item-notifikasi">
-                <p><strong>${p.nama}</strong> ingin berteman denganmu</p>
-                <div>
-                    <button class="btn-kecil btn-terima" onclick="terimaPertemanan(${i})">Terima</button>
-                    <button class="btn-kecil btn-tolak" onclick="tolakPertemanan(${i})">Tolak</button>
-                </div>
-            </div>
-        `;
-    });
-}
-
-// Terima Pertemanan
-function terimaPertemanan(index) {
-    let p = permintaanPertemanan[index];
-    let temanBaru = { nama: p.nama, id: p.id, online: true };
-    daftarTeman.push(temanBaru);
-    riwayatChat[p.id] = [];
-    permintaanPertemanan.splice(index, 1);
-    perbaruiNotifikasi();
-    perbaruiDaftarTeman();
-    alert(p.nama + ' sekarang adalah temanmu! 🎉');
-}
-
-// Tolak Pertemanan
-function tolakPertemanan(index) {
-    permintaanPertemanan.splice(index, 1);
-    perbaruiNotifikasi();
-}
-
-// Perbarui Daftar Teman
-function perbaruiDaftarTeman() {
-    let wadahOnline = document.getElementById('daftar-online');
-    let wadahOffline = document.getElementById('daftar-offline');
-    let wadahChat = document.getElementById('daftar-chat');
-    let kosongTeman = document.getElementById('kosong-teman');
-    let kosongChat = document.getElementById('kosong-chat');
-
-    wadahOnline.innerHTML = '';
-    wadahOffline.innerHTML = '';
-    wadahChat.innerHTML = '';
-
-    if (daftarTeman.length === 0) {
-        kosongTeman.style.display = 'block';
-        kosongChat.style.display = 'block';
-        return;
-    }
-    kosongTeman.style.display = 'none';
-    kosongChat.style.display = 'none';
-
-    daftarTeman.forEach(t => {
-        let htmlItem = `
-            <div class="item-teman" onclick="bukaChat('${t.id}', '${t.nama}')">
-                <div class="avatar-teman">
-                    ${t.nama.charAt(0).toUpperCase()}
-                    <span class="status-dot ${t.online ? 'online' : 'offline'}"></span>
-                </div>
-                <div class="info-teman">
-                    <h5>${t.nama}</h5>
-                    <p>${t.online ? 'Online sekarang' : 'Terakhir lama lalu'}</p>
-                </div>
-            </div>
-        `;
-        if (t.online) {
-            wadahOnline.innerHTML += htmlItem;
-        } else {
-            wadahOffline.innerHTML += htmlItem;
-        }
-
-        wadahChat.innerHTML += `
-            <div class="item-teman" onclick="bukaChat('${t.id}', '${t.nama}')">
-                <div class="avatar-teman">
-                    ${t.nama.charAt(0).toUpperCase()}
-                    <span class="status-dot ${t.online ? 'online' : 'offline'}"></span>
-                </div>
-                <div class="info-teman">
-                    <h5>${t.nama}</h5>
-                    <p>${riwayatChat[t.id] && riwayatChat[t.id].length > 0 ? riwayatChat[t.id][riwayatChat[t.id].length - 1].teks : 'Mulai obrolan...'}</p>
-                </div>
-                <span class="waktu-chat">Baru saja</span>
-            </div>
-        `;
-    });
-}
-
-let temanAktif = null;
-// Buka Chat
-function bukaChat(id, nama) {
-    temanAktif = { id, nama };
-    document.getElementById('chat-nama').textContent = nama;
-    document.getElementById('chat-avatar').textContent = nama.charAt(0).toUpperCase();
-    document.getElementById('chat-status').textContent = 'Online';
-    document.getElementById('btn-mabar-chat').style.display = 'inline-block';
-    document.getElementById('kotak-kirim').style.display = 'flex';
+  <!-- PANEL CHAT -->
+  <div class="panel-chat" id="panelChat">
+    <div class="chat-kosong" id="chatKosong">
+      <div class="chat-kosong-icon">💬</div>
+      <p>Pilih teman untuk mulai mengobrol</p>
+    </div>
     
-    tampilkanPesan();
-}
-
-// Tampilkan Pesan
-function tampilkanPesan() {
-    let wadah = document.getElementById('badan-chat');
-    if (!temanAktif) return;
-    let pesan = riwayatChat[temanAktif.id] || [];
-    if (pesan.length === 0) {
-        wadah.innerHTML = '<div class="pesan-kosong">Belum ada pesan. Sapa dia dulu ya! 👋</div>';
-        return;
-    }
-    wadah.innerHTML = '';
-    pesan.forEach(p => {
-        wadah.innerHTML += `
-            <div class="pesan ${p.dariSaya ? 'dikirim' : 'diterima'}">
-                ${p.teks}
-                <div class="waktu-pesan">${p.waktu}</div>
-            </div>
-        `;
-    });
-    wadah.scrollTop = wadah.scrollHeight;
-}
-
-// Kirim Pesan
-function kirimPesan() {
-    let input = document.getElementById('input-pesan');
-    let teks = input.value.trim();
-    if (!teks || !temanAktif) return;
+    <div class="chat-header sembunyi" id="chatHeader">
+      <button class="tombol-kembali" onclick="tutupChat()">←</button>
+      <div class="foto-kecil">👤</div>
+      <div>
+        <div style="font-weight:600" id="namaChat">-</div>
+        <div style="font-size:12px;color:var(--abu-teks)" id="statusChat">-</div>
+      </div>
+    </div>
     
-    let sekarang = new Date();
-    let waktu = sekarang.getHours() + ':' + (sekarang.getMinutes() < 10 ? '0' : '') + sekarang.getMinutes();
+    <div class="area-pesan" id="areaPesan" style="display:none"></div>
     
-    riwayatChat[temanAktif.id].push({ teks, waktu, dariSaya: true });
-    input.value = '';
-    tampilkanPesan();
-    
-    setTimeout(() => {
-        let balasan = ['Oke siap! 😊', 'Boleh dong!', 'Asyik, ayo main bareng! 🎮', 'Halo! Apa kabar?'][Math.floor(Math.random() * 4)];
-        riwayatChat[temanAktif.id].push({ teks: balasan, waktu, dariSaya: false });
-        tampilkanPesan();
-    }, 800);
-}
+    <div class="bar-input" id="barInput" style="display:none">
+      <button class="tombol-hadiah" onclick="bukaModalHadiah()">🎁</button>
+      <input type="text" id="inputPesan" placeholder="Ketik pesan..." onkeypress="if(event.key==='Enter')kirimPesan()">
+      <button class="tombol-kirim" onclick="kirimPesan()">➤</button>
+    </div>
+  </div>
+</div>
 
-// Ajak Mabar
-function ajakMabar() {
-    if (!temanAktif) return;
-    alert('Undangan mabar dikirim ke ' + temanAktif.nama + '! 🎮\n\nSaat dia menerima, kalian bisa main & kerjakan task bersama!');
-}
+<!-- === MODAL CARI TEMAN === -->
+<div class="modal-cari" id="modalCari">
+  <div class="kotak-cari">
+    <div class="judul-cari">
+      <span>Cari Teman</span>
+      <button class="tutup-modal" onclick="tutupModalCari()">×</button>
+    </div>
+    <div class="isi-cari">
+      <input type="text" class="input" id="inputCariId" placeholder="Masukkan ID teman...">
+      <button class="btn btn-biru" onclick="cariTeman()">Cari</button>
+      <div class="hasil-cari" id="hasilCari">
+        <div class="tidak-ada">Masukkan ID untuk mencari</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-// Buka/Tutup Panel
-function bukaPanel() {
-    document.getElementById('panel-samping').classList.add('buka');
-    perbaruiNotifikasi();
-}
-function tutupPanel() {
-    document.getElementById('panel-samping').classList.remove('buka');
-}
+<!-- === MODAL HADIAH === -->
+<div class="modal-hadiah" id="modalHadiah">
+  <div class="kotak-hadiah">
+    <div class="judul-hadiah">
+      <span>Kirim Hadiah</span>
+      <button class="tutup-modal" onclick="tutupModalHadiah()">×</button>
+    </div>
+    <div class="isi-hadiah">
+      <div class="daftar-hadiah">
+        <div class="item-hadiah">
+          <div class="info-hadiah">
+            <span class="emoji-hadiah">🍫</span>
+            <span class="nama-hadiah">Cokelat</span>
+          </div>
+          <div class="harga-hadiah">🪙 2</div>
+          <button class="btn-kirim-hadiah" onclick="kirimHadiah('🍫 Cokelat', 2)">Kirim</button>
+        </div>
+        <div class="item-hadiah">
+          <div class="info-hadiah">
+            <span class="emoji-hadiah">💎</span>
+            <span class="nama-hadiah">Permata</span>
+          </div>
+          <div class="harga-hadiah">🪙 5</div>
+          <button class="btn-kirim-hadiah" onclick="kirimHadiah('💎 Permata', 5)">Kirim</button>
+        </div>
+        <div class="item-hadiah">
+          <div class="info-hadiah">
+            <span class="emoji-hadiah">🌮</span>
+            <span class="nama-hadiah">Makanan</span>
+          </div>
+          <div class="harga-hadiah">🪙 2</div>
+          <button class="btn-kirim-hadiah" onclick="kirimHadiah('🌮 Makanan', 2)">Kirim</button>
+        </div>
+        <div class="item-hadiah">
+          <div class="info-hadiah">
+            <span class="emoji-hadiah">🍹</span>
+            <span class="nama-hadiah">Minuman</span>
+          </div>
+          <div class="harga-hadiah">🪙 3</div>
+          <button class="btn-kirim-hadiah" onclick="kirimHadiah('🍹 Minuman', 3)">Kirim</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-window.onload = function() {
-    permintaanPertemanan.push({ nama: 'Luna', id: 'ID100789', dari: 'dalam' });
-};
-</script>
+<!-- === POPUP === -->
+<div class="popup-latar" id="popup">
+  <div class="popup-kotak">
+    <div class="popup-teks" id="teksPopup"></div>
+    <button class="btn btn-biru" style="width:auto;padding:8px 28px" onclick="tutupPopup()">Oke</button>
+  </div>
+</div>
 
+<script src="script.js"></script>
 </body>
-  </html>
-  
+      </html>
+          
