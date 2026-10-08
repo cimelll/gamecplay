@@ -1,223 +1,330 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cplay</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOX Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arial Rounded MT Bold", "Varela Round", sans-serif;
+            font-weight: bold;
+        }
+        body {
+            background: linear-gradient(180deg, #E6F0FA 0%, #FFFFFF 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            color: #1E40AF;
+        }
+        h1 {
+            font-size: 42px;
+            color: #1E40AF;
+            margin-bottom: 30px;
+            letter-spacing: 4px;
+        }
+        .container {
+            background: #FFFFFF;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 18px;
+            border: 2px solid #BFDBFE;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            text-align: center;
+            color: #1E40AF;
+            outline: none;
+            transition: 0.2s;
+        }
+        input:focus { border-color: #3B82F6; }
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            background: #3B82F6;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 12px;
+        }
+        button:hover { background: #2563EB; }
+        button.secondary {
+            background: #EFF6FF;
+            color: #1E40AF;
+        }
+        button.secondary:hover { background: #DBEAFE; }
+        .room-code {
+            font-size: 26px;
+            letter-spacing: 6px;
+            color: #1E40AF;
+            background: #EFF6FF;
+            padding: 12px 24px;
+            border-radius: 10px;
+            margin: 16px 0;
+        }
+        .status {
+            font-size: 20px;
+            color: #1E40AF;
+            margin-bottom: 20px;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 24px auto;
+            max-width: 300px;
+        }
+        .cell {
+            aspect-ratio: 1;
+            background: #EFF6FF;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            color: #1E40AF;
+            cursor: pointer;
+            transition: 0.2s;
+            user-select: none;
+        }
+        .cell:hover { background: #DBEAFE; }
+        .cell.x { color: #1E40AF; }
+        .cell.o { color: #1D4ED8; background: #DBEAFE; }
+        .cell.win { background: #BFDBFE; }
+        .info {
+            font-size: 15px;
+            color: #3B82F6;
+            margin-top: 10px;
+        }
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+        }
+        .score {
+            font-size: 18px;
+            color: #1E40AF;
+        }
+        .hidden { display: none !important; }
+    </style>
 </head>
 <body>
+    <h1>XOX</h1>
+    <div class="container">
 
-<!-- === HALAMAN MASUK === -->
-<div class="layar-masuk" id="layarMasuk">
-  <div class="kotak-masuk">
-    <h1>Cplay</h1>
-    <p>Masukkan nama untuk mulai bermain</p>
-    <input type="text" class="input" id="namaPengguna" placeholder="Nama kamu..." maxlength="20">
-    <button class="btn btn-biru" onclick="masuk()">Masuk & Mulai</button>
-  </div>
-</div>
-
-<!-- === APLIKASI UTAMA === -->
-<div class="aplikasi" id="aplikasi">
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-atas">
-      <h2>Cplay</h2>
-    </div>
-    <div class="sidebar-menu">
-      <div class="menu-item aktif" id="menuBeranda" onclick="bukaHalaman('beranda')">
-        <span>🏠</span><span>Beranda</span>
-      </div>
-      <div class="menu-item" id="menuTeman" onclick="bukaHalaman('teman')">
-        <span>👥</span><span>Teman</span>
-      </div>
-      <div class="menu-item" id="menuTask" onclick="bukaHalaman('task')">
-        <span>📋</span><span>Task</span>
-      </div>
-      <div class="menu-item" id="menuNotif" onclick="bukaHalaman('notif')">
-        <span>🔔</span><span>Permintaan</span>
-      </div>
-      <div class="menu-item" id="menuProfil" onclick="bukaHalaman('profil')">
-        <span>👤</span><span>Profil</span>
-      </div>
-    </div>
-    <div class="sidebar-bawah">
-      <div class="profil-mini" onclick="bukaHalaman('profil')">
-        <div class="foto-kecil">👤</div>
-        <div class="nama-mini" id="namaMini">-</div>
-        <div class="koin-mini" id="koinMini">🪙 0</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- KONTEN TENGAH -->
-  <div class="konten" id="kontenUtama">
-    <!-- BERANDA -->
-    <div id="halBeranda">
-      <h2 class="judul-halaman">Teman Saya</h2>
-      <div class="cari-bar">
-        <input type="text" id="cariId" placeholder="Cari ID teman...">
-        <button class="btn-kecil btn-biru" onclick="bukaModalCari()">Cari</button>
-      </div>
-      <div class="daftar-teman" id="daftarTeman">
-        <div class="tidak-ada">Belum ada teman. Cari ID teman untuk menambahkan.</div>
-      </div>
-    </div>
-
-    <!-- TEMAN -->
-    <div id="halTeman" class="sembunyi">
-      <h2 class="judul-halaman">Daftar Teman</h2>
-      <div class="daftar-teman" id="daftarTeman2">
-        <div class="tidak-ada">Belum ada teman.</div>
-      </div>
-    </div>
-
-    <!-- TASK -->
-    <div id="halTask" class="sembunyi">
-      <h2 class="judul-halaman">Tugas Harian</h2>
-      <div class="daftar-task">
-        <div class="item-task">
-          <div class="nama-task">Menambah 1 teman baru</div>
-          <div class="hadiah-task">🪙 +5</div>
-          <button class="btn-kecil btn-biru" id="taskTambahTeman" onclick="ambilHadiah('tambahTeman')">Ambil</button>
+        <!-- Layar Mulai -->
+        <div id="startScreen" class="screen active">
+            <button onclick="createRoom()">BUAT RUANGAN</button>
+            <input type="text" id="joinCode" placeholder="MASUKKAN KODE RUANGAN">
+            <button class="secondary" onclick="joinRoom()">MASUK KE RUANGAN</button>
         </div>
-        <div class="item-task">
-          <div class="nama-task">Kirim pesan ke teman</div>
-          <div class="hadiah-task">🪙 +5</div>
-          <button class="btn-kecil btn-biru" id="taskKirimChat" onclick="ambilHadiah('kirimChat')">Ambil</button>
+
+        <!-- Layar Ruangan -->
+        <div id="roomScreen" class="screen">
+            <div class="status" id="roomStatus">Kode Ruangan:</div>
+            <div class="room-code" id="displayCode"></div>
+            <div class="info" id="waitingInfo">Menunggu pemain lain...</div>
+            <button class="secondary" onclick="backToStart()" style="margin-top:20px;">KEMBALI</button>
         </div>
-      </div>
-      <div style="margin-top:24px;padding:20px;background:var(--putih);border-radius:10px;text-align:center;border:1px solid var(--abu-batas)">
-        <div style="color:var(--abu-teks);font-size:14px">Total Koin</div>
-        <div style="font-size:32px;font-weight:700;color:var(--kuning);margin-top:8px" id="totalKoin">🪙 0</div>
-      </div>
-    </div>
 
-    <!-- PERMINTAAN -->
-    <div id="halNotif" class="sembunyi">
-      <h2 class="judul-halaman">Permintaan Pertemanan</h2>
-      <div id="daftarPermintaan">
-        <div class="tidak-ada">Belum ada permintaan.</div>
-      </div>
-    </div>
-
-    <!-- PROFIL -->
-    <div id="halProfil" class="sembunyi">
-      <h2 class="judul-halaman">Profil Saya</h2>
-      <div class="kotak-profil">
-        <div class="foto-besar">👤</div>
-        <div class="nama-besar" id="namaProfil">-</div>
-        <div class="id-besar">ID: <span id="idSaya">-</span> <button class="btn-kecil btn-abu" onclick="salinId()">Salin</button></div>
-        <div class="koin-besar" id="koinProfil">🪙 0</div>
-        
-        <div class="form-edit">
-          <label>Ubah Nama</label>
-          <input type="text" id="ubahNama" placeholder="Nama baru..." maxlength="20">
-          <button class="btn btn-biru" onclick="simpanNama()">Simpan Perubahan</button>
+        <!-- Layar Game -->
+        <div id="gameScreen" class="screen">
+            <div class="score-board">
+                <div class="score">Pemain X: <span id="scoreX">0</span></div>
+                <div class="score">Pemain O: <span id="scoreO">0</span></div>
+            </div>
+            <div class="status" id="turnStatus">Giliran Pemain X</div>
+            <div class="board" id="board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+            <button onclick="resetBoard()">ULANGI PERMAINAN</button>
+            <button class="secondary" onclick="backToStart()">KELUAR</button>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- PANEL CHAT -->
-  <div class="panel-chat" id="panelChat">
-    <div class="chat-kosong" id="chatKosong">
-      <div class="chat-kosong-icon">💬</div>
-      <p>Pilih teman untuk mulai mengobrol</p>
     </div>
-    
-    <div class="chat-header sembunyi" id="chatHeader">
-      <button class="tombol-kembali" onclick="tutupChat()">←</button>
-      <div class="foto-kecil">👤</div>
-      <div>
-        <div style="font-weight:600" id="namaChat">-</div>
-        <div style="font-size:12px;color:var(--abu-teks)" id="statusChat">-</div>
-      </div>
-    </div>
-    
-    <div class="area-pesan" id="areaPesan" style="display:none"></div>
-    
-    <div class="bar-input" id="barInput" style="display:none">
-      <button class="tombol-hadiah" onclick="bukaModalHadiah()">🎁</button>
-      <input type="text" id="inputPesan" placeholder="Ketik pesan..." onkeypress="if(event.key==='Enter')kirimPesan()">
-      <button class="tombol-kirim" onclick="kirimPesan()">➤</button>
-    </div>
-  </div>
-</div>
 
-<!-- === MODAL CARI TEMAN === -->
-<div class="modal-cari" id="modalCari">
-  <div class="kotak-cari">
-    <div class="judul-cari">
-      <span>Cari Teman</span>
-      <button class="tutup-modal" onclick="tutupModalCari()">×</button>
-    </div>
-    <div class="isi-cari">
-      <input type="text" class="input" id="inputCariId" placeholder="Masukkan ID teman...">
-      <button class="btn btn-biru" onclick="cariTeman()">Cari</button>
-      <div class="hasil-cari" id="hasilCari">
-        <div class="tidak-ada">Masukkan ID untuk mencari</div>
-      </div>
-    </div>
-  </div>
-</div>
+    <script>
+        // Catatan: Ini versi simulasi lokal — untuk main antar HP butuh server
+        // Untuk demo: buka 2 tab/jendela browser, masukkan kode yang sama
+        let roomCode = '';
+        let mySymbol = '';
+        let board = ['','','','','','','','',''];
+        let currentTurn = 'X';
+        let gameActive = false;
+        let scoreX = 0, scoreO = 0;
 
-<!-- === MODAL HADIAH === -->
-<div class="modal-hadiah" id="modalHadiah">
-  <div class="kotak-hadiah">
-    <div class="judul-hadiah">
-      <span>Kirim Hadiah</span>
-      <button class="tutup-modal" onclick="tutupModalHadiah()">×</button>
-    </div>
-    <div class="isi-hadiah">
-      <div class="daftar-hadiah">
-        <div class="item-hadiah">
-          <div class="info-hadiah">
-            <span class="emoji-hadiah">🍫</span>
-            <span class="nama-hadiah">Cokelat</span>
-          </div>
-          <div class="harga-hadiah">🪙 2</div>
-          <button class="btn-kirim-hadiah" onclick="kirimHadiah('🍫 Cokelat', 2)">Kirim</button>
-        </div>
-        <div class="item-hadiah">
-          <div class="info-hadiah">
-            <span class="emoji-hadiah">💎</span>
-            <span class="nama-hadiah">Permata</span>
-          </div>
-          <div class="harga-hadiah">🪙 5</div>
-          <button class="btn-kirim-hadiah" onclick="kirimHadiah('💎 Permata', 5)">Kirim</button>
-        </div>
-        <div class="item-hadiah">
-          <div class="info-hadiah">
-            <span class="emoji-hadiah">🌮</span>
-            <span class="nama-hadiah">Makanan</span>
-          </div>
-          <div class="harga-hadiah">🪙 2</div>
-          <button class="btn-kirim-hadiah" onclick="kirimHadiah('🌮 Makanan', 2)">Kirim</button>
-        </div>
-        <div class="item-hadiah">
-          <div class="info-hadiah">
-            <span class="emoji-hadiah">🍹</span>
-            <span class="nama-hadiah">Minuman</span>
-          </div>
-          <div class="harga-hadiah">🪙 3</div>
-          <button class="btn-kirim-hadiah" onclick="kirimHadiah('🍹 Minuman', 3)">Kirim</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        const winPatterns = [
+            [0,1,2], [3,4,5], [6,7,8],
+            [0,3,6], [1,4,7], [2,5,8],
+            [0,4,8], [2,4,6]
+        ];
 
-<!-- === POPUP === -->
-<div class="popup-latar" id="popup">
-  <div class="popup-kotak">
-    <div class="popup-teks" id="teksPopup"></div>
-    <button class="btn btn-biru" style="width:auto;padding:8px 28px" onclick="tutupPopup()">Oke</button>
-  </div>
-</div>
+        function generateCode() {
+            const chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
+            let code = '';
+            for(let i=0; i<5; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
 
-<script src="script.js"></script>
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function createRoom() {
+            roomCode = generateCode();
+            document.getElementById('displayCode').textContent = roomCode;
+            document.getElementById('waitingInfo').textContent = 'Siapkan perangkat kedua, masukkan kode ini';
+            showScreen('roomScreen');
+            mySymbol = 'X';
+            simulateRoomJoin();
+        }
+
+        function joinRoom() {
+            const code = document.getElementById('joinCode').value.trim().toUpperCase();
+            if(code.length < 4) { alert('Masukkan kode yang valid'); return; }
+            roomCode = code;
+            document.getElementById('displayCode').textContent = roomCode;
+            document.getElementById('waitingInfo').textContent = 'Bergabung sebagai Pemain O';
+            showScreen('roomScreen');
+            mySymbol = 'O';
+            setTimeout(() => startGame(), 800);
+        }
+
+        // Simulasi koneksi antar pemain (demo)
+        function simulateRoomJoin() {
+            const checkInterval = setInterval(() => {
+                const saved = localStorage.getItem('xox_room_' + roomCode);
+                if(saved === 'joined') {
+                    clearInterval(checkInterval);
+                    setTimeout(() => startGame(), 500);
+                }
+            }, 500);
+        }
+
+        function startGame() {
+            showScreen('gameScreen');
+            gameActive = true;
+            updateStatus();
+        }
+
+        function backToStart() {
+            gameActive = false;
+            board = ['','','','','','','','',''];
+            roomCode = '';
+            localStorage.clear();
+            showScreen('startScreen');
+        }
+
+        // Klik kotak
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.addEventListener('click', () => {
+                if(!gameActive) return;
+                const idx = parseInt(cell.dataset.index);
+                if(board[idx] !== '') return;
+                if((currentTurn === 'X' && mySymbol !== 'X') || 
+                   (currentTurn === 'O' && mySymbol !== 'O')) return;
+
+                board[idx] = currentTurn;
+                cell.textContent = currentTurn;
+                cell.classList.add(currentTurn.toLowerCase());
+                checkWinner();
+                switchTurn();
+            });
+        });
+
+        function switchTurn() {
+            currentTurn = currentTurn === 'X' ? 'O' : 'X';
+            updateStatus();
+        }
+
+        function updateStatus() {
+            const statusEl = document.getElementById('turnStatus');
+            if(currentTurn === mySymbol) {
+                statusEl.textContent = 'GILIRAN ANDA (' + mySymbol + ')';
+            } else {
+                statusEl.textContent = 'MENUNGGU LAWAN...';
+            }
+        }
+
+        function checkWinner() {
+            for(let p of winPatterns) {
+                const [a,b,c] = p;
+                if(board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    gameActive = false;
+                    highlightWin(p);
+                    setTimeout(() => {
+                        alert('PEMAIN ' + board[a] + ' MENANG!');
+                        if(board[a] === 'X') scoreX++; else scoreO++;
+                        updateScore();
+                        resetBoard();
+                    }, 400);
+                    return;
+                }
+            }
+            if(!board.includes('')) {
+                gameActive = false;
+                setTimeout(() => {
+                    alert('SERI!');
+                    resetBoard();
+                }, 400);
+            }
+        }
+
+        function highlightWin(pattern) {
+            pattern.forEach(i => {
+                document.querySelectorAll('.cell')[i].classList.add('win');
+            });
+        }
+
+        function resetBoard() {
+            board = ['','','','','','','','',''];
+            gameActive = true;
+            currentTurn = 'X';
+            document.querySelectorAll('.cell').forEach(c => {
+                c.textContent = '';
+                c.classList.remove('x','o','win');
+            });
+            updateStatus();
+        }
+
+        function updateScore() {
+            document.getElementById('scoreX').textContent = scoreX;
+            document.getElementById('scoreO').textContent = scoreO;
+        }
+
+        // Sinyal bergabung
+        document.querySelector('.secondary[onclick="joinRoom()"]').addEventListener('click', () => {
+            if(roomCode) localStorage.setItem('xox_room_' + roomCode, 'joined');
+        });
+    </script>
 </body>
-      </html>
-          
+</html>
